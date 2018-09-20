@@ -12,7 +12,7 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 // import { RecipeItemResolver } from './recipes/recipe-list/recipe-item/recipe-item-resolver.service';
 import { RecipeService } from './recipes/recipe.service';
@@ -36,10 +36,11 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule
   ],
-  providers: [ShoppingListService, RecipeService  /*, RecipeItemResolver */],
+  providers: [ShoppingListService, RecipeService, RecipeService  /*, RecipeItemResolver */],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
