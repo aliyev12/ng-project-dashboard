@@ -3,6 +3,7 @@
         <button
         class="btn btn-success"
         (click)="onNewRecipe()"
+        *ngIf="authService.isAuthenticated()"
         >New Recipe</button>
     </div>
 </div>

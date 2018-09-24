@@ -30,6 +30,11 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
   // getRecipe(id: number) {
   //   const recipe = this.recipes.find(
   //     (r) => {

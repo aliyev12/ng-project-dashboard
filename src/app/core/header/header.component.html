@@ -1,0 +1,45 @@
+<nav class="navbar navbar-default navbar-expand-lg">
+<!-- <nav class="navbar navbar-inverse navbar-expand-lg"> -->
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> -->
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" (click)="toggleNavbar()">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+      <a routerLink="/" class="navbar-brand">Recipe Book</a>
+    </div>
+
+      <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+      <ul class="nav navbar-nav">
+          <!-- Not sure if I still need the line below. It was cut
+          out of first li tag below, and it's purpuse was
+          when that li tag was pointing to an empty route '/'
+          this attribute would make sure that the thing worked.
+          That particular attribute is used for home routes
+          aka '/' routes: -->
+          <!-- [routerLinkActiveOptions]="{exact: true}"  -->
+        <li routerLinkActive="active"><a routerLink="/recipes">Recipe</a></li>
+        <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <ng-template [ngIf]="!authService.isAuthenticated()">
+          <li><a routerLink="/signup">Register</a></li>
+          <li><a routerLink="/signin">Login</a></li>
+        </ng-template>
+
+        <li><a style="cursor: pointer;" (click)="onLogout()" *ngIf="isAuthenticated()">Logout</a></li>
+        <li class="dropdown" appDropdown *ngIf="isAuthenticated()">
+          <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
+            <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch Data</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</nav>
