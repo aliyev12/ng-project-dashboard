@@ -13,7 +13,7 @@ import {Project} from '../models/project.model';
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css'],
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectsListComponent implements OnInit {
   projectState: Observable<fromProject.State>;
   isAuthenticated: Observable<fromAuth.State>;
 

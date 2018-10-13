@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Project} from '../recipe.model';
+import { Project } from '../models/project.model';
 
 export const SET_PROJECTS = 'SET_PROJECTS';
 export const ADD_PROJECT = 'ADD_PROJECT';
@@ -7,8 +7,6 @@ export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const STORE_PROJECTS = 'STORE_PROJECTS';
 export const FETCH_PROJECTS = 'FETCH_PROJECTS';
-export const FETCH_EVENTS = 'FETCH_EVENTS';
-export const FETCH_EVENTS_SUCCESS = 'FETCH_EVENTS_SUCCESS';
 
 export class SetProjects implements Action {
   readonly type = SET_PROJECTS;
@@ -42,21 +40,10 @@ export class FetchProjects implements Action {
   readonly type = FETCH_PROJECTS;
 }
 
-export class FetchEvents implements Action {
-  readonly type = FETCH_EVENTS;
-}
-
-export class FetchEventsSuccess implements Action {
-  readonly type = FETCH_EVENTS_SUCCESS;
-  constructor(public payload: Project[]) {}
-}
-
 export type ProjectActions =
   | SetProjects
   | AddProject
   | UpdateProject
   | DeleteProject
   | StoreProjects
-  | FetchProjects
-  | FetchEvents
-  | FetchEventsSuccess;
+  | FetchProjects;

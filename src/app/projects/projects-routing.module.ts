@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ProjectsComponent } from "./projects.component";
+import { ProjectsComponent } from './projects.component';
 import { ProjectStartComponent } from "./project-start/project-start.component";
 import { ProjectEditComponent } from "./project-edit/project-edit.component";
 import { ProjectDetailComponent } from "./project-detail/project-detail.component";

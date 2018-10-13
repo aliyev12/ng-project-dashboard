@@ -1,13 +1,12 @@
 import {Effect, Actions} from '@ngrx/effects';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import * as ProjectActions from '../store/project.actions';
+import * as ProjectActions from './project.actions';
 import {switchMap, withLatestFrom, map, tap} from 'rxjs/operators';
 import {Project} from '../models/project.model';
 import {HttpClient, HttpRequest} from '@angular/common/http';
-import * as fromProject from '../store/project.reducers';
+import * as fromProject from './project.reducers';
 import {Store} from '@ngrx/store';
-import {FirebaseService} from '../firebase.service';
 
 @Injectable()
 export class ProjectEffects {
@@ -15,7 +14,7 @@ export class ProjectEffects {
   projectFetch = this.actions$.ofType(ProjectActions.FETCH_PROJECTS).pipe(
     switchMap((action: ProjectActions.FetchProjects) => {
       return this.httpClient.get<Project[]>(
-        'https://ng-project-book-efcae.firebaseio.com/projects.json',
+        'https://ng-project-dashboard.firebaseio.com/projects.json',
         {
           observe: 'body',
           responseType: 'json',
@@ -24,8 +23,16 @@ export class ProjectEffects {
     }),
     map(projects => {
       for (const project of projects) {
-        if (!project['ingredients']) {
-          project['ingredients'] = [];
+        if (!project['keyMilestones']) {
+          project['keyMilestones'] = [];
+        } else if (!project['upcomingKeyActivities']) {
+          project['upcomingKeyActivities'] = [];
+        } else if (!project['resourceAssignments']) {
+          project['resourceAssignments'] = [];
+        } else if (!project['keyRisks']) {
+          project['keyRisks'] = [];
+        } else if (!project['requiredDecisions']) {
+          project['requiredDecisions'] = [];
         }
       }
       return {
@@ -41,7 +48,7 @@ export class ProjectEffects {
     switchMap(([action, state]) => {
       const req = new HttpRequest(
         'PUT',
-        'https://ng-project-book-efcae.firebaseio.com/projects.json',
+        'https://ng-project-dashboard.firebaseio.com/projects.json',
         state.projects,
         {reportProgress: true}
       );
@@ -49,21 +56,10 @@ export class ProjectEffects {
     })
   );
 
-  @Effect()
-  eventsStore = this.actions$.ofType(ProjectActions.FETCH_EVENTS).pipe(
-    // filtering actions
-    switchMap(() =>
-      this.firebaseService.items.do(
-        payload => new ProjectActions.FetchEventsSuccess(payload)
-      )
-    )
-  );
-
   constructor(
     private actions$: Actions,
     private router: Router,
     private httpClient: HttpClient,
-    private store: Store<fromProject.FeatureState>,
-    private firebaseService: FirebaseService
+    private store: Store<fromProject.FeatureState>
   ) {}
 }

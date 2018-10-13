@@ -1,8 +1,17 @@
 import {Project} from '../models/project.model';
-import {Ingredient} from '../../shared/ingredient.model';
 import * as ProjectActions from './project.actions';
 import * as fromApp from '../../store/app.reducers';
 import {HttpParams, HttpClient, HttpRequest} from '@angular/common/http';
+import { KeyMilestone } from '../models/key-milestone/key-milestone.model';
+import { KeyMilestoneItem } from '../models/key-milestone/key-milestone-item.model';
+import { UpcomingKeyActivity } from '../models/upcoming-key-activity/upcoming-key-activity.model';
+import { UpcomingKeyActivityItem } from '../models/upcoming-key-activity/upcoming-key-activity-item.model';
+import { ResourceAssignment } from '../models/resource-assignment/resource-assignment.model';
+import { ResourceAssignmentItem } from '../models/resource-assignment/resource-assignment-item.model';
+import { KeyRisk } from '../models/key-risk/key-risk.model';
+import { KeyRiskItem } from '../models/key-risk/key-risk-item.model';
+import { RequiredDecision } from '../models/required-decision/required-decision.model';
+import { RequiredDecisionItem } from '../models/required-decision/required-decision-item.model';
 
 export interface FeatureState extends fromApp.AppState {
   projects: State;
@@ -15,21 +24,43 @@ export interface State {
 const initialState: State = {
   projects: [
     new Project(
-      'Tasty Schnitzel',
-      'A super-tasty Schnitzel - just awesome!',
-      'https://upload.wikimedia.org/wikipedia/commons/7/72/Schnitzel.JPG',
-      [new Ingredient('Meat', 1), new Ingredient('French Fries', 20)]
-    ),
-    new Project(
-      'Big Fat Burger',
-      'What else you need to say?',
-      'https://upload.wikimedia.org/wikipedia/commons/b/be/Burger_King_Angus_Bacon_%26_Cheese_Steak_Burger.jpg',
-      [new Ingredient('Buns', 2), new Ingredient('Meat', 1)]
-    ),
+      'CSAT 2.0 Environment',
+      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto repellendus corrupti numquam ',
+      [new KeyMilestone(
+        'Continuing Diagnostic Monitoring Phase 25',
+        [new KeyMilestoneItem(
+          'Phase I completed',
+          5,
+          new Date('January 31 1980 12:30')
+          )]
+        )],
+      [new UpcomingKeyActivity(
+        'test',
+        [new UpcomingKeyActivityItem(
+          'test1'
+          )]
+        )],
+      [new ResourceAssignment(
+        'test',
+        [new ResourceAssignmentItem(
+          'test1'
+          )]
+        )],
+      [new KeyRisk(
+        'test',
+        [new KeyRiskItem(
+          'test1'
+          )]
+        )],
+      [new RequiredDecision(
+        'test',
+        [new RequiredDecisionItem(
+          'test1'
+          )]
+        )]
+    )
   ], // end of projects array declaration.
 };
-
-// this.store.dispatch(new ProjectActions.FetchProjects());
 
 export function projectReducer(
   state = initialState,
@@ -68,18 +99,6 @@ export function projectReducer(
         ...state,
         projects: oldProjects,
       };
-
-    case ProjectActions.FETCH_EVENTS: {
-      return {
-        state,
-      };
-    }
-
-    case ProjectActions.FETCH_EVENTS_SUCCESS: {
-      return {
-        projects: action.payload,
-      };
-    }
 
     default:
       return state;
