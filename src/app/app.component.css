@@ -1,5 +1,4 @@
-:host /deep/ .btn {
-  margin-left: 6px !important;
-  margin-right: 6px !important;
+#container {
+  min-height: 100% !important;
+  position: relative;
 }
-

@@ -1,12 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {RecipeService} from '../../recipes/recipe.service';
-import {Recipe} from '../../recipes/recipe.model';
-import {Subscription} from 'rxjs';
-import {ActivatedRoute, Router, Params} from '@angular/router';
-import {Response} from '@angular/http';
-
-import {DataStorageService} from '../../shared/data-storage.service';
-import { AuthService } from '../../auth/auth.service';
+import {Observable} from 'rxjs';
+import {Store} from '@ngrx/store';
+import * as fromRecipe from '../../recipes/store/recipe.reducers';
+import * as RecipeActions from '../../recipes/store/recipe.actions';
+import * as fromAuth from '../../auth/store/auth.reducers';
+import * as AuthActions from '../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -14,19 +12,17 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  authState: Observable<fromAuth.State>;
   navbarOpen = false;
-  recipes: Recipe[];
-  subscription: Subscription;
+  app_user = {
+    name: 'John Doe',
+    username: 'john.doe',
+  };
 
-  constructor(
-    private dataStorageService: DataStorageService,
-    private recipeService: RecipeService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public authService: AuthService
-  ) {}
+  constructor(private store: Store<fromRecipe.FeatureState>) {}
 
   ngOnInit() {
+    this.authState = this.store.select('auth');
   }
 
   toggleNavbar() {
@@ -34,26 +30,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveData() {
-    this.dataStorageService.storeRecipes()
-      .subscribe(
-        (response) => {
-          console.log(response);
-        }
-      );
+    console.log('onSaveData within header component has been executed...');
+    this.store.dispatch(new RecipeActions.StoreRecipes());
   }
 
   onFetchData() {
-    this.dataStorageService.getRecipes();
+    this.store.dispatch(new RecipeActions.FetchRecipes());
   }
 
   onLogout() {
-    this.authService.logout();
+    this.store.dispatch(new AuthActions.Logout());
   }
 
-  isAuthenticated() {
-    return this.authService.isAuthenticated();
-  }
-
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 }

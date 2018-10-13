@@ -1,59 +1,65 @@
-import { Component, OnInit } from '@angular/core';
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
-import { Data, ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
-import { Store } from '@ngrx/store';
-import { Ingredient } from '../../shared/ingredient.model';
+import {Component, OnInit} from '@angular/core';
+import { ActivatedRoute, Params, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
+import * as fromAuth from '../../auth/store/auth.reducers';
+import * as fromRecepy from '../store/recipe.reducers';
+import {Observable} from 'rxjs';
+import * as RecipeActions from '../store/recipe.actions';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrls: ['./recipe-detail.component.css']
+  styleUrls: ['./recipe-detail.component.css'],
 })
 export class RecipeDetailComponent implements OnInit {
   showDropdown = false;
+  isAuthenticated: boolean;
 
   // @Input()
-  recipe: Recipe;
+  recipeState: Observable<fromRecepy.State>;
   id: number;
 
-  constructor(private recipeService: RecipeService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public authService: AuthService,
-              private store: Store<{shoppingList: {ingredients: Ingredient[]}}> ) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store<fromRecepy.FeatureState>
+  ) {}
 
   ngOnInit() {
-    // this.route.data
-    // .subscribe(
-    //   (data: Data) => {
-    //     this.recipe = data['recipe'];
-    //   }
-    // );
+    this.store.select('auth').subscribe((authState: fromAuth.State) => {
+      this.isAuthenticated = authState.authenticated;
+    });
 
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-        this.recipe = this.recipeService.getRecipe(this.id);
-      }
-    );
+    this.route.params.subscribe((params: Params) => {
+      this.id = +params['id'];
+      this.recipeState = this.store.select('recipes');
+    });
   }
 
   onAddToShoppingList() {
-    this.store.dispatch(new ShoppingListActions.AddIngredients(this.recipe.ingredients));
+    this.store
+      .select('recipes')
+      .pipe(take(1))
+      .subscribe((recipeState: fromRecepy.State) => {
+        this.store.dispatch(
+          new ShoppingListActions.AddIngredients(
+            recipeState.recipes[this.id].ingredients
+          )
+        );
+      });
   }
 
   onEditRecipe() {
+    console.log(
+      'onEditRecipe is routing to /edit, aka recipe-edit-component...'
+    );
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
   onDeleteRecipe() {
-    this.recipeService.deleteRecipe(this.id);
+    this.store.dispatch(new RecipeActions.DeleteRecipe(this.id));
     this.router.navigate(['/recipes']);
-
   }
-
 }

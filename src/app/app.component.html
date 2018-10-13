@@ -1,12 +1,18 @@
-<app-header
-(featureSelected)="onNavigate($event)"
-  ></app-header>
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <router-outlet></router-outlet>
+<!-- <div [ngStyle]="{'min-height': clientHeight + 'px', 'margin-bottom': '-50px'}"> -->
+<div id="container">
+  <app-header (featureSelected)="onNavigate($event)"></app-header>
+
+  <div id="main" class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
+
+  <!-- <div style="height: 100px"></div>
+</div> -->
+
+  <div style="height: 100px"></div>
+  <app-footer></app-footer>
 </div>
-
-

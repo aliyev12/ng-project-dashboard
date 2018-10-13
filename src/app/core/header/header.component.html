@@ -1,36 +1,94 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark p-0">
+  <div class="container-fluid">
+    <a routerLink="/" class="navbar-brand">Recipe Book</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+      <!-- LEFT NAV LINKS -->
+      <ul class="navbar-nav">
+        <li routerLinkActive="active" class="nav-item px-2"><a routerLink="/recipes" class="nav-link">Recipe</a></li>
+        <li routerLinkActive="active" class="nav-item px-2"><a routerLink="/shopping-list" class="nav-link">Shopping
+            List</a></li>
+      </ul>
+      <ul class="navbar-nav navbar-right">
+        <li *ngIf="!(authState | async).authenticated" routerLinkActive="active" class="nav-item px-2"><a routerLink="/signup"
+            class="nav-link">Register</a></li>
+        <li *ngIf="!(authState | async).authenticated" routerLinkActive="active" class="nav-item px-2"><a routerLink="/signin"
+            class="nav-link">Login</a></li>
+
+        <!-- SYNC DROPDOWN -->
+        <li class="nav-item dropdown mr-4" *ngIf="(authState | async).authenticated">
+          <a href="#" class="nav-link dropdown-toggle text-nowrap" data-toggle="dropdown" role="button">
+            <i class="fas fa-sync mr-2"></i> Sync {{app_user.name}}
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item" (click)="onSaveData()">
+              <i class="fas fa-cloud-upload-alt mr-2"></i> Save to Cloud
+            </a>
+            <a href="#" class="dropdown-item" (click)="onFetchData()">
+              <i class="fas fa-cloud-download-alt mr-2"></i> Upload from Cloud
+            </a>
+          </div>
+        </li>
+
+        <!-- WELCOME DROPDOWN -->
+        <li class="nav-item dropdown" *ngIf="(authState | async).authenticated">
+          <a href="#" class="nav-link dropdown-toggle text-nowrap" data-toggle="dropdown" role="button">
+            <i class="fas fa-user mr-2"></i> Welcome {{app_user.name}}
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-user-circle"></i> Profile
+            </a>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+            <a class="dropdown-item" (click)="onLogout()">
+              <i class="fas fa-user-times"></i> Logout
+            </a>
+          </div>
+        </li>
+      </ul>
+
+    </div> <!-- END OF #navbarCollapse -->
+
+  </div>
+</nav>
+
+
+
+
+
+
+<!-- ORIGINAL
 <nav class="navbar navbar-default navbar-expand-lg">
-<!-- <nav class="navbar navbar-inverse navbar-expand-lg"> -->
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> -->
   <div class="container-fluid">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" (click)="toggleNavbar()">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+      <button type="button" class="navbar-toggle" (click)="toggleNavbar()">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a routerLink="/" class="navbar-brand">Recipe Book</a>
     </div>
 
-      <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
+    <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }">
       <ul class="nav navbar-nav">
-          <!-- Not sure if I still need the line below. It was cut
-          out of first li tag below, and it's purpuse was
-          when that li tag was pointing to an empty route '/'
-          this attribute would make sure that the thing worked.
-          That particular attribute is used for home routes
-          aka '/' routes: -->
-          <!-- [routerLinkActiveOptions]="{exact: true}"  -->
         <li routerLinkActive="active"><a routerLink="/recipes">Recipe</a></li>
         <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <ng-template [ngIf]="!authService.isAuthenticated()">
+        <ng-template [ngIf]="!(authState | async).authenticated">
           <li><a routerLink="/signup">Register</a></li>
           <li><a routerLink="/signin">Login</a></li>
         </ng-template>
 
-        <li><a style="cursor: pointer;" (click)="onLogout()" *ngIf="isAuthenticated()">Logout</a></li>
-        <li class="dropdown" appDropdown *ngIf="isAuthenticated()">
+        <li><a style="cursor: pointer;" (click)="onLogout()" *ngIf="(authState | async).authenticated">Logout</a></li>
+        <li class="dropdown" appDropdown *ngIf="(authState | async).authenticated">
           <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
@@ -38,8 +96,6 @@
           </ul>
         </li>
       </ul>
-
     </div>
-
   </div>
-</nav>
+</nav> -->
