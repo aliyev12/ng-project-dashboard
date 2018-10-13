@@ -17,9 +17,24 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FooterComponent} from './core/footer/footer.component';
+import {ProjectDashboardComponent} from './projects/project-dashboard.component';
+import {ProjectsListComponent} from './projects/projects-list/projects-list.component';
+import {ProjectItemComponent} from './projects/projects-list/project-item/project-item.component';
+import { ProjectStartComponent } from './projects/project-start/project-start.component';
+import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
+import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    FooterComponent,
+    ProjectDashboardComponent,
+    ProjectsListComponent,
+    ProjectItemComponent,
+    ProjectStartComponent,
+    ProjectEditComponent,
+    ProjectDetailComponent,
+  ],
   imports: [
     BrowserModule,
     AngularFontAwesomeModule,
