@@ -59,7 +59,7 @@ const initialState: State = {
           )]
         )]
     )
-  ], // end of projects array declaration.
+  ] // end of projects array declaration.
 };
 
 export function projectReducer(

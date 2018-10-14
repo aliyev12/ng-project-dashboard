@@ -1,3 +1,23 @@
-<p>
-  project-item works!
-</p>
+<a
+routerLinkActive="active"
+[routerLink]="[index]"
+style="cursor: pointer;"
+class="list-group-item clearfix"
+    >
+    <div class="pull-left">
+        <h4 class="list-group-item-heading">project.name{{ project.name }}</h4>
+        <p class="list-group-item-text">{{ project.keyMilestones }}</p>
+        <p class="list-group-item-text">{{ project.keyRisks }}</p>
+        <p class="list-group-item-text">{{ project.requiredDecisions }}</p>
+        <p class="list-group-item-text">{{ project.resourceAssignments }}</p>
+        <p class="list-group-item-text">{{ project.upcomingKeyActivities }}</p>
+        <p class="list-group-item-text">{{ project.summary }}</p>
+    </div>
+    <!-- <span class="pull-right">
+        <img
+        [src]="project.imagePath"
+        alt="{{ project.name }}"
+        class="img-responsive"
+        style="max-height: 50px;">
+    </span> -->
+</a>

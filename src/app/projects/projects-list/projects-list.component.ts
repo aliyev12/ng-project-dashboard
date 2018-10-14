@@ -7,11 +7,12 @@ import * as fromAuth from '../../auth/store/auth.reducers';
 import * as fromProject from '../store/project.reducers';
 import * as ProjectActions from '../store/project.actions';
 import {Project} from '../models/project.model';
+import { async } from 'q';
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.css'],
+  selector: 'app-projects-list',
+  templateUrl: './projects-list.component.html',
+  styleUrls: ['./projects-list.component.css'],
 })
 export class ProjectsListComponent implements OnInit {
   projectState: Observable<fromProject.State>;
@@ -20,17 +21,22 @@ export class ProjectsListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public store1: Store<fromApp.AppState>,
-    public store2: Store<fromProject.FeatureState>
+    public store: Store<fromProject.FeatureState>
   ) {}
 
   ngOnInit() {
-    this.store2.dispatch(new ProjectActions.FetchEvents());
-    this.projectState = this.store2.select('projects');
-    this.isAuthenticated = this.store1.select('auth');
+    this.projectState = this.store.select('projects');
+    this.projectState.subscribe(
+      data => {
+        console.log('log1');
+        console.log(data.projects);
+        console.log('log2');
+      }
+    );
+    this.isAuthenticated = this.store.select('auth');
     this.isAuthenticated.subscribe(data => {
       if (data.authenticated) {
-        this.store2.dispatch(new ProjectActions.FetchProjects());
+        // this.store.dispatch(new ProjectActions.FetchProjects());
       }
     });
   }
