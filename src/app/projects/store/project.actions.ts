@@ -1,8 +1,10 @@
 import {Action} from '@ngrx/store';
 import { Project } from '../models/project.model';
+import { KeyMilestone } from '../models/key-milestone/key-milestone.model';
 
 export const SET_PROJECTS = 'SET_PROJECTS';
 export const ADD_PROJECT = 'ADD_PROJECT';
+export const ADD_KEY_MILESTONE = 'ADD_KEY_MILESTONE';
 export const UPDATE_PROJECT = 'UPDATE_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const STORE_PROJECTS = 'STORE_PROJECTS';
@@ -18,6 +20,12 @@ export class AddProject implements Action {
   readonly type = ADD_PROJECT;
 
   constructor(public payload: Project) {}
+}
+
+export class AddKeyMilestone implements Action {
+  readonly type = ADD_KEY_MILESTONE;
+
+  constructor(public payload: {projectIndex: number; keyMilestone: KeyMilestone}) {}
 }
 
 export class UpdateProject implements Action {
@@ -43,6 +51,7 @@ export class FetchProjects implements Action {
 export type ProjectActions =
   | SetProjects
   | AddProject
+  | AddKeyMilestone
   | UpdateProject
   | DeleteProject
   | StoreProjects

@@ -1,18 +1,15 @@
-<div class="row">
-  <div class="col-xs-12">
-      <button
-      class="btn btn-success"
-      (click)="onNewProject()"
-      *ngIf="(isAuthenticated | async).authenticated"
-      >New Project</button>
+<div class="row mb-3">
+  <div class="col-sm-12">
+    <button id="newProjectButton" class="btn btn-outline-success btn-block text-dark" (click)="onNewProject()" *ngIf="(isAuthenticated | async).authenticated">
+      <i class="fas fa-plus"></i> New
+      Project</button>
   </div>
 </div>
-<hr>
-<div class="row" >
-  <div class="col-xs-12">
-      <app-project-item
-      *ngFor="let projectEl of (projectState | async).projects; let i = index"
-      [project]="projectEl"
-      [index]="i"></app-project-item>
-  </div>
+<div class="row">
+    <div class="col-sm-12">
+  <ul class="list-group">
+      <app-project-item *ngFor="let projectEl of (projectState | async).projects; let i = index" [project]="projectEl"
+        [index]="i"></app-project-item>
+  </ul>
+</div>
 </div>

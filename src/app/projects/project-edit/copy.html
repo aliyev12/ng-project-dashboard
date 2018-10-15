@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!projectForm.valid">Save</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- name: string,
+        summary: string,
+        keyMilestones: KeyMilestone[],
+        upcomingKeyActivities: UpcomingKeyActivity[],
+        resourceAssignments: ResourceAssignment[],
+        keyRisks: KeyRisk[],
+        requiredDecisions: RequiredDecision[] -->
+
+      <!-- NAME -->
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Summary</label>
+            <textarea type="text" id="description" class="form-control" formControlName="summary" rows="6"></textarea>
+          </div>
+        </div>
+      </div>
+
+ <!-- public name: string,
+      public items: KeyMilestoneItem[]
+
+      public name: string, public status: number, public date: Date -->
+
+      <!-- KEY MILESTONES -->
+      <div class="row">
+        <div class="col-xs-12" formArrayName="keyMilestones">
+
+          <div class="row" *ngFor="let keyMilestoneCtrl of getKeyMilestoneControls(); let i = index" [formGroupName]="i"
+            style="margin-top: 10px;">
+
+            <!-- name -->
+            <div class="col-xs-8">
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+
+            <!-- key milestone items -->
+            <div class="row" *ngFor="let keyMilestoneItem of keyMilestoneCtrl.get('items')">
+                <input type="text" class="form-control" formControlName="name">
+                <input type="number" class="form-control" formControlName="status">
+                <input type="date" class="form-control" formControlName="date">
+              <!-- delete item button -->
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-success" (click)="onAddKeyMilestoneItem(keyMilestoneItem)">Add Key Milestone Item</button>
+                <!-- <button type="button" class="btn btn-danger" (click)="onDeleteKeyMilestoneItem(i); let i = index">X</button> -->
+              </div>
+            </div>
+
+            <!-- delete key milestone button -->
+            <div class="col-xs-2">
+              <button type="button" class="btn btn-danger" (click)="onDeleteKeyMilestone(i)">X</button>
+            </div>
+          </div>
+
+          <hr>
+
+          <!-- add button -->
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="button" class="btn btn-success" (click)="onAddKeyMilestone()">Add Key Milestone</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- -- end of KEY MILESTONES -- -->
+
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<a routerLinkActive="active" [routerLink]="[index]" style="cursor: pointer;" class="list-group-item clearfix">
+  <div class="pull-left">
+    <h4 class="list-group-item-heading">{{ project.name }}</h4>
+
+    <!-- key milestones -->
+    <ul *ngFor="let keyMilestone of  project.keyMilestones">
+        <li class="list-group-item-text">{{ keyMilestone.name }}</li>
+      <ul *ngFor="let keyMilestoneItem of keyMilestone.items">
+          <li class="list-group-item-text">{{ keyMilestoneItem.name }}; status: {{ keyMilestoneItem.status }}, Date: {{ keyMilestoneItem.date }}</li>
+      </ul>
+    </ul>
+
+    <!-- upcoming key activities -->
+    <ul *ngFor="let upcomingKeyActivity of  project.upcomingKeyActivities">
+        <li class="list-group-item-text">{{ upcomingKeyActivity.name }}</li>
+      <ul *ngFor="let upcomingKeyActivityItem of upcomingKeyActivity.items">
+          <li class="list-group-item-text">{{ upcomingKeyActivityItem.name }}</li>
+      </ul>
+    </ul>
+
+    <!-- resource assignments -->
+    <ul *ngFor="let resourceAssignment of  project.resourceAssignments">
+        <li class="list-group-item-text">{{ resourceAssignment.name }}</li>
+      <ul *ngFor="let resourceAssignmentItem of resourceAssignment.items">
+          <li class="list-group-item-text">{{ resourceAssignmentItem.name }}</li>
+      </ul>
+    </ul>
+
+    <!-- key risks -->
+    <ul *ngFor="let keyRisk of  project.keyRisks">
+        <li class="list-group-item-text">{{ keyRisk.name }}</li>
+      <ul *ngFor="let keyRiskItem of keyRisk.items">
+          <li class="list-group-item-text">{{ keyRiskItem.name }}</li>
+      </ul>
+    </ul>
+
+    <!-- required decisions -->
+    <ul *ngFor="let requiredDecision of  project.requiredDecisions">
+        <li class="list-group-item-text">{{ requiredDecision.name }}</li>
+      <ul *ngFor="let requiredDecisionItem of requiredDecision.items">
+          <li class="list-group-item-text">{{ requiredDecisionItem.name }}</li>
+      </ul>
+    </ul>
+
+    <p class="list-group-item-text">{{ project.summary }}</p>
+
+
+  </div>
+
+</a>

@@ -32,7 +32,13 @@ const initialState: State = {
           'Phase I completed',
           5,
           new Date('January 31 1980 12:30')
-          )]
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+            )
+        ]
         )],
       [new UpcomingKeyActivity(
         'test',
@@ -70,7 +76,7 @@ export function projectReducer(
     case ProjectActions.SET_PROJECTS:
       return {
         ...state,
-        projects: [...action.payload],
+        projects: [...action.payload]
       };
 
     case ProjectActions.ADD_PROJECT:
@@ -78,6 +84,26 @@ export function projectReducer(
         ...state,
         projects: [...state.projects, action.payload],
       };
+
+      case ProjectActions.ADD_KEY_MILESTONE:
+      const project2 = state.projects[action.payload.projectIndex];
+
+      return {
+        ...project2,
+        keyMilestones: [...project2.keyMilestones,
+        action.payload.keyMilestone]
+      };
+
+      /**
+       *
+    name: string,
+    summary: string,
+    keyMilestones: KeyMilestone[],
+    upcomingKeyActivities: UpcomingKeyActivity[],
+    resourceAssignments: ResourceAssignment[],
+    keyRisks: KeyRisk[],
+    requiredDecisions: RequiredDecision[]
+       */
 
     case ProjectActions.UPDATE_PROJECT:
       const project = state.projects[action.payload.index];

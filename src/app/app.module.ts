@@ -1,4 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
@@ -17,26 +18,17 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FooterComponent} from './core/footer/footer.component';
-import {ProjectsComponent} from './projects/projects.component';
-import {ProjectsListComponent} from './projects/projects-list/projects-list.component';
-import {ProjectItemComponent} from './projects/projects-list/project-item/project-item.component';
-import { ProjectStartComponent } from './projects/project-start/project-start.component';
-import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
-import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
-    ProjectsComponent,
-    ProjectsListComponent,
-    ProjectItemComponent,
-    ProjectStartComponent,
-    ProjectEditComponent,
-    ProjectDetailComponent,
-  ],
+    FooterComponent
+    ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFontAwesomeModule,
     HttpClientModule,
     AppRoutingModule,

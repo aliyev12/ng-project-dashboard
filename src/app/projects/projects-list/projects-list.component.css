@@ -1,0 +1,7 @@
+.min-width-200 {
+  min-width: 200px !important;
+}
+
+#newProjectButton:hover {
+  color: #fff !important;
+}

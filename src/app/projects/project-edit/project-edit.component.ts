@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from '../models/project.model';
-import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromProject from '../store/project.reducers';
 import * as ProjectActions from '../store/project.actions';
 import { take } from 'rxjs/operators';
+import { KeyMilestone } from '../models/key-milestone/key-milestone.model';
 
 @Component({
   selector: 'app-project-edit',
@@ -20,10 +21,13 @@ export class ProjectEditComponent implements OnInit {
   projectForm: FormGroup;
   project: Project;
 
+  keyMilestoneItems: KeyMilestone[];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<fromProject.FeatureState>
+    private store: Store<fromProject.FeatureState>,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -64,22 +68,33 @@ export class ProjectEditComponent implements OnInit {
 
   onAddKeyMilestone() {
     (<FormArray>this.projectForm.get('keyMilestones')).push(
-      new FormGroup({
-        name: new FormControl(null, Validators.required),
-        items: new FormGroup({
-          name: new FormControl(null, Validators.required),
-          status: new FormControl(null, Validators.required),
-          date: new FormControl(null, Validators.required)
+      this.fb.group({
+        name: this.fb.control['']
+
+        /*
+        ,
+        items: this.fb.group({
+          name: this.fb.control[''],
+          status: this.fb.control[''],
+          date: this.fb.control['']
         })
-      }) // end of new FormGroup
+        */
+
+      }) // end of this.fb.group
     ); // end of push
   } // end of onAddKeyMilestone()
+
+// angular reactive form array inside array push
+
+  onAddKeyMilestoneItem(keyMilestoneItem: KeyMilestone) {
+    this.keyMilestoneItems.push(keyMilestoneItem);
+  }
 
   onDeleteKeyMilestone(index: number) {
     (<FormArray>this.projectForm.get('keyMilestones')).removeAt(index);
   }
 
-  getControls() {
+  getKeyMilestoneControls() {
     return (<FormArray>this.projectForm.get('keyMilestones')).controls;
   }
 
@@ -97,23 +112,21 @@ export class ProjectEditComponent implements OnInit {
 
   onAddUpcomingKeyActivity() {
     (<FormArray>this.projectForm.get('upcomingKeyActivities')).push(
-      new FormGroup({
-        name: new FormControl(null, Validators.required),
-        items: new FormGroup({
-          name: new FormControl(null, Validators.required),
-          status: new FormControl(null, Validators.required),
-          date: new FormControl(null, Validators.required)
+      this.fb.group({
+        name: this.fb.control[''],
+        items: this.fb.group({
+          name: this.fb.control['']
         })
-      }) // end of new FormGroup
+      }) // end of this.fb.group
     ); // end of push
   } // end of onAddKeyMilestone()
 
   onDeleteUpcomingKeyActivity(index: number) {
-    (<FormArray>this.projectForm.get('keyMilestones')).removeAt(index);
+    (<FormArray>this.projectForm.get('upcomingKeyActivities')).removeAt(index);
   }
 
-  getControls() {
-    return (<FormArray>this.projectForm.get('keyMilestones')).controls;
+  getUpcomingKeyActivityControls() {
+    return (<FormArray>this.projectForm.get('upcomingKeyActivities')).controls;
   }
 
   /******************************************/
@@ -121,6 +134,99 @@ export class ProjectEditComponent implements OnInit {
   /******************************************/
   /*----------------------------------------*/
 
+
+
+  /********************************/
+  /********************************/
+  /* RESOURCE ASSIGNMENTS ACTIONS */
+  /********************************/
+  /********************************/
+
+  onAddResourceAssignment() {
+    (<FormArray>this.projectForm.get('resourceAssignments')).push(
+      this.fb.group({
+        name: this.fb.control[''],
+        items: this.fb.group({
+          name: this.fb.control['']
+        })
+      }) // end of this.fb.group
+    ); // end of push
+  } // end of onAddKeyMilestone()
+
+  onDeleteResourceAssignment(index: number) {
+    (<FormArray>this.projectForm.get('resourceAssignments')).removeAt(index);
+  }
+
+  getResourceAssignmentControls() {
+    return (<FormArray>this.projectForm.get('resourceAssignments')).controls;
+  }
+
+  /***************************************/
+  /* END OF resource assignments actions */
+  /***************************************/
+  /*-------------------------------------*/
+
+
+  /*********************/
+  /*********************/
+  /* KEY RISKS ACTIONS */
+  /*********************/
+  /*********************/
+
+  onAddKeyRisk() {
+    (<FormArray>this.projectForm.get('keyRisks')).push(
+      this.fb.group({
+        name: this.fb.control[''],
+        items: this.fb.group({
+          name: this.fb.control['']
+        })
+      }) // end of this.fb.group
+    ); // end of push
+  } // end of onAddKeyRisk()
+
+  onDeleteKeyRisk(index: number) {
+    (<FormArray>this.projectForm.get('keyRisks')).removeAt(index);
+  }
+
+  getKeyRiskControls() {
+    return (<FormArray>this.projectForm.get('keyRisks')).controls;
+  }
+
+  /***************************/
+  /* END OF key risk actions */
+  /***************************/
+  /*-------------------------*/
+
+
+  /******************************/
+  /******************************/
+  /* REQUIRED DECISIONS ACTIONS */
+  /******************************/
+  /******************************/
+
+  onAddRequiredDecision() {
+    (<FormArray>this.projectForm.get('requiredDecisions')).push(
+      this.fb.group({
+        name: this.fb.control[''],
+        items: this.fb.group({
+          name: this.fb.control['']
+        })
+      }) // end of this.fb.group
+    ); // end of push
+  } // end of onAddKeyRisk()
+
+  onDeleteRequiredDecision(index: number) {
+    (<FormArray>this.projectForm.get('requiredDecisions')).removeAt(index);
+  }
+
+  getRequiredDecisionControls() {
+    return (<FormArray>this.projectForm.get('requiredDecisions')).controls;
+  }
+
+  /*************************************/
+  /* END OF required decisions actions */
+  /*************************************/
+  /*-----------------------------------*/
 
 
   onCancel() {
@@ -131,11 +237,11 @@ export class ProjectEditComponent implements OnInit {
   private initForm() {
     let projectName = '';
     let projectSummary = '';
-    const projectKeyMilestones = new FormArray([]);
-    const projectUpcomingKeyActivities = new FormArray([]);
-    const projectResourceAssignments = new FormArray([]);
-    const projectKeyRisks = new FormArray([]);
-    const projectRequiredDecisions = new FormArray([]);
+    const projectKeyMilestones = this.fb.array([]);
+    const projectUpcomingKeyActivities = this.fb.array([]);
+    const projectResourceAssignments = this.fb.array([]);
+    const projectKeyRisks = this.fb.array([]);
+    const projectRequiredDecisions = this.fb.array([]);
 
     if (this.editMode) {
       this.store
@@ -151,23 +257,23 @@ export class ProjectEditComponent implements OnInit {
           /***************/
           if (project['keyMilestones']) {
             for (const keyMilestone of project.keyMilestones) {
-              const projectKeyMilestoneItems = new FormArray([]);
+              const projectKeyMilestoneItems = this.fb.array([]);
               if (keyMilestone['items']) {
                 for (const keyMilestoneItem of keyMilestone.items) {
                 projectKeyMilestoneItems.push(
-                  new FormGroup({
-                    name: new FormControl(keyMilestoneItem.name, Validators.required),
-                    status: new FormControl(keyMilestoneItem.status, Validators.required),
-                    date: new FormControl(keyMilestoneItem.date, Validators.required)
+                  this.fb.group({
+                    name: [keyMilestoneItem.name],
+                    status: [keyMilestoneItem.status],
+                    date: [keyMilestoneItem.date]
                   })
                 ); // end of push
                 } // end of for
               } // end of if (keyMilestone['items'])
               projectKeyMilestones.push(
-                new FormGroup({
-                  name: new FormControl(keyMilestone.name, Validators.required),
+                this.fb.group({
+                  name: [keyMilestone.name],
                   items: projectKeyMilestoneItems
-                }) // end of new FormGroup...
+                }) // end of this.fb.group...
               ); // end of push
             } // end of for
           } // end of if (project['keyMilestones'])
@@ -181,21 +287,21 @@ export class ProjectEditComponent implements OnInit {
           /***************/
           if (project['upcomingKeyActivities']) {
             for (const upcomingKeyActivity of project.upcomingKeyActivities) {
-              const projectUpcomingKeyActivityItems = new FormArray([]);
+              const projectUpcomingKeyActivityItems = this.fb.array([]);
               if (upcomingKeyActivity['items']) {
                 for (const upcomingKeyActivityItem of upcomingKeyActivity.items) {
                   projectUpcomingKeyActivityItems.push(
-                  new FormGroup({
-                    name: new FormControl(upcomingKeyActivityItem.name, Validators.required)
+                  this.fb.group({
+                    name: this.fb.control[upcomingKeyActivityItem.name]
                   })
                 ); // end of push
                 } // end of for
               } // end of if (keyMilestone['items'])
               projectUpcomingKeyActivities.push(
-                new FormGroup({
-                  name: new FormControl(upcomingKeyActivity.name, Validators.required),
+                this.fb.group({
+                  name: this.fb.control[upcomingKeyActivity.name],
                   items: projectUpcomingKeyActivityItems
-                }) // end of new FormGroup...
+                }) // end of this.fb.group...
               ); // end of push
             } // end of for
           } // end of if (project['keyMilestones'])
@@ -209,21 +315,21 @@ export class ProjectEditComponent implements OnInit {
           /***************/
           if (project['resourceAssignments']) {
             for (const resourceAssignment of project.resourceAssignments) {
-              const projectResourceAssignmentItems = new FormArray([]);
+              const projectResourceAssignmentItems = this.fb.array([]);
               if (resourceAssignment['items']) {
                 for (const resourceAssignmentItem of resourceAssignment.items) {
                   projectResourceAssignmentItems.push(
-                  new FormGroup({
-                    name: new FormControl(resourceAssignmentItem.name, Validators.required)
+                  this.fb.group({
+                    name: this.fb.control[resourceAssignmentItem.name]
                   })
                 ); // end of push
                 } // end of for
               } // end of if (keyMilestone['items'])
               projectResourceAssignments.push(
-                new FormGroup({
-                  name: new FormControl(resourceAssignment.name, Validators.required),
+                this.fb.group({
+                  name: this.fb.control[resourceAssignment.name],
                   items: projectResourceAssignmentItems
-                }) // end of new FormGroup...
+                }) // end of this.fb.group...
               ); // end of push
             } // end of for
           } // end of if (project['keyMilestones'])
@@ -237,21 +343,21 @@ export class ProjectEditComponent implements OnInit {
           /***************/
           if (project['keyRisks']) {
             for (const keyRisk of project.keyRisks) {
-              const projectKeyRiskItems = new FormArray([]);
+              const projectKeyRiskItems = this.fb.array([]);
               if (keyRisk['items']) {
                 for (const keyRiskItem of keyRisk.items) {
                   projectKeyRiskItems.push(
-                  new FormGroup({
-                    name: new FormControl(keyRiskItem.name, Validators.required)
+                  this.fb.group({
+                    name: this.fb.control[keyRiskItem.name]
                   })
                 ); // end of push
                 } // end of for
               } // end of if (keyMilestone['items'])
               projectKeyRisks.push(
-                new FormGroup({
-                  name: new FormControl(keyRisk.name, Validators.required),
+                this.fb.group({
+                  name: this.fb.control[keyRisk.name],
                   items: projectKeyRiskItems
-                }) // end of new FormGroup...
+                }) // end of this.fb.group...
               ); // end of push
             } // end of for
           } // end of if (project['keyMilestones'])
@@ -265,21 +371,21 @@ export class ProjectEditComponent implements OnInit {
           /***************/
           if (project['requiredDecisions']) {
             for (const requiredDecision of project.requiredDecisions) {
-              const projectRequiredDecisionItems = new FormArray([]);
+              const projectRequiredDecisionItems = this.fb.array([]);
               if (requiredDecision['items']) {
                 for (const requiredDecisionItem of requiredDecision.items) {
                   projectRequiredDecisionItems.push(
-                  new FormGroup({
-                    name: new FormControl(requiredDecisionItem.name, Validators.required)
+                  this.fb.group({
+                    name: this.fb.control[requiredDecisionItem.name]
                   })
                 ); // end of push
                 } // end of for
               } // end of if (keyMilestone['items'])
               projectRequiredDecisions.push(
-                new FormGroup({
-                  name: new FormControl(requiredDecision.name, Validators.required),
+                this.fb.group({
+                  name: this.fb.control[requiredDecision.name],
                   items: projectRequiredDecisionItems
-                }) // end of new FormGroup...
+                }) // end of this.fb.group...
               ); // end of push
             } // end of for
           } // end of if (project['keyMilestones'])
@@ -291,9 +397,9 @@ export class ProjectEditComponent implements OnInit {
 
     } // end of if (this.editMode)
 
-    this.projectForm = new FormGroup({
-      name: new FormControl(projectName, Validators.required),
-      summary: new FormControl(projectSummary, Validators.required),
+    this.projectForm = this.fb.group({
+      name: [projectName],
+      summary: [projectSummary],
       keyMilestones: projectKeyMilestones,
       upcomingKeyActivities: projectUpcomingKeyActivities,
       resourceAssignments: projectResourceAssignments,
@@ -302,3 +408,6 @@ export class ProjectEditComponent implements OnInit {
     });
   }
 }
+
+
+// , Validators.required
