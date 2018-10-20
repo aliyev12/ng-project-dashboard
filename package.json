@@ -24,6 +24,7 @@
     "@ngrx/router-store": "^6.1.0",
     "@ngrx/store": "^6.1.0",
     "@ngrx/store-devtools": "^6.1.0",
+    "@nicky-lenaers/ngx-scroll-to": "^1.1.1",
     "angular-font-awesome": "^3.1.2",
     "angularfire2": "^5.0.2",
     "bootstrap": "^3.3.7",

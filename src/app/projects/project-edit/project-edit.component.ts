@@ -14,7 +14,7 @@ import * as fromProject from '../store/project.reducers';
 import * as ProjectActions from '../store/project.actions';
 import {take} from 'rxjs/operators';
 import {KeyMilestone} from '../models/key-milestone/key-milestone.model';
-
+import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
   selector: 'app-project-edit',
@@ -31,7 +31,8 @@ export class ProjectEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<fromProject.FeatureState>
+    private store: Store<fromProject.FeatureState>,
+    private _scrollToService: ScrollToService
   ) {}
 
   ngOnInit() {
@@ -72,7 +73,19 @@ export class ProjectEditComponent implements OnInit {
         items: new FormArray([]),
       })
     );
+    const lengthOfKeyMilestones = (<FormArray>this.projectForm.get('keyMilestones')).length;
+    const indexOfLastItem = lengthOfKeyMilestones - 1;
+    const destination = 'keyMilestone-' + indexOfLastItem;
 
+    const config: ScrollToConfigOptions = {
+      container: 'keyMilestones',
+      target: destination,
+      duration: 2000,
+      easing: 'easeOutElastic',
+      offset: 0
+    };
+
+    this._scrollToService.scrollTo(config);
   }
 
   onAddNewUpcomingKeyActivity() {
@@ -82,6 +95,23 @@ export class ProjectEditComponent implements OnInit {
         items: new FormArray([]),
       })
     );
+
+    const lengthOfKeyMilestones = (<FormArray>this.projectForm.get('upcomingKeyActivities')).length;
+    const indexOfLastItem = lengthOfKeyMilestones - 1;
+    const destination = 'upcomingKeyActivity-' + indexOfLastItem;
+
+    const config: ScrollToConfigOptions = {
+      container: 'upcomingKeyActivities',
+      target: destination,
+      duration: 2000,
+      easing: 'easeOutElastic',
+      offset: 0
+    };
+    console.log('config is: ');
+    console.log(config);
+
+
+    this._scrollToService.scrollTo(config);
   }
 
   onAddKeyMilestoneItem(keyMilestone): void {

@@ -36,11 +36,13 @@
                     <div class="item-hl">
                       <button type="button" id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1"
                         (click)="onAddNewKeyMilestone()">
+                        <!-- alternative way of implementing scrolling to element without ts: -->
+                        <!-- [ngx-scroll-to]="'#endOfKeyMilestones'" [ngx-scroll-to-duration]="1500" -->
                         <i class="fas fa-plus"></i></button>
                     </div>
                   </div>
                 </div>
-                <div class="card-body enableOverflow">
+                <div class="card-body enableOverflow" id="keyMilestones">
                   <div class="card-text" formArrayName="keyMilestones">
                     <div class="pl-0" *ngFor="let keyMilestone of projectForm.get('keyMilestones').controls; let i=index"
                       [formGroupName]="i"
@@ -81,11 +83,14 @@
                           </div>
                         </div>
                       </div> <!-- end of formArrayName="items" -->
+
                     </div>
                     <!--end of [formGroupName]="i" and loop-->
                   </div>
                   <!--end of formArrayName="keyMilestones" end of card-text-->
+                  <div id="endOfKeyMilestones"></div>
                 </div> <!-- end of "card-body" -->
+
               </div> <!-- end of "card border-info" -->
             </div> <!-- end of "col p-2" -->
           </div> <!-- end key milestones row -->
@@ -105,10 +110,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body enableOverflow" id="upcomingKeyActivities">
                   <div class="card-text" formArrayName="upcomingKeyActivities">
                     <div class="pl-0" *ngFor="let upcomingKeyActivity of projectForm.get('upcomingKeyActivities').controls; let indexOfUpcomingKeyActivity=index"
-                      [formGroupName]="indexOfUpcomingKeyActivity">
+                      [formGroupName]="indexOfUpcomingKeyActivity"
+                      id="{{'upcomingKeyActivity-' + (indexOfUpcomingKeyActivity + 1)}}">
 
                       <div class="container-1">
                         <div class="box-1">
@@ -166,11 +172,51 @@
                   </div>
 
                 </div>
-                <div class="card-body">
-                  <ul class="card-text">
-                    <li></li>
-                  </ul>
-                </div>
+                <div class="card-body enableOverflow" id="resourceAssignments">
+                    <div class="card-text" formArrayName="resourceAssignments">
+                      <div class="pl-0" *ngFor="let resourceAssignment of projectForm.get('resourceAssignments').controls; let indexOfResourceAssignment=index"
+                        [formGroupName]="indexOfResourceAssignment"
+                        id="{{'resourceAssignment-' + (indexOfResourceAssignment + 1)}}">
+
+                        <div class="container-1">
+                          <div class="box-1">
+                            <p class="m-0 text-right mr-2">{{indexOfResourceAssignment + 1}}. </p>
+                          </div>
+                          <div class="box-2">
+                            <textarea type="text" class="form-control" formControlName="name" placeholder="Resource Assignment" rows="1"></textarea>
+                          </div>
+                          <div class="box-3">
+                            <button type="button" class="btn btn-outline-danger" (click)="onDeleteResourceAssignment(indexOfResourceAssignment)"><i
+                                class="far fa-trash-alt"></i></button>
+                          </div>
+                          <div class="box-4">
+                            <button type="button" (click)="onAddResourceAssignmentItem(resourceAssignment)" type="button" class="btn btn-outline-success text-dark py-0 px-1"><i
+                                class="fas fa-plus"></i></button>
+                          </div>
+                        </div> <!-- end of flex container for upcoming key name -->
+
+                        <div class="p-0 m-0" formArrayName="items">
+                          <div class="container-1" *ngFor="let item of resourceAssignment.get('items').controls; let indexOfResourceAssignmentItem=index"
+                            [formGroupName]="indexOfResourceAssignmentItem">
+                            <div class="item-box-1 ml-auto">
+                              <p class="m-0 text-right mr-2">{{getBulletLetter(indexOfResourceAssignmentItem)}}) </p>
+                            </div>
+                            <div class="item-box-2">
+                              <textarea type="text" class="form-control" placeholder="Resource Assignment Item" formControlName="name" rows="1"></textarea>
+                            </div>
+                            <div class="item-box-3">
+                              <button type="button" (click)="onDeleteResourceAssignmentItem(resourceAssignment, indexOfResourceAssignmentItem)" type="button" class="btn btn-outline-danger"><i
+                                  class="far fa-trash-alt"></i></button>
+                            </div>
+                            <div class="item-box-4">
+                            </div>
+                          </div>
+                        </div> <!-- end of formArrayName="items" -->
+                      </div>
+                      <!--end of [formGroupName]="i" and loop-->
+                    </div>
+                    <!--end of formArrayName="keyMilestones" end of card-text-->
+                  </div>
               </div>
             </div>
           </div>

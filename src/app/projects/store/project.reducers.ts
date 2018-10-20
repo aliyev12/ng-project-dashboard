@@ -191,7 +191,26 @@ const initialState: State = {
           ),
         ])
       ],
-      [new UpcomingKeyActivity('test', [new UpcomingKeyActivityItem('test1')])],
+      [new UpcomingKeyActivity(
+        'Continuing Diagnostic Monitoring Phase 25', [
+          new UpcomingKeyActivityItem('Phase I completed')
+        ]),
+        new UpcomingKeyActivity(
+          'Continuing Diagnostic Monitoring Phase 25', [
+            new UpcomingKeyActivityItem('Phase I completed')
+          ]),
+          new UpcomingKeyActivity(
+            'Continuing Diagnostic Monitoring Phase 25', [
+              new UpcomingKeyActivityItem('Phase I completed')
+            ]),
+            new UpcomingKeyActivity(
+              'Continuing Diagnostic Monitoring Phase 25', [
+                new UpcomingKeyActivityItem('Phase I completed')
+              ]),
+              new UpcomingKeyActivity(
+                'Continuing Diagnostic Monitoring Phase 25', [
+                  new UpcomingKeyActivityItem('Phase I completed')
+                ])],
       [new ResourceAssignment('test', [new ResourceAssignmentItem('test1')])],
       [new KeyRisk('test', [new KeyRiskItem('test1')])],
       [new RequiredDecision('test', [new RequiredDecisionItem('test1')])]
