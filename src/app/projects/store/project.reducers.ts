@@ -2,16 +2,16 @@ import {Project} from '../models/project.model';
 import * as ProjectActions from './project.actions';
 import * as fromApp from '../../store/app.reducers';
 import {HttpParams, HttpClient, HttpRequest} from '@angular/common/http';
-import { KeyMilestone } from '../models/key-milestone/key-milestone.model';
-import { KeyMilestoneItem } from '../models/key-milestone/key-milestone-item.model';
-import { UpcomingKeyActivity } from '../models/upcoming-key-activity/upcoming-key-activity.model';
-import { UpcomingKeyActivityItem } from '../models/upcoming-key-activity/upcoming-key-activity-item.model';
-import { ResourceAssignment } from '../models/resource-assignment/resource-assignment.model';
-import { ResourceAssignmentItem } from '../models/resource-assignment/resource-assignment-item.model';
-import { KeyRisk } from '../models/key-risk/key-risk.model';
-import { KeyRiskItem } from '../models/key-risk/key-risk-item.model';
-import { RequiredDecision } from '../models/required-decision/required-decision.model';
-import { RequiredDecisionItem } from '../models/required-decision/required-decision-item.model';
+import {KeyMilestone} from '../models/key-milestone/key-milestone.model';
+import {KeyMilestoneItem} from '../models/key-milestone/key-milestone-item.model';
+import {UpcomingKeyActivity} from '../models/upcoming-key-activity/upcoming-key-activity.model';
+import {UpcomingKeyActivityItem} from '../models/upcoming-key-activity/upcoming-key-activity-item.model';
+import {ResourceAssignment} from '../models/resource-assignment/resource-assignment.model';
+import {ResourceAssignmentItem} from '../models/resource-assignment/resource-assignment-item.model';
+import {KeyRisk} from '../models/key-risk/key-risk.model';
+import {KeyRiskItem} from '../models/key-risk/key-risk-item.model';
+import {RequiredDecision} from '../models/required-decision/required-decision.model';
+import {RequiredDecisionItem} from '../models/required-decision/required-decision-item.model';
 
 export interface FeatureState extends fromApp.AppState {
   projects: State;
@@ -26,46 +26,177 @@ const initialState: State = {
     new Project(
       'CSAT 2.0 Environment',
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto repellendus corrupti numquam ',
-      [new KeyMilestone(
-        'Continuing Diagnostic Monitoring Phase 25',
-        [new KeyMilestoneItem(
-          'Phase I completed',
-          5,
-          new Date('January 31 1980 12:30')
+      [
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
           ),
           new KeyMilestoneItem(
             'Phase VXIII completed',
             5,
             new Date('January 1 1989 12:30')
-            )
-        ]
-        )],
-      [new UpcomingKeyActivity(
-        'test',
-        [new UpcomingKeyActivityItem(
-          'test1'
-          )]
-        )],
-      [new ResourceAssignment(
-        'test',
-        [new ResourceAssignmentItem(
-          'test1'
-          )]
-        )],
-      [new KeyRisk(
-        'test',
-        [new KeyRiskItem(
-          'test1'
-          )]
-        )],
-      [new RequiredDecision(
-        'test',
-        [new RequiredDecisionItem(
-          'test1'
-          )]
-        )]
-    )
-  ] // end of projects array declaration.
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+          new KeyMilestoneItem(
+            'Phase VXIII completed',
+            5,
+            new Date('January 1 1989 12:30')
+          ),
+        ]),
+        new KeyMilestone('Continuing Diagnostic Monitoring Phase 25', [
+          new KeyMilestoneItem(
+            'Phase I completed',
+            5,
+            new Date('January 31 1980 12:30')
+          ),
+        ])
+      ],
+      [new UpcomingKeyActivity('test', [new UpcomingKeyActivityItem('test1')])],
+      [new ResourceAssignment('test', [new ResourceAssignmentItem('test1')])],
+      [new KeyRisk('test', [new KeyRiskItem('test1')])],
+      [new RequiredDecision('test', [new RequiredDecisionItem('test1')])]
+    ),
+  ], // end of projects array declaration.
 };
 
 export function projectReducer(
@@ -76,7 +207,7 @@ export function projectReducer(
     case ProjectActions.SET_PROJECTS:
       return {
         ...state,
-        projects: [...action.payload]
+        projects: [...action.payload],
       };
 
     case ProjectActions.ADD_PROJECT:
@@ -84,26 +215,6 @@ export function projectReducer(
         ...state,
         projects: [...state.projects, action.payload],
       };
-
-      case ProjectActions.ADD_KEY_MILESTONE:
-      const project2 = state.projects[action.payload.projectIndex];
-
-      return {
-        ...project2,
-        keyMilestones: [...project2.keyMilestones,
-        action.payload.keyMilestone]
-      };
-
-      /**
-       *
-    name: string,
-    summary: string,
-    keyMilestones: KeyMilestone[],
-    upcomingKeyActivities: UpcomingKeyActivity[],
-    resourceAssignments: ResourceAssignment[],
-    keyRisks: KeyRisk[],
-    requiredDecisions: RequiredDecision[]
-       */
 
     case ProjectActions.UPDATE_PROJECT:
       const project = state.projects[action.payload.index];

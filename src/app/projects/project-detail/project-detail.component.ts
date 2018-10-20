@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Project } from '../models/project.model';
 import { Observable } from 'rxjs';
 import * as fromProject from '../store/project.reducers';
@@ -16,6 +16,7 @@ import * as ProjectActions from '../store/project.actions';
 export class ProjectDetailComponent implements OnInit {
   showDropdown = false;
   isAuthenticated: boolean;
+  kms = [];
 
   // @Input()
   projectState: Observable<fromProject.State>;
@@ -28,6 +29,8 @@ export class ProjectDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(`ENTERING PROJECT-DETAIL TS...`);
+
     this.store.select('auth').subscribe((authState: fromAuth.State) => {
       this.isAuthenticated = authState.authenticated;
     });
@@ -39,15 +42,15 @@ export class ProjectDetailComponent implements OnInit {
       console.log('DETAILS knows id, it is right below');
       console.log(this.id);
       console.log('--- id above ---');
-      // this.projectState.subscribe(
-      //   data => {
-      //     const something = data.projects[this.id].keyMilestones;
-      //     console.log('something below');
-      //     console.log(something);
-      //     console.log('something above');
+      this.projectState.subscribe(
+        data => {
+          const something = data.projects[this.id].keyMilestones;
+          console.log('something below');
+          console.log(something);
+          console.log('something above');
 
-      //   }
-      // );
+        }
+      );
     });
   }
 
@@ -65,9 +68,6 @@ export class ProjectDetailComponent implements OnInit {
   // }
 
   onEditProject() {
-    console.log(
-      'onEditProject is routing to /edit, aka project-edit-component...'
-    );
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
@@ -79,4 +79,41 @@ export class ProjectDetailComponent implements OnInit {
   onNewKeyMilestone(id: number) {
      this.router.navigate(['new-key-milestone'], {relativeTo: this.route});
   }
+
+  getBulletLetter(j) {
+    const lettersArray = [
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+      'k',
+      'l',
+      'm',
+      'n',
+      'o',
+      'p',
+      'q',
+      'r',
+      's',
+      't',
+      'u',
+      'v',
+      'w',
+      'x',
+      'y',
+      'z',
+    ];
+    if (j > lettersArray.length - 1) {
+      return '#' + (j - 25);
+    } else {
+      return lettersArray[j];
+    }
+  }
+
 }

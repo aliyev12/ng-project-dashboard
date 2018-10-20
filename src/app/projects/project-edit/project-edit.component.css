@@ -1,3 +1,8 @@
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+
 .square {
   height: 30px !important;
   width: 30px !important;
@@ -18,3 +23,55 @@
 #newKeyMilestoneButton:hover {
   color: #fff !important;
 }
+
+ul {
+  list-style: none !important;
+}
+
+.container-1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.box-1 {
+  flex-basis: 2%;
+ }
+
+ .box-2 {
+  flex-basis: 86%;
+  margin-right: 10px;
+ }
+
+ .box-3 {
+  flex-basis: 6%;
+ }
+
+ .box-4 {
+  flex-basis: 6%;
+ }
+
+.item-box-1 {
+  flex-basis: 8%;
+ }
+
+ .item-box-2 {
+  flex-basis: 80%;
+  margin-right: 10px;
+ }
+
+ .item-box-3 {
+  flex-basis: 6%;
+ }
+
+ .item-box-4 {
+  flex-basis: 6%;
+ }
+
+ .enableOverflow{
+   overflow: auto;
+   max-height: 300px;
+   min-height: 200px;
+ }
+

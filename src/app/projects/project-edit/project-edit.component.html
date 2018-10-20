@@ -1,30 +1,12 @@
 <div class="row">
   <div class="col-xs-12">
-    <form [formGroup]="projectForm">
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-xs-12">
-          <button (click)="onSubmit()" type="button" class="btn btn-success" [disabled]="!projectForm.valid">Save</button>
+          <button type="submit" class="btn btn-success mr-4" [disabled]="!projectForm.valid">Save</button>
           <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
         </div>
       </div>
-
-      <!-- <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" formControlName="name" class="form-control">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="description">Summary</label>
-            <textarea type="text" id="description" class="form-control" formControlName="summary" rows="6"></textarea>
-          </div>
-        </div>
-      </div> -->
 
       <div class="row">
 
@@ -35,64 +17,137 @@
               <div class="card border-info">
                 <div class="card-body py-2">
                   <span class="card-title h3 text-center m-0">
-                    <div class="form-group">
-                      <label for="name">Name</label>
-                      <input type="text" id="name" formControlName="name" class="form-control">
-                    </div>
-                    <!-- <div *ngIf="(projectState | async).projects && (projectState | async).projects.length > 0">
-                            {{ (projectState | async).projects[id]?.name }}
-                        </div> -->
+                    <textarea type="text" id="name" formControlName="name" class="form-control" placeholder="Enter Project Name" rows="1"></textarea>
                   </span>
                 </div>
               </div>
             </div>
           </div>
 
+          <!-- KEY MILESTONES -->
           <div class="row">
             <div class="col p-2">
               <div class="card border-info">
                 <div class="card-header">
-
                   <div class="d-flex justify-content-between row-hl">
                     <div class="item-hl">
                       <span>Key Milestones</span>
                     </div>
                     <div class="item-hl">
-                      <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone(id)">
+                      <button type="button" id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1"
+                        (click)="onAddNewKeyMilestone()">
                         <i class="fas fa-plus"></i></button>
                     </div>
                   </div>
-
                 </div>
-                <div class="card-body">
-                  <ul class="card-text">
-                    <!-- <li *ngFor="let keyMilestone of (projectState | async).projects[id].keyMilestones; let i=index">{{ keyMilestone.name }}</li> -->
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+                <div class="card-body enableOverflow">
+                  <div class="card-text" formArrayName="keyMilestones">
+                    <div class="pl-0" *ngFor="let keyMilestone of projectForm.get('keyMilestones').controls; let i=index"
+                      [formGroupName]="i"
+                      id="{{'keyMilestone-' + (i + 1)}}">
 
+                      <div class="container-1">
+                        <div class="box-1">
+                          <p class="m-0 text-right mr-2">{{i+1}}. </p>
+                        </div>
+                        <div class="box-2">
+                          <textarea type="text" class="form-control" formControlName="name" placeholder="Key Milestone" rows="1"></textarea>
+                        </div>
+                        <div class="box-3">
+                          <button type="button" class="btn btn-outline-danger" (click)="onDeleteKeyMilestone(i)"><i
+                              class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="box-4">
+                          <!-- emply flex box just for proper alignment -->
+                          <button type="button" (click)="onAddKeyMilestoneItem(keyMilestone)" type="button" class="btn btn-outline-success text-dark py-0 px-1"><i
+                              class="fas fa-plus"></i></button>
+                        </div>
+                      </div> <!-- end of flex container for key milestone name -->
+
+                      <div class="p-0 m-0" formArrayName="items">
+                        <div class="container-1" *ngFor="let item of keyMilestone.get('items').controls; let j=index"
+                          [formGroupName]="j">
+                          <div class="item-box-1 ml-auto">
+                            <p class="m-0 text-right mr-2">{{getBulletLetter(j)}}) </p>
+                          </div>
+                          <div class="item-box-2">
+                            <textarea type="text" class="form-control" placeholder="Key Milestone Item" formControlName="name" rows="1"></textarea>
+                          </div>
+                          <div class="item-box-3">
+                            <button type="button" (click)="onDeleteKeyMilestoneItem(keyMilestone, j)" type="button" class="btn btn-outline-danger"><i
+                                class="far fa-trash-alt"></i></button>
+                          </div>
+                          <div class="item-box-4">
+                          </div>
+                        </div>
+                      </div> <!-- end of formArrayName="items" -->
+                    </div>
+                    <!--end of [formGroupName]="i" and loop-->
+                  </div>
+                  <!--end of formArrayName="keyMilestones" end of card-text-->
+                </div> <!-- end of "card-body" -->
+              </div> <!-- end of "card border-info" -->
+            </div> <!-- end of "col p-2" -->
+          </div> <!-- end key milestones row -->
+
+          <!-- UPCPMING KEY ACTIVITIES -->
           <div class="row">
             <div class="col-md-6 p-2">
               <div class="card border-info">
                 <div class="card-header">
-
                   <div class="d-flex justify-content-between row-hl">
                     <div class="item-hl">
                       <span>Upcoming Key Activities</span>
                     </div>
                     <div class="item-hl">
-                      <!-- <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                          <i class="fas fa-plus"></i></button> -->
+                      <button type="button" id="newUpcomingKeyActivityButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onAddNewUpcomingKeyActivity()" >
+                        <i class="fas fa-plus"></i></button>
                     </div>
                   </div>
-
                 </div>
                 <div class="card-body">
-                  <ul class="card-text">
-                    <!-- <li *ngFor="let upcomingKeyActivity of (projectState | async).projects[id].upcomingKeyActivities; let i=index">{{ upcomingKeyActivity.name }}</li> -->
-                  </ul>
+                  <div class="card-text" formArrayName="upcomingKeyActivities">
+                    <div class="pl-0" *ngFor="let upcomingKeyActivity of projectForm.get('upcomingKeyActivities').controls; let indexOfUpcomingKeyActivity=index"
+                      [formGroupName]="indexOfUpcomingKeyActivity">
+
+                      <div class="container-1">
+                        <div class="box-1">
+                          <p class="m-0 text-right mr-2">{{indexOfUpcomingKeyActivity + 1}}. </p>
+                        </div>
+                        <div class="box-2">
+                          <textarea type="text" class="form-control" formControlName="name" placeholder="Upcoming Key Activity" rows="1"></textarea>
+                        </div>
+                        <div class="box-3">
+                          <button type="button" class="btn btn-outline-danger" (click)="onDeleteUpcomingKeyActivity(indexOfUpcomingKeyActivity)"><i
+                              class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="box-4">
+                          <button type="button" (click)="onAddUpcomingKeyActivityItem(upcomingKeyActivity)" type="button" class="btn btn-outline-success text-dark py-0 px-1"><i
+                              class="fas fa-plus"></i></button>
+                        </div>
+                      </div> <!-- end of flex container for upcoming key name -->
+
+                      <div class="p-0 m-0" formArrayName="items">
+                        <div class="container-1" *ngFor="let item of upcomingKeyActivity.get('items').controls; let indexOfUpcomingKeyActivityItem=index"
+                          [formGroupName]="indexOfUpcomingKeyActivityItem">
+                          <div class="item-box-1 ml-auto">
+                            <p class="m-0 text-right mr-2">{{getBulletLetter(indexOfUpcomingKeyActivityItem)}}) </p>
+                          </div>
+                          <div class="item-box-2">
+                            <textarea type="text" class="form-control" placeholder="Upcoming Key Activity Item" formControlName="name" rows="1"></textarea>
+                          </div>
+                          <div class="item-box-3">
+                            <button type="button" (click)="onDeleteUpcomingKeyActivityItem(upcomingKeyActivity, indexOfUpcomingKeyActivityItem)" type="button" class="btn btn-outline-danger"><i
+                                class="far fa-trash-alt"></i></button>
+                          </div>
+                          <div class="item-box-4">
+                          </div>
+                        </div>
+                      </div> <!-- end of formArrayName="items" -->
+                    </div>
+                    <!--end of [formGroupName]="i" and loop-->
+                  </div>
+                  <!--end of formArrayName="keyMilestones" end of card-text-->
                 </div>
               </div>
             </div>
@@ -106,14 +161,14 @@
                     </div>
                     <div class="item-hl">
                       <!-- <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                          <i class="fas fa-plus"></i></button> -->
+                        <i class="fas fa-plus"></i></button> -->
                     </div>
                   </div>
 
                 </div>
                 <div class="card-body">
                   <ul class="card-text">
-                    <!-- <li *ngFor="let resourceAssignment of (projectState | async).projects[id].resourceAssignments; let i=index">{{ resourceAssignment.name }}</li> -->
+                    <li></li>
                   </ul>
                 </div>
               </div>
@@ -130,13 +185,13 @@
                     </div>
                     <div class="item-hl">
                       <!-- <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                          <i class="fas fa-plus"></i></button> -->
+                        <i class="fas fa-plus"></i></button> -->
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <ul class="card-text">
-                    <!-- <li *ngFor="let keyRisk of (projectState | async).projects[id].keyRisks; let i=index">{{ keyRisk.name }}</li> -->
+                    <li></li>
                   </ul>
                 </div>
               </div>
@@ -150,13 +205,13 @@
                     </div>
                     <div class="item-hl">
                       <!-- <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                          <i class="fas fa-plus"></i></button> -->
+                        <i class="fas fa-plus"></i></button> -->
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <ul class="card-text">
-                    <!-- <li *ngFor="let requiredDecision of (projectState | async).projects[id].requiredDecisions; let i=index">{{ requiredDecision.name }}</li> -->
+                    <li></li>
                   </ul>
                 </div>
               </div>
@@ -165,25 +220,23 @@
 
         </div>
 
-        <div class="col-lg-3 py-2 px-4">
+        <!-- SUMMARY -->
+        <div class="col-lg-3 py-2 px-4" id="summary">
           <div class="card border-info height-100">
             <div class="card-header">
               Summary
             </div>
             <div class="card-body height-100">
-              <span class="card-text">
-                <div class="form-group">
-                  <label for="description">Summary</label>
-                  <textarea type="text" id="description" class="form-control" formControlName="summary" rows="6"></textarea>
-                </div>
-                <!-- {{ (projectState | async).projects[id].summary }} -->
-              </span>
+              <p class="card-text">
+                <textarea type="text" id="description" class="form-control" formControlName="summary" placeholder="Summary" rows="6"></textarea>
+              </p>
             </div>
           </div>
         </div>
 
       </div>
 
+      <!-- LEGEND -->
       <div class="row mt-3">
         <div class="col-xl-3">
           <div class="alert alert-white p-1 text-right">
@@ -220,6 +273,7 @@
         </div>
       </div>
 
+      <a style="cursor: pointer;" (click)="onEditProject()" *ngIf="isAuthenticated">Edit Project</a>
 
     </form>
   </div>

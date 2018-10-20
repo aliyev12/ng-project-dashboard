@@ -18,3 +18,15 @@
 #newKeyMilestoneButton:hover {
   color: #fff !important;
 }
+
+.splitInColumns {
+  -webkit-columns: 2;
+  -moz-columns: 2;
+  columns: 2;
+}
+
+.innerDivs{
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}

@@ -7,10 +7,10 @@
         <div class="card border-info">
           <div class="card-body py-2">
             <span class="card-title h3 text-center m-0">
-                <div *ngIf="(projectState | async).projects && (projectState | async).projects.length > 0">
-                    {{ (projectState | async).projects[id]?.name }}
-                </div>
-              </span>
+              <div *ngIf="(projectState | async).projects && (projectState | async).projects.length > 0">
+                {{ (projectState | async).projects[id]?.name }}
+              </div>
+            </span>
           </div>
         </div>
       </div>
@@ -26,16 +26,19 @@
                 <span>Key Milestones</span>
               </div>
               <div class="item-hl">
-                <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone(id)">
-                  <i class="fas fa-plus"></i></button>
               </div>
             </div>
 
           </div>
           <div class="card-body">
-            <ul class="card-text">
-              <!-- <li *ngFor="let keyMilestone of (projectState | async).projects[id].keyMilestones; let i=index">{{ keyMilestone.name }}</li> -->
-            </ul>
+            <div class="p-0 ml-4 splitInColumns">
+              <div class="p-2 p-2 innerDivs" *ngFor="let keyMilestone of (projectState | async).projects[id].keyMilestones; let i=index">
+                  <span class="mr-2">{{i+1}}.</span> <u>{{keyMilestone.name}}</u>
+                  <div class="p-0 ml-4 font-italic" *ngFor="let keyMilestoneItem of keyMilestone.items; let j=index">
+                    <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{keyMilestoneItem.name}}
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -51,16 +54,19 @@
                 <span>Upcoming Key Activities</span>
               </div>
               <div class="item-hl">
-                <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                  <i class="fas fa-plus"></i></button>
               </div>
             </div>
 
           </div>
           <div class="card-body">
-            <ul class="card-text">
-                <!-- <li *ngFor="let upcomingKeyActivity of (projectState | async).projects[id].upcomingKeyActivities; let i=index">{{ upcomingKeyActivity.name }}</li> -->
-            </ul>
+              <div class="p-0 ml-4">
+                  <div class="p-2 p-2" *ngFor="let upcomingKeyActivity of (projectState | async).projects[id].upcomingKeyActivities; let i=index">
+                      <span class="mr-2">{{i+1}}.</span> <u>{{upcomingKeyActivity.name}}</u>
+                      <div class="p-0 ml-4 font-italic" *ngFor="let upcomingKeyActivityItem of upcomingKeyActivity.items; let j=index">
+                        <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{upcomingKeyActivityItem.name}}
+                      </div>
+                  </div>
+                </div>
           </div>
         </div>
       </div>
@@ -73,15 +79,14 @@
                 <span>Resource Assignments</span>
               </div>
               <div class="item-hl">
-                <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                  <i class="fas fa-plus"></i></button>
               </div>
             </div>
 
           </div>
           <div class="card-body">
             <ul class="card-text">
-                <!-- <li *ngFor="let resourceAssignment of (projectState | async).projects[id].resourceAssignments; let i=index">{{ resourceAssignment.name }}</li> -->
+              <li *ngFor="let resourceAssignment of (projectState | async).projects[id].resourceAssignments; let i=index">{{
+                resourceAssignment.name }}</li>
             </ul>
           </div>
         </div>
@@ -97,14 +102,12 @@
                 <span>Key Risks and Issues</span>
               </div>
               <div class="item-hl">
-                <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                  <i class="fas fa-plus"></i></button>
               </div>
             </div>
           </div>
           <div class="card-body">
             <ul class="card-text">
-                <!-- <li *ngFor="let keyRisk of (projectState | async).projects[id].keyRisks; let i=index">{{ keyRisk.name }}</li> -->
+              <li *ngFor="let keyRisk of (projectState | async).projects[id].keyRisks; let i=index">{{ keyRisk.name }}</li>
             </ul>
           </div>
         </div>
@@ -117,14 +120,13 @@
                 <span>Required Decisions & Open Items</span>
               </div>
               <div class="item-hl">
-                <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                  <i class="fas fa-plus"></i></button>
               </div>
             </div>
           </div>
           <div class="card-body">
             <ul class="card-text">
-                <!-- <li *ngFor="let requiredDecision of (projectState | async).projects[id].requiredDecisions; let i=index">{{ requiredDecision.name }}</li> -->
+              <li *ngFor="let requiredDecision of (projectState | async).projects[id].requiredDecisions; let i=index">{{
+                requiredDecision.name }}</li>
             </ul>
           </div>
         </div>
@@ -140,7 +142,7 @@
       </div>
       <div class="card-body height-100">
         <p class="card-text">
-          <!-- {{ (projectState | async).projects[id].summary }} -->
+          {{ (projectState | async).projects[id].summary }}
         </p>
       </div>
     </div>
@@ -183,3 +185,7 @@
     </div>
   </div>
 </div>
+
+
+
+<a style="cursor: pointer;" (click)="onEditProject()" *ngIf="isAuthenticated">Edit Project</a>
