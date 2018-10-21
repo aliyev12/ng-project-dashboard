@@ -16,8 +16,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { ProjectEffects } from './store/project.effects';
 import { AngularFireModule } from 'angularFire2';
 import { AngularFireDatabaseModule } from 'angularFire2/database';
-import { KeyMilestoneEditComponent } from './project-edit/key-milestone-edit/key-milestone-edit.component';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 export const firebaseCredentials = {
   apiKey: 'AIzaSyDZhoHrSZgnEurG8rwT5NaitgKr-E4i3Jk',
@@ -35,9 +35,8 @@ export const firebaseCredentials = {
     ProjectsListComponent,
     ProjectEditComponent,
     ProjectDetailComponent,
-    ProjectItemComponent,
-    KeyMilestoneEditComponent
-  ],
+    ProjectItemComponent
+    ],
   imports: [
     CommonModule,
     FormsModule,
@@ -48,7 +47,9 @@ export const firebaseCredentials = {
     EffectsModule.forFeature([ProjectEffects]),
     AngularFireModule.initializeApp(firebaseCredentials),
     AngularFireDatabaseModule,
-    ScrollToModule.forRoot()
+    ScrollToModule.forRoot(),
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ]
 })
 export class ProjectsModule {}

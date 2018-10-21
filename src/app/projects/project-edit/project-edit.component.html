@@ -17,7 +17,8 @@
               <div class="card border-info">
                 <div class="card-body py-2">
                   <span class="card-title h3 text-center m-0">
-                    <textarea type="text" id="name" formControlName="name" class="form-control" placeholder="Enter Project Name" rows="1"></textarea>
+                    <textarea type="text" id="name" formControlName="name" class="form-control" placeholder="Enter Project Name"
+                      rows="1"></textarea>
                   </span>
                 </div>
               </div>
@@ -45,15 +46,14 @@
                 <div class="card-body enableOverflow" id="keyMilestones">
                   <div class="card-text" formArrayName="keyMilestones">
                     <div class="pl-0" *ngFor="let keyMilestone of projectForm.get('keyMilestones').controls; let i=index"
-                      [formGroupName]="i"
-                      id="{{'keyMilestone-' + (i + 1)}}">
-
+                      [formGroupName]="i" id="{{'keyMilestone-' + (i + 1)}}">
                       <div class="container-1">
                         <div class="box-1">
                           <p class="m-0 text-right mr-2">{{i+1}}. </p>
                         </div>
                         <div class="box-2">
-                          <textarea type="text" class="form-control" formControlName="name" placeholder="Key Milestone" rows="1"></textarea>
+                          <textarea type="text" class="form-control" formControlName="name" placeholder="Key Milestone"
+                            rows="1"></textarea>
                         </div>
                         <div class="box-3">
                           <button type="button" class="btn btn-outline-danger" (click)="onDeleteKeyMilestone(i)"><i
@@ -65,7 +65,6 @@
                               class="fas fa-plus"></i></button>
                         </div>
                       </div> <!-- end of flex container for key milestone name -->
-
                       <div class="p-0 m-0" formArrayName="items">
                         <div class="container-1" *ngFor="let item of keyMilestone.get('items').controls; let j=index"
                           [formGroupName]="j">
@@ -73,24 +72,23 @@
                             <p class="m-0 text-right mr-2">{{getBulletLetter(j)}}) </p>
                           </div>
                           <div class="item-box-2">
-                            <textarea type="text" class="form-control" placeholder="Key Milestone Item" formControlName="name" rows="1"></textarea>
+                            <textarea type="text" class="form-control" placeholder="Key Milestone Item" formControlName="name"
+                              rows="1"></textarea>
                           </div>
                           <div class="item-box-3">
-                            <button type="button" (click)="onDeleteKeyMilestoneItem(keyMilestone, j)" type="button" class="btn btn-outline-danger"><i
-                                class="far fa-trash-alt"></i></button>
+                            <button type="button" (click)="onDeleteKeyMilestoneItem(keyMilestone, j)" type="button"
+                              class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
                           </div>
                           <div class="item-box-4">
                           </div>
                         </div>
                       </div> <!-- end of formArrayName="items" -->
-
                     </div>
                     <!--end of [formGroupName]="i" and loop-->
                   </div>
                   <!--end of formArrayName="keyMilestones" end of card-text-->
                   <div id="endOfKeyMilestones"></div>
                 </div> <!-- end of "card-body" -->
-
               </div> <!-- end of "card border-info" -->
             </div> <!-- end of "col p-2" -->
           </div> <!-- end key milestones row -->
@@ -105,7 +103,8 @@
                       <span>Upcoming Key Activities</span>
                     </div>
                     <div class="item-hl">
-                      <button type="button" id="newUpcomingKeyActivityButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onAddNewUpcomingKeyActivity()" >
+                      <button type="button" id="newUpcomingKeyActivityButton" class="btn btn-outline-success text-dark py-0 px-1"
+                        (click)="onAddNewUpcomingKeyActivity()">
                         <i class="fas fa-plus"></i></button>
                     </div>
                   </div>
@@ -113,26 +112,24 @@
                 <div class="card-body enableOverflow" id="upcomingKeyActivities">
                   <div class="card-text" formArrayName="upcomingKeyActivities">
                     <div class="pl-0" *ngFor="let upcomingKeyActivity of projectForm.get('upcomingKeyActivities').controls; let indexOfUpcomingKeyActivity=index"
-                      [formGroupName]="indexOfUpcomingKeyActivity"
-                      id="{{'upcomingKeyActivity-' + (indexOfUpcomingKeyActivity + 1)}}">
-
+                      [formGroupName]="indexOfUpcomingKeyActivity" id="{{'upcomingKeyActivity-' + (indexOfUpcomingKeyActivity + 1)}}">
                       <div class="container-1">
                         <div class="box-1">
                           <p class="m-0 text-right mr-2">{{indexOfUpcomingKeyActivity + 1}}. </p>
                         </div>
                         <div class="box-2">
-                          <textarea type="text" class="form-control" formControlName="name" placeholder="Upcoming Key Activity" rows="1"></textarea>
+                          <textarea type="text" class="form-control" formControlName="name" placeholder="Upcoming Key Activity"
+                            rows="1"></textarea>
                         </div>
                         <div class="box-3">
                           <button type="button" class="btn btn-outline-danger" (click)="onDeleteUpcomingKeyActivity(indexOfUpcomingKeyActivity)"><i
                               class="far fa-trash-alt"></i></button>
                         </div>
                         <div class="box-4">
-                          <button type="button" (click)="onAddUpcomingKeyActivityItem(upcomingKeyActivity)" type="button" class="btn btn-outline-success text-dark py-0 px-1"><i
-                              class="fas fa-plus"></i></button>
+                          <button type="button" (click)="onAddUpcomingKeyActivityItem(upcomingKeyActivity)" type="button"
+                            class="btn btn-outline-success text-dark py-0 px-1"><i class="fas fa-plus"></i></button>
                         </div>
                       </div> <!-- end of flex container for upcoming key name -->
-
                       <div class="p-0 m-0" formArrayName="items">
                         <div class="container-1" *ngFor="let item of upcomingKeyActivity.get('items').controls; let indexOfUpcomingKeyActivityItem=index"
                           [formGroupName]="indexOfUpcomingKeyActivityItem">
@@ -140,11 +137,12 @@
                             <p class="m-0 text-right mr-2">{{getBulletLetter(indexOfUpcomingKeyActivityItem)}}) </p>
                           </div>
                           <div class="item-box-2">
-                            <textarea type="text" class="form-control" placeholder="Upcoming Key Activity Item" formControlName="name" rows="1"></textarea>
+                            <textarea type="text" class="form-control" placeholder="Upcoming Key Activity Item"
+                              formControlName="name" rows="1"></textarea>
                           </div>
                           <div class="item-box-3">
-                            <button type="button" (click)="onDeleteUpcomingKeyActivityItem(upcomingKeyActivity, indexOfUpcomingKeyActivityItem)" type="button" class="btn btn-outline-danger"><i
-                                class="far fa-trash-alt"></i></button>
+                            <button type="button" (click)="onDeleteUpcomingKeyActivityItem(upcomingKeyActivity, indexOfUpcomingKeyActivityItem)"
+                              type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
                           </div>
                           <div class="item-box-4">
                           </div>
@@ -157,70 +155,71 @@
                 </div>
               </div>
             </div>
+
+            <!-- RESOURCE ASSIGNMENTS -->
             <div class="col-md-6 p-2">
               <div class="card border-info">
                 <div class="card-header">
-
                   <div class="d-flex justify-content-between row-hl">
                     <div class="item-hl">
                       <span>Resource Assignments</span>
                     </div>
                     <div class="item-hl">
-                      <!-- <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                        <i class="fas fa-plus"></i></button> -->
+                      <button type="button" id="newResourceAssignment" class="btn btn-outline-success text-dark py-0 px-1"
+                        (click)="onNewResourceAssignment()">
+                        <i class="fas fa-plus"></i></button>
                     </div>
                   </div>
-
                 </div>
                 <div class="card-body enableOverflow" id="resourceAssignments">
-                    <div class="card-text" formArrayName="resourceAssignments">
-                      <div class="pl-0" *ngFor="let resourceAssignment of projectForm.get('resourceAssignments').controls; let indexOfResourceAssignment=index"
-                        [formGroupName]="indexOfResourceAssignment"
-                        id="{{'resourceAssignment-' + (indexOfResourceAssignment + 1)}}">
-
-                        <div class="container-1">
-                          <div class="box-1">
-                            <p class="m-0 text-right mr-2">{{indexOfResourceAssignment + 1}}. </p>
+                  <div class="card-text" formArrayName="resourceAssignments">
+                    <div class="pl-0" *ngFor="let resourceAssignment of projectForm.get('resourceAssignments').controls; let indexOfResourceAssignment=index"
+                      [formGroupName]="indexOfResourceAssignment" id="{{'resourceAssignment-' + (indexOfResourceAssignment + 1)}}">
+                      <div class="container-1">
+                        <div class="box-1">
+                          <p class="m-0 text-right mr-2">{{indexOfResourceAssignment + 1}}. </p>
+                        </div>
+                        <div class="box-2">
+                          <textarea type="text" class="form-control" formControlName="name" placeholder="Resource Assignment"
+                            rows="1"></textarea>
+                        </div>
+                        <div class="box-3">
+                          <button type="button" class="btn btn-outline-danger" (click)="onDeleteResourceAssignment(indexOfResourceAssignment)"><i
+                              class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="box-4">
+                          <button type="button" (click)="onAddResourceAssignmentItem(resourceAssignment)" type="button"
+                            class="btn btn-outline-success text-dark py-0 px-1"><i class="fas fa-plus"></i></button>
+                        </div>
+                      </div> <!-- end of flex container for upcoming key name -->
+                      <div class="p-0 m-0" formArrayName="items">
+                        <div class="container-1" *ngFor="let item of resourceAssignment.get('items').controls; let indexOfResourceAssignmentItem=index"
+                          [formGroupName]="indexOfResourceAssignmentItem">
+                          <div class="item-box-1 ml-auto">
+                            <p class="m-0 text-right mr-2">{{getBulletLetter(indexOfResourceAssignmentItem)}}) </p>
                           </div>
-                          <div class="box-2">
-                            <textarea type="text" class="form-control" formControlName="name" placeholder="Resource Assignment" rows="1"></textarea>
+                          <div class="item-box-2">
+                            <textarea type="text" class="form-control" placeholder="Resource Assignment Item"
+                              formControlName="name" rows="1"></textarea>
                           </div>
-                          <div class="box-3">
-                            <button type="button" class="btn btn-outline-danger" (click)="onDeleteResourceAssignment(indexOfResourceAssignment)"><i
-                                class="far fa-trash-alt"></i></button>
+                          <div class="item-box-3">
+                            <button type="button" (click)="onDeleteResourceAssignmentItem(resourceAssignment, indexOfResourceAssignmentItem)"
+                              type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
                           </div>
-                          <div class="box-4">
-                            <button type="button" (click)="onAddResourceAssignmentItem(resourceAssignment)" type="button" class="btn btn-outline-success text-dark py-0 px-1"><i
-                                class="fas fa-plus"></i></button>
+                          <div class="item-box-4">
                           </div>
-                        </div> <!-- end of flex container for upcoming key name -->
-
-                        <div class="p-0 m-0" formArrayName="items">
-                          <div class="container-1" *ngFor="let item of resourceAssignment.get('items').controls; let indexOfResourceAssignmentItem=index"
-                            [formGroupName]="indexOfResourceAssignmentItem">
-                            <div class="item-box-1 ml-auto">
-                              <p class="m-0 text-right mr-2">{{getBulletLetter(indexOfResourceAssignmentItem)}}) </p>
-                            </div>
-                            <div class="item-box-2">
-                              <textarea type="text" class="form-control" placeholder="Resource Assignment Item" formControlName="name" rows="1"></textarea>
-                            </div>
-                            <div class="item-box-3">
-                              <button type="button" (click)="onDeleteResourceAssignmentItem(resourceAssignment, indexOfResourceAssignmentItem)" type="button" class="btn btn-outline-danger"><i
-                                  class="far fa-trash-alt"></i></button>
-                            </div>
-                            <div class="item-box-4">
-                            </div>
-                          </div>
-                        </div> <!-- end of formArrayName="items" -->
-                      </div>
-                      <!--end of [formGroupName]="i" and loop-->
+                        </div>
+                      </div> <!-- end of formArrayName="items" -->
                     </div>
-                    <!--end of formArrayName="keyMilestones" end of card-text-->
+                    <!--end of [formGroupName]="i" and loop-->
                   </div>
+                  <!--end of formArrayName="keyMilestones" end of card-text-->
+                </div>
               </div>
             </div>
           </div>
 
+          <!-- KEY RISKS -->
           <div class="row">
             <div class="col-md-6 p-2">
               <div class="card border-info">
@@ -230,18 +229,59 @@
                       <span>Key Risks and Issues</span>
                     </div>
                     <div class="item-hl">
-                      <!-- <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                        <i class="fas fa-plus"></i></button> -->
+                      <button type="button" id="newKeyRiskButton" class="btn btn-outline-success text-dark py-0 px-1"
+                        (click)="onNewKeyRisk()">
+                        <i class="fas fa-plus"></i></button>
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
-                  <ul class="card-text">
-                    <li></li>
-                  </ul>
+                <div class="card-body enableOverflow" id="keyRisks">
+                  <div class="card-text" formArrayName="keyRisks">
+                    <div class="pl-0" *ngFor="let keyRisk of projectForm.get('keyRisks').controls; let indexOfKeyRisk=index"
+                      [formGroupName]="indexOfKeyRisk" id="{{'keyRisk-' + (indexOfKeyRisk + 1)}}">
+                      <div class="container-1">
+                        <div class="box-1">
+                          <p class="m-0 text-right mr-2">{{indexOfKeyRisk + 1}}. </p>
+                        </div>
+                        <div class="box-2">
+                          <textarea type="text" class="form-control" formControlName="name" placeholder="Key Risk" rows="1"></textarea>
+                        </div>
+                        <div class="box-3">
+                          <button type="button" class="btn btn-outline-danger" (click)="onDeleteKeyRisk(indexOfKeyRisk)"><i
+                              class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="box-4">
+                          <button type="button" (click)="onAddKeyRiskItem(keyRisk)" type="button" class="btn btn-outline-success text-dark py-0 px-1"><i
+                              class="fas fa-plus"></i></button>
+                        </div>
+                      </div> <!-- end of flex container for Key Risk name -->
+                      <div class="p-0 m-0" formArrayName="items">
+                        <div class="container-1" *ngFor="let item of keyRisk.get('items').controls; let indexOfKeyRiskItem=index"
+                          [formGroupName]="indexOfKeyRiskItem">
+                          <div class="item-box-1 ml-auto">
+                            <p class="m-0 text-right mr-2">{{getBulletLetter(indexOfKeyRiskItem)}}) </p>
+                          </div>
+                          <div class="item-box-2">
+                            <textarea type="text" class="form-control" placeholder="Key Risk Item" formControlName="name"
+                              rows="1"></textarea>
+                          </div>
+                          <div class="item-box-3">
+                            <button type="button" (click)="onDeleteKeyRiskItem(keyRisk, indexOfKeyRiskItem)" type="button"
+                              class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                          </div>
+                          <div class="item-box-4">
+                          </div>
+                        </div>
+                      </div> <!-- end of formArrayName="items" -->
+                    </div>
+                    <!--end of [formGroupName]="i" and loop-->
+                  </div>
+                  <!--end of formArrayName="keyMilestones" end of card-text-->
                 </div>
               </div>
             </div>
+
+            <!-- REQUIRED DECISIONS -->
             <div class="col-md-6 p-2">
               <div class="card border-info">
                 <div class="card-header">
@@ -250,15 +290,55 @@
                       <span>Required Decisions & Open Items</span>
                     </div>
                     <div class="item-hl">
-                      <!-- <button id="newKeyMilestoneButton" class="btn btn-outline-success text-dark py-0 px-1" (click)="onNewKeyMilestone()">
-                        <i class="fas fa-plus"></i></button> -->
+                      <button type="button" id="newRequiredDecisionButton" class="btn btn-outline-success text-dark py-0 px-1"
+                        (click)="onNewRequiredDecision()">
+                        <i class="fas fa-plus"></i></button>
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
-                  <ul class="card-text">
-                    <li></li>
-                  </ul>
+                <div class="card-body enableOverflow" id="requiredDecisions">
+                  <div class="card-text" formArrayName="requiredDecisions">
+                    <div class="pl-0" *ngFor="let requiredDecision of projectForm.get('requiredDecisions').controls; let indexOfRequiredDecision=index"
+                      [formGroupName]="indexOfRequiredDecision" id="{{'requiredDecision-' + (indexOfRequiredDecision + 1)}}">
+                      <div class="container-1">
+                        <div class="box-1">
+                          <p class="m-0 text-right mr-2">{{indexOfRequiredDecision + 1}}. </p>
+                        </div>
+                        <div class="box-2">
+                          <textarea type="text" class="form-control" formControlName="name" placeholder="Required Decision"
+                            rows="1"></textarea>
+                        </div>
+                        <div class="box-3">
+                          <button type="button" class="btn btn-outline-danger" (click)="onDeleteRequiredDecision(indexOfRequiredDecision)"><i
+                              class="far fa-trash-alt"></i></button>
+                        </div>
+                        <div class="box-4">
+                          <button type="button" (click)="onAddRequiredDecisionItem(requiredDecision)" type="button"
+                            class="btn btn-outline-success text-dark py-0 px-1"><i class="fas fa-plus"></i></button>
+                        </div>
+                      </div> <!-- end of flex container for Key Risk name -->
+                      <div class="p-0 m-0" formArrayName="items">
+                        <div class="container-1" *ngFor="let item of requiredDecision.get('items').controls; let indexOfRequiredDecisionItem=index"
+                          [formGroupName]="indexOfRequiredDecisionItem">
+                          <div class="item-box-1 ml-auto">
+                            <p class="m-0 text-right mr-2">{{getBulletLetter(indexOfRequiredDecisionItem)}}) </p>
+                          </div>
+                          <div class="item-box-2">
+                            <textarea type="text" class="form-control" placeholder="Required Decision Item"
+                              formControlName="name" rows="1"></textarea>
+                          </div>
+                          <div class="item-box-3">
+                            <button type="button" (click)="onDeleteRequiredDecisionItem(requiredDecision, indexOfRequiredDecisionItem)"
+                              type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                          </div>
+                          <div class="item-box-4">
+                          </div>
+                        </div>
+                      </div> <!-- end of formArrayName="items" -->
+                    </div>
+                    <!--end of [formGroupName]="i" and loop-->
+                  </div>
+                  <!--end of formArrayName="keyMilestones" end of card-text-->
                 </div>
               </div>
             </div>
@@ -272,10 +352,11 @@
             <div class="card-header">
               Summary
             </div>
-            <div class="card-body height-100">
-              <p class="card-text">
-                <textarea type="text" id="description" class="form-control" formControlName="summary" placeholder="Summary" rows="6"></textarea>
-              </p>
+            <div class="card-body height-100 p-1">
+              <!-- <textarea type="text" id="description" class="form-control" formControlName="summary" placeholder="Summary"
+                  rows="6"></textarea> -->
+                <textarea [froalaEditor]="options" formControlName="summary" (froalaModelChange)="onChange($event)" [(froalaModel)]="model" id="description" placeholder="Summary"
+                  #summaryEditor></textarea>
             </div>
           </div>
         </div>

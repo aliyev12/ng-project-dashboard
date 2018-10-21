@@ -33,10 +33,10 @@
           <div class="card-body">
             <div class="p-0 ml-4 splitInColumns">
               <div class="p-2 p-2 innerDivs" *ngFor="let keyMilestone of (projectState | async).projects[id].keyMilestones; let i=index">
-                  <span class="mr-2">{{i+1}}.</span> <u>{{keyMilestone.name}}</u>
-                  <div class="p-0 ml-4 font-italic" *ngFor="let keyMilestoneItem of keyMilestone.items; let j=index">
-                    <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{keyMilestoneItem.name}}
-                  </div>
+                <span class="mr-2">{{i+1}}.</span> <u>{{keyMilestone.name}}</u>
+                <div class="p-0 ml-4 font-italic" *ngFor="let keyMilestoneItem of keyMilestone.items; let j=index">
+                  <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{keyMilestoneItem.name}}
+                </div>
               </div>
             </div>
           </div>
@@ -59,14 +59,14 @@
 
           </div>
           <div class="card-body">
-              <div class="p-0 ml-4">
-                  <div class="p-2 p-2" *ngFor="let upcomingKeyActivity of (projectState | async).projects[id].upcomingKeyActivities; let i=index">
-                      <span class="mr-2">{{i+1}}.</span> <u>{{upcomingKeyActivity.name}}</u>
-                      <div class="p-0 ml-4 font-italic" *ngFor="let upcomingKeyActivityItem of upcomingKeyActivity.items; let j=index">
-                        <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{upcomingKeyActivityItem.name}}
-                      </div>
-                  </div>
+            <div class="p-0 ml-4">
+              <div class="p-2 p-2" *ngFor="let upcomingKeyActivity of (projectState | async).projects[id].upcomingKeyActivities; let i=index">
+                <span class="mr-2">{{i+1}}.</span> <u>{{upcomingKeyActivity.name}}</u>
+                <div class="p-0 ml-4 font-italic" *ngFor="let upcomingKeyActivityItem of upcomingKeyActivity.items; let j=index">
+                  <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{upcomingKeyActivityItem.name}}
                 </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -84,10 +84,14 @@
 
           </div>
           <div class="card-body">
-            <ul class="card-text">
-              <li *ngFor="let resourceAssignment of (projectState | async).projects[id].resourceAssignments; let i=index">{{
-                resourceAssignment.name }}</li>
-            </ul>
+            <div class="p-0 ml-4">
+              <div class="p-2 p-2" *ngFor="let resourceAssignment of (projectState | async).projects[id].resourceAssignments; let i=index">
+                <span class="mr-2">{{i+1}}.</span> <u>{{resourceAssignment.name}}</u>
+                <div class="p-0 ml-4 font-italic" *ngFor="let resourceAssignmentItem of resourceAssignment.items; let j=index">
+                  <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{resourceAssignmentItem.name}}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -106,9 +110,14 @@
             </div>
           </div>
           <div class="card-body">
-            <ul class="card-text">
-              <li *ngFor="let keyRisk of (projectState | async).projects[id].keyRisks; let i=index">{{ keyRisk.name }}</li>
-            </ul>
+            <div class="p-0 ml-4">
+              <div class="p-2 p-2" *ngFor="let keyRisk of (projectState | async).projects[id].keyRisks; let i=index">
+                <span class="mr-2">{{i+1}}.</span> <u>{{keyRisk.name}}</u>
+                <div class="p-0 ml-4 font-italic" *ngFor="let keyRiskItem of keyRisk.items; let j=index">
+                  <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{keyRiskItem.name}}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -124,10 +133,14 @@
             </div>
           </div>
           <div class="card-body">
-            <ul class="card-text">
-              <li *ngFor="let requiredDecision of (projectState | async).projects[id].requiredDecisions; let i=index">{{
-                requiredDecision.name }}</li>
-            </ul>
+            <div class="p-0 ml-4">
+              <div class="p-2 p-2" *ngFor="let requiredDecision of (projectState | async).projects[id].requiredDecisions; let i=index">
+                <span class="mr-2">{{i+1}}.</span> <u>{{requiredDecision.name}}</u>
+                <div class="p-0 ml-4 font-italic" *ngFor="let requiredDecisionItem of requiredDecision.items; let j=index">
+                  <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{requiredDecisionItem.name}}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -141,9 +154,9 @@
         Summary
       </div>
       <div class="card-body height-100">
-        <p class="card-text">
+        <div [froalaView]="editorContent">
           {{ (projectState | async).projects[id].summary }}
-        </p>
+        </div>
       </div>
     </div>
   </div>

@@ -16,11 +16,9 @@ import * as ProjectActions from '../store/project.actions';
 export class ProjectDetailComponent implements OnInit {
   showDropdown = false;
   isAuthenticated: boolean;
-  kms = [];
-
-  // @Input()
   projectState: Observable<fromProject.State>;
   id: number;
+  editorContent;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,43 +27,20 @@ export class ProjectDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(`ENTERING PROJECT-DETAIL TS...`);
-
     this.store.select('auth').subscribe((authState: fromAuth.State) => {
       this.isAuthenticated = authState.authenticated;
     });
 
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      console.log(this.id);
       this.projectState = this.store.select('projects');
-      console.log('DETAILS knows id, it is right below');
-      console.log(this.id);
-      console.log('--- id above ---');
       this.projectState.subscribe(
         data => {
-          const something = data.projects[this.id].keyMilestones;
-          console.log('something below');
-          console.log(something);
-          console.log('something above');
-
+          this.editorContent = data.projects[this.id].summary;
         }
       );
     });
   }
-
-  // onAddToShoppingList() {
-  //   this.store
-  //     .select('projects')
-  //     .pipe(take(1))
-  //     .subscribe((projectState: fromProject.State) => {
-  //       this.store.dispatch(
-  //         new ShoppingListActions.AddIngredients(
-  //           projectState.projects[this.id].ingredients
-  //         )
-  //       );
-  //     });
-  // }
 
   onEditProject() {
     this.router.navigate(['edit'], {relativeTo: this.route});
