@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import * as fromProject from '../../projects/store/project.reducers';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
@@ -7,7 +10,22 @@ import {Component, OnInit} from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   year = new Date().getFullYear();
-  constructor() {}
+  lastModifierDate: Date;
+  projectState: Observable<fromProject.State>;
 
-  ngOnInit() {}
+  constructor(private store: Store<fromProject.FeatureState>) {}
+
+  ngOnInit() {
+    this.projectState = this.store.select('projects');
+    this.projectState.subscribe(data => {
+        this.lastModifierDate = data.lastModified;
+      }
+      );
+
+
+
+
+
+  }
+
 }

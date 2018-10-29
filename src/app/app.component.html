@@ -1,18 +1,61 @@
-<!-- <div [ngStyle]="{'min-height': clientHeight + 'px', 'margin-bottom': '-50px'}"> -->
-<div id="container">
-  <app-header (featureSelected)="onNavigate($event)"></app-header>
+<app-sidebar></app-sidebar>
+<div class="container">
+  <flash-messages></flash-messages>
+  <router-outlet></router-outlet>
+</div>
 
+
+
+
+
+
+<!-- OLD STUFF BELOW -->
+<!-- OLD STUFF BELOW -->
+<!-- OLD STUFF BELOW -->
+<!-- OLD STUFF BELOW -->
+<!-- OLD STUFF BELOW -->
+<!-- OLD STUFF BELOW -->
+
+
+
+
+<!-- <div [ngStyle]="{'min-height': clientHeight + 'px', 'margin-bottom': '-50px'}"> -->
+
+
+
+<!-- <div id="container">
   <div id="main">
     <div class="row">
-      <div class="col-md-12 px-0">
+      <div class="col-md-12">
         <router-outlet></router-outlet>
       </div>
     </div>
   </div>
-
-  <!-- <div style="height: 100px"></div>
 </div> -->
 
-  <div style="height: 100px"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div id="footerAndTopMargin">
+  <div class="aboveFooterSpace"></div>
   <app-footer></app-footer>
-</div>
+</div> -->
+
+<!-- </div> -->
+
+
+<!-- <ul>
+    <li class="text" *ngFor="let item of items | async">
+      {{item.name}}
+    </li>
+  </ul> -->

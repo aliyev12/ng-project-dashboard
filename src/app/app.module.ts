@@ -1,47 +1,50 @@
 import {BrowserModule} from '@angular/platform-browser';
+import { ProjectService } from './services/project.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import {NgModule} from '@angular/core';
+import { LoginComponent } from './components/login/login.component';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {SharedModule} from './shared/shared.module';
-import {ShoppingListModule} from './shopping-list/shopping-list.module';
-import {CoreModule} from './core/core.module';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from './store/app.reducers';
-import {EffectsModule} from '@ngrx/effects';
-import {AuthEffects} from './auth/store/auth.effects';
-import {AuthModule} from './auth/auth.module';
-import {StoreRouterConnectingModule} from '@ngrx/router-store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FooterComponent} from './core/footer/footer.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ProjectStartComponent } from './components/project-start/project-start.component';
+import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ProjectEditComponent } from './components/project-edit/project-edit.component';
+// import { ProjectsListComponent } from './components/projects-list/projects-list.component';
 
 
 @NgModule({
   declarations: [
+    LoginComponent,
     AppComponent,
-    FooterComponent
+    HomepageComponent,
+    SidebarComponent,
+    ProjectStartComponent,
+    ProjectDetailComponent,
+    ProjectEditComponent,
+    // ProjectsListComponent,
+    NotFoundComponent
     ],
   imports: [
     BrowserModule,
     FormsModule,
+    FlashMessagesModule.forRoot(),
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     HttpClientModule,
+    HttpModule,
     AppRoutingModule,
-    SharedModule,
-    ShoppingListModule,
-    AuthModule,
-    CoreModule,
-    StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AuthEffects]),
-    StoreRouterConnectingModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [AppComponent],
+  providers: [ProjectService, AuthService, AuthGuard]
 })
 export class AppModule {}

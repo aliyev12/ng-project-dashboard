@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <!-- Sidebar Holder -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <a routerLink="/">
+        <h3>Project Dashboard</h3>
+      </a>
+    </div>
+
+    <ul class="list-unstyled components">
+      <li *ngIf="isAuthenticated">
+        <a class="dropdown-item" (click)="onLogout()">
+          <i class="fas fa-user-times"></i> Logout
+        </a>
+      </li>
+
+      <li  *ngIf="isAuthenticated">
+        <a *ngFor="let projectEl of projects; let i = index" [routerLink]="i">{{projectEl.name}}</a>
+      </li>
+      <li id="newProjectLi">
+        <a id="newProjectButton" (click)="onNewProject()" *ngIf="isAuthenticated">
+          <i class="fas fa-plus pr-2"></i> New
+          Project</a>
+      </li>
+    </ul>
+
+  </nav>
+
+  <!-- Page Content Holder -->
+  <div id="content">
+
+    <button type="button" id="sidebarCollapse" class="navbar-btn" (click)="onSidebarCollapse()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+      <router-outlet></router-outlet>
+  </div>
+
+</div>

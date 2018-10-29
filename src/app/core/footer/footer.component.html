@@ -2,11 +2,27 @@
 <footer class="bg-dark text-white">
   <!-- <div class="container"> -->
   <div id="footer" class="row align-items-center">
-    <div class="col">
-      <p class="lead text-center mb-0">
+    <div class="col footerHeight">
+      <!-- <p class="lead text-center mb-0">
         Copyright &copy; {{year}}
         Recipe Book
-      </p>
+      </p> -->
+
+      <!-- <div class="d-flex justify-content-center align-items-center">
+        <div class="text-white align-self-center marginLeft">{{ lastModifierDate | date: 'medium' }}</div>
+        <div class="dhsLogo"><img src="../../../assets/img/dhs-seal-206x60.png" alt="DHS Seal"></div>
+      </div> -->
+      <div class="row align-items-center justify-content-center">
+        <div class="col-4"><p class="text-white text-center p-0 m-0  px-4">{{ lastModifierDate | date: 'medium' }}</p></div>
+        <div class="col-4">
+          <div class="row justify-content-center">
+            <img id="dhsSealFooter" src="../../../assets/img/dhs-seal-206x60.png" alt="DHS Seal">
+          </div>
+          </div>
+        <div class="col-4"></div>
+      </div>
+
+
     </div>
   </div>
   <!-- </div> -->

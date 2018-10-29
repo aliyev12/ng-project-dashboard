@@ -1,0 +1,191 @@
+<!-- <div class="projectListFlexContainer">
+  <div class="projectListFlexItems">
+    <div class="row mb-3">
+      <div class="col-sm-12">
+        <button id="newProjectButton" class="btn btn-link btn-block text-dark" (click)="onNewProject()" *ngIf="(isAuthenticated | async).authenticated">
+          <i class="fas fa-plus"></i> New
+          Project</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="projectListFlexItems">
+  <div class="row">
+    <div class="col-sm-12">
+      <ul class="list-group projectsListLarge">
+        <app-project-item *ngFor="let projectEl of (projectState | async).projects; let i = index" [project]="projectEl"
+          [index]="i"></app-project-item>
+      </ul>
+      <li class="nav-item dropdown projectsListSmall">
+        <a href="#" class="nav-link dropdown-toggle text-dark text-nowrap" data-toggle="dropdown" role="button">
+          Projects
+        </a>
+        <div class="dropdown-menu">
+          <app-project-item *ngFor="let projectEl of (projectState | async).projects; let i = index" [project]="projectEl"
+            [index]="i"></app-project-item>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>
+</div> -->
+
+
+
+
+<!--  -->
+<!-- first virsion below: -->
+<!--  -->
+
+
+
+
+<!-- <div class="flex-list-wrapper">
+
+
+
+<div id="wrapper">
+    <div *ngIf="!isClosed" class="overlay"></div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top p-0" id="sidebar-wrapper" role="navigation">
+      <ul class="nav sidebar-nav">
+        <li class="sidebar-brand">
+          <a routerLink="/" >
+            Project Dashboard
+          </a>
+        </li>
+        <li class="dropdown">
+            <a routerLinkActive="active" class="dropdown-toggle" data-toggle="dropdown">Management</a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li><a href="#">Separated link</a></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+        <li  routerLinkActive="active" >
+          <a routerLink="/projects">Projects</a>
+        </li>
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+            <app-project-item *ngFor="let projectEl of (projectState | async).projects; let i = index" [project]="projectEl"
+            [index]="i"></app-project-item>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="page-content-wrapper">
+      <button type="button" class="hamburger is-open" data-toggle="offcanvas" (click)="hamburger_cross()">
+        <span class="hamb-top"></span>
+        <span class="hamb-middle"></span>
+        <span class="hamb-bottom"></span>
+      </button>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+<div class="flex-list-item-2 p-5">
+    <router-outlet></router-outlet>
+</div>
+
+
+
+
+
+
+</div> -->
+
+
+
+
+
+<!-- second version below -->
+
+
+
+<div class="wrapper">
+  <!-- Sidebar Holder -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <a routerLink="/">
+        <h3>Project Dashboard</h3>
+      </a>
+    </div>
+
+    <ul class="list-unstyled components">
+      <li class="active">
+        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Manage</a>
+        <ul class="collapse list-unstyled" id="homeSubmenu">
+          <li *ngIf="!(authState | async).authenticated" routerLinkActive="active">
+            <a routerLink="/signup">
+              Register
+            </a>
+          </li>
+          <li *ngIf="!(authState | async).authenticated" routerLinkActive="active">
+            <a routerLink="/signin">
+              Login
+            </a>
+          </li>
+          <li *ngIf="(authState | async).authenticated">
+            <a href="#" (click)="onSaveData()">
+              <i class="fas fa-cloud-upload-alt mr-2"></i> Save to Cloud
+            </a>
+          </li>
+          <li *ngIf="(authState | async).authenticated">
+            <a href="#" (click)="onFetchData()">
+              <i class="fas fa-cloud-download-alt mr-2"></i> Upload from Cloud
+            </a>
+          </li>
+
+          <li *ngIf="(authState | async).authenticated">
+            <a class="dropdown-item" (click)="onLogout()">
+              <i class="fas fa-user-times"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">About</a>
+      </li>
+
+      <li>
+        <!-- <app-project-item *ngFor="let projectEl of (projectState | async).projects; let i = index" [project]="projectEl"
+          [index]="i"></app-project-item> -->
+        <a *ngFor="let projectEl of (projectState | async).projects; let i = index" [routerLink]="i">{{projectEl.name}}</a>
+      </li>
+      <li id="newProjectLi">
+        <a id="newProjectButton" (click)="onNewProject()" *ngIf="(isAuthenticated | async).authenticated">
+          <i class="fas fa-plus pr-2"></i> New
+          Project</a>
+      </li>
+    </ul>
+
+  </nav>
+
+  <!-- Page Content Holder -->
+  <div id="content">
+
+    <button type="button" id="sidebarCollapse" class="navbar-btn" (click)="onSidebarCollapse()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+      <router-outlet></router-outlet>
+  </div>
+
+</div>

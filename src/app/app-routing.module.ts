@@ -1,21 +1,41 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
-import {ShoppingListComponent} from './shopping-list/shopping-list.component';
-import {HomeComponent} from './core/home/home.component';
-import {ProjectsComponent} from './projects/projects.component';
+import { ProjectEditComponent } from './components/project-edit/project-edit.component';
+import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
+import { AuthGuard } from './guards/auth.guard';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { LoginComponent } from './components/login/login.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
-const appRoutes: Routes = [
-  // { path: '', redirectTo: '/recipes', pathMatch: 'full' },
-  {path: '', component: HomeComponent},
-  {path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule'},
-  {path: 'projects', loadChildren: './projects/projects.module#ProjectsModule'},
-  {path: 'shopping-list', component: ShoppingListComponent}
+// const appRoutes: Routes = [
+//   { path: '', redirectTo: '/projects', pathMatch: 'full' },
+//   // {path: '', component: HomeComponent},
+//   // {path: 'recipes', loadChildren: './recipes/recipes.module#RecipesModule'},
+//   // {path: 'projects', loadChildren: './projects/projects.module#ProjectsModule'},
+//   // {path: 'projects', component: ProjectsComponent},
+//   // {path: 'shopping-list', component: ShoppingListComponent}
+//   { path: 'projects', component: ProjectsComponent, children: [
+//     { path: '', component: ProjectStartComponent, canActivate: [AuthGuard] },
+//     { path: 'new', component: ProjectEditComponent, canActivate: [AuthGuard] },
+//     { path: ':id', component: ProjectDetailComponent, canActivate: [AuthGuard] },
+//     { path: ':id/edit', component: ProjectEditComponent, canActivate: [AuthGuard] }
+//   ], canActivate: [AuthGuard] },
+// ];
+
+const routes: Routes = [
+  {path: '', component: HomepageComponent, canActivate: [AuthGuard]},
+  {path: 'login', component: LoginComponent},
+  {path: 'projects/new', component: ProjectEditComponent, canActivate: [AuthGuard] },
+  {path: 'projects/:id', component: ProjectDetailComponent, canActivate: [AuthGuard] },
+  {path: 'projects/:id/edit', component: ProjectEditComponent, canActivate: [AuthGuard]},
+  {path: '**', component: NotFoundComponent},
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules}),
-  ],
+    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+    ],
   exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {}

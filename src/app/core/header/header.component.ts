@@ -1,4 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromRecipe from '../../recipes/store/recipe.reducers';
@@ -11,7 +14,7 @@ import * as AuthActions from '../../auth/store/auth.actions';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   authState: Observable<fromAuth.State>;
   navbarOpen = false;
   app_user = {
@@ -19,7 +22,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     username: 'john.doe',
   };
 
-  constructor(private store: Store<fromRecipe.FeatureState>) {}
+  constructor(
+    private store: Store<fromRecipe.FeatureState>
+  ) {}
 
   ngOnInit() {
     this.authState = this.store.select('auth');
@@ -30,7 +35,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveData() {
-    console.log('onSaveData within header component has been executed...');
     this.store.dispatch(new RecipeActions.StoreRecipes());
   }
 
@@ -42,5 +46,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.store.dispatch(new AuthActions.Logout());
   }
 
-  ngOnDestroy() {}
 }

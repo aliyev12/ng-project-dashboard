@@ -7,3 +7,62 @@ body {
   max-width: 100%;
   overflow-x: hidden !important;
 }
+
+
+
+@media (max-width: 992px) {
+
+  .projectsListSmall,
+  #projectsListSmall {
+    display: block !important;
+  }
+
+  .projectsListLarge,
+  #projectsListLarge {
+    display: none !important;
+  }
+
+  #summaryCard {
+    margin-left: -5px !important;
+    margin-right: -5px !important;
+  }
+
+  #summaryCol {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* .row-ml-10 {
+    margin-left: -15px !important;
+  } */
+
+}
+
+@media (min-width: 1201px) {
+
+  .projectsListSmall,
+  #projectsListSmall {
+    display: none !important;
+  }
+
+  .projectsListLarge,
+  #projectsListLarge {
+    display: block !important;
+  }
+
+}
+
+@media (max-width: 1160px) {
+  #legend {
+    display: none !important;
+  }
+}
+
+#dhsSealFooter {
+  display: none !important;
+}
+
+
+
