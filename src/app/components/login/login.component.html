@@ -1,9 +1,9 @@
-<div class="row">
+<div class="row"  *ngIf="!isLoading">
   <div class="col-md-6 mx-auto">
     <div class="card">
       <div class="card-body">
         <h1 class="text-center pb-4 pt-3">
-          <span class="text-primary"><i class="fa fa-lock"></i> Client Panel</span> Login
+          <span class="text-dark"><i class="fa fa-lock"></i> Project Dashboard Login</span>
         </h1>
         <form (submit)="onSubmit()">
           <div class="form-group">
@@ -19,4 +19,19 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="sk-fading-circle" *ngIf="isLoading">
+  <div class="sk-circle1 sk-circle"></div>
+  <div class="sk-circle2 sk-circle"></div>
+  <div class="sk-circle3 sk-circle"></div>
+  <div class="sk-circle4 sk-circle"></div>
+  <div class="sk-circle5 sk-circle"></div>
+  <div class="sk-circle6 sk-circle"></div>
+  <div class="sk-circle7 sk-circle"></div>
+  <div class="sk-circle8 sk-circle"></div>
+  <div class="sk-circle9 sk-circle"></div>
+  <div class="sk-circle10 sk-circle"></div>
+  <div class="sk-circle11 sk-circle"></div>
+  <div class="sk-circle12 sk-circle"></div>
 </div>

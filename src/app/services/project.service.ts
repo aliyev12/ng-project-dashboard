@@ -45,7 +45,6 @@ export class ProjectService {
     this.projectsCollection.add(project)
       .then((data) => {
         this.router.navigate([`projects/${data.id}`], {relativeTo: this.route});
-        console.log(`The ID of the newly created project is: ${data.id}`);
       });
   }
 
@@ -91,9 +90,15 @@ export class ProjectService {
     return this.project;
   }
 
-  updateProject(project: Project) {
-    this.projectDoc = this.afs.doc(`projects/${project.id}`);
-    this.projectDoc.update(project);
+  updateProject(id: string, project: Project) {
+    this.projectDoc = this.afs.doc(`projects/${id}`);
+    this.projectDoc.update(project)
+      .then(() => {
+        this.router.navigate([`projects/${id}`]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   deleteProject(project: Project) {

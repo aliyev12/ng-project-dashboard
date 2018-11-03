@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
 import { Project } from '../../models/project.model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // import {Store} from '@ngrx/store';
 // import * as fromAuth from '../../auth/store/auth.reducers';
 // import * as AuthActions from '../../auth/store/auth.actions';
@@ -21,9 +22,6 @@ import { Project } from '../../models/project.model';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
-  // authState: Observable<fromAuth.State>;
-  // projectState: Observable<fromProject.State>;
-  // isAuthenticated: Observable<fromAuth.State>;
   innerWidth: any;
   isAuthenticated: boolean;
   loggedInUser: string;
@@ -39,7 +37,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     private router: Router,
     private authService: AuthService,
     private projectService: ProjectService,
-    // public store: Store<fromProject.FeatureState>,
     private elRef: ElementRef
       ) {}
 
@@ -48,14 +45,15 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       if (auth) {
         this.isAuthenticated = true;
         this.loggedInUser = auth.email;
+        this.projectService.getProjects().subscribe(projects => {
+          this.projects = projects;
+        });
       } else {
         this.isAuthenticated = false;
       }
     });
 
-    this.projectService.getProjects().subscribe(projects => {
-      this.projects = projects;
-    });
+
 
     // this.projectState = this.store.select('projects');
     // this.authState = this.store.select('auth');
@@ -110,6 +108,14 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   onLogout() {
     // this.store.dispatch(new AuthActions.Logout());
+    this.isAuthenticated = false;
+    this.authService.logout();
+  }
+
+  onNavigateToProject(index: number) {
+    this.projectService.getProjects().subscribe(projects => {
+        this.router.navigate([`projects/${projects[index].id}`]);
+    });
   }
 
 

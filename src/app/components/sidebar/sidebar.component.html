@@ -14,8 +14,9 @@
         </a>
       </li>
 
-      <li *ngFor="let project of projects">
-        <a routerLink="projects/{{ project.id }}">{{ project.name }}</a>
+      <li *ngFor="let project of projects; let i = index">
+        <!-- routerLink="projects/{{ project.id }}" -->
+        <a  (click)="onNavigateToProject(i)">{{ project.name }}</a>
       </li>
       <li id="newProjectLi">
         <a id="newProjectButton" (click)="onNewProject()">

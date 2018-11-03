@@ -23,14 +23,25 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 // ];
 
 const routes: Routes = [
-  {path: '', redirectTo: '/projects', pathMatch: 'full', canActivate: [AuthGuard]},
-  {path: 'projects', component: HomepageComponent, canActivate: [AuthGuard]},
+  // {path: '', redirectTo: '/projects', pathMatch: 'full', canActivate: [AuthGuard]},
+  {path: '', component: HomepageComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'projects/new', component: ProjectEditComponent, canActivate: [AuthGuard] },
   {path: 'projects/:id', component: ProjectDetailComponent, canActivate: [AuthGuard] },
   {path: 'projects/edit/:id', component: ProjectEditComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotFoundComponent},
 ];
+
+/*
+const recipesRoutes: Routes = [
+  { path: '', component: RecipesComponent, children: [
+    { path: '', component: RecipeStartComponent },
+    { path: 'new', component: RecipeEditComponent, canActivate: [AuthGuard] },
+    { path: ':id', component: RecipeDetailComponent },
+    { path: ':id/edit', component: RecipeEditComponent, canActivate: [AuthGuard] }
+  ] },
+];
+*/
 
 @NgModule({
   imports: [

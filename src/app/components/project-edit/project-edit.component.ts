@@ -17,7 +17,7 @@ import {
 import {forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ProjectService} from '../../services/project.service';
-import {FlashMessagesService} from 'angular2-flash-messages';
+// import {FlashMessagesService} from 'angular2-flash-messages';
 import {Subscription} from 'rxjs';
 import {Promise} from 'q';
 
@@ -57,14 +57,13 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
     private router: Router,
     private projectService: ProjectService,
     private _scrollToService: ScrollToService,
-    private flashMessage: FlashMessagesService,
+    // private flashMessage: FlashMessagesService,
     private elRef: ElementRef
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
-      // If there is an ID passed into url, then editMode is true, otherwise it is false
       this.editMode = params['id'] != null;
       if (this.editMode) {
       this.projectService.getProject(this.id).subscribe(project => {
@@ -87,11 +86,7 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
 
   onSubmit() {
     if (this.editMode) {
-      this.projectService.updateProject(this.projectForm.value);
-      this.flashMessage.show('Project updated', {
-        cssClass: 'alert-success',
-        timeout: 4000,
-      });
+      this.projectService.updateProject(this.id, this.projectForm.value);
     } else {
       this.projectService.newProject(this.projectForm.value);
     }

@@ -1,15 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Project} from '../../models/project.model';
-// import {Observable} from 'rxjs';
-// import * as fromProject from '../store/project.reducers';
 import {ActivatedRoute, Router, Params} from '@angular/router';
-// import {Store} from '@ngrx/store';
-// import * as fromAuth from '../../auth/store/auth.reducers';
-// import {take} from 'rxjs/operators';
 import {AuthService} from '../../services/auth.service';
 import {ProjectService} from '../../services/project.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
-// import * as ProjectActions from '../store/project.actions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-project-detail',
@@ -20,11 +15,12 @@ export class ProjectDetailComponent implements OnInit {
   showDropdown = false;
   isAuthenticated: boolean;
   loggedInUser: string;
-  // projectState: Observable<fromProject.State>;
   id: string;
   project: Project;
+  projectIsLoaded = false;
   projects: Project[];
   editorContent;
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,47 +31,35 @@ export class ProjectDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.store.select('auth').subscribe((authState: fromAuth.State) => {
-    //   this.isAuthenticated = authState.authenticated;
-    // });
-
     this.authService.getAuth().subscribe(auth => {
       if (auth) {
         this.isAuthenticated = true;
         this.loggedInUser = auth.email;
+        console.log('Is Authenticated!');
       } else {
         this.isAuthenticated = false;
       }
     });
-
-    // Get ID from URL
-    this.id = this.route.snapshot.params['id'];
-    // Get client
-    this.projectService.getProject(this.id).subscribe(project => {
-      if (project !== null) {
-        // Do something if project exists
-      }
-      this.project = project;
-      console.log('project');
-      console.log(this.project);
-
-
-
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.projectService.getProject(params['id']).subscribe(project => {
+        this.projectIsLoaded = true;
+        this.isLoading = false;
+        this.project = project;
+      });
+      this.projectService.getProjects().subscribe(projects => {
+        this.projects = projects;
+      });
     });
 
-    this.projectService.getProjects().subscribe(projects => {
-      this.projects = projects;
-    });
-
-    // this.route.params.subscribe((params: Params) => {
-    //   this.id = +params['id'];
-    //   this.projectState = this.store.select('projects');
-    //   this.projectState.subscribe(
-    //     data => {
-    //       this.editorContent = data.projects[this.id].summary;
-    //     }
-    //   );
-    // });
+    console.log(`this.id = ${this.id}`);
+    console.log(`this.project = `);
+    console.log(this.project);
+    setTimeout(() => {
+      console.log(`this.project 2 s later = `);
+    console.log(this.project);
+    }, 2000);
+    console.log();
   }
 
   onEditProject() {
@@ -91,9 +75,6 @@ export class ProjectDetailComponent implements OnInit {
       });
       this.router.navigate(['/projects']);
     }
-
-    // this.store.dispatch(new ProjectActions.DeleteProject(this.id));
-    // this.router.navigate(['/projects']);
   }
 
   getBulletLetter(j) {
