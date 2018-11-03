@@ -1,7 +1,7 @@
 import { RequiredDecisionItem } from './required-decision-item.model';
 
-export class RequiredDecision {
-  constructor(
-    public name: string,
-    public items: RequiredDecisionItem[]) {}
+export interface RequiredDecision {
+  id?: string;
+  name?: string;
+  items?: RequiredDecisionItem[];
 }

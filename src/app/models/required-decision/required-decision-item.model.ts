@@ -1,5 +1,5 @@
-export class RequiredDecisionItem {
-  constructor(
-    public name: string
-    ) {}
+
+export interface RequiredDecisionItem {
+  id?: string;
+  name?: string;
 }

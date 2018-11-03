@@ -6,9 +6,9 @@ import {
   HostListener,
 } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
-import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
+import { AuthService } from '../../services/auth.service';
+import { ProjectService } from '../../services/project.service';
+import { Project } from '../../models/project.model';
 // import {Store} from '@ngrx/store';
 // import * as fromAuth from '../../auth/store/auth.reducers';
 // import * as AuthActions from '../../auth/store/auth.actions';
@@ -29,7 +29,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   loggedInUser: string;
   projects: Project[];
   trigger;
-  overlay;
   wrapper;
   sidebarCollapse;
   isClosed = false;
@@ -81,12 +80,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   // }
 
   onNewProject() {
-    this.router.navigate(['new'], {relativeTo: this.route});
+    this.router.navigate(['projects/new'], {relativeTo: this.route});
   }
 
   ngAfterViewInit() {
     this.trigger = this.elRef.nativeElement.querySelector('.hamburger');
-    this.overlay = this.elRef.nativeElement.querySelector('.overlay');
     this.wrapper = this.elRef.nativeElement.querySelector('#wrapper');
     this.sidebar = this.elRef.nativeElement.querySelector('#sidebar');
     this.sidebarCollapse = this.elRef.nativeElement.querySelector('#sidebarCollapse');
@@ -108,12 +106,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   onSidebarCollapse() {
     this.sidebar.classList.toggle('active');
     this.sidebarCollapse.classList.toggle('active');
-    this.overlay.classList.toggle('active');
-  }
-
-  onDismissOrOverlay() {
-    this.sidebar.classList.remove('active');
-    // this.overlay.classList.remove('active');
   }
 
   onLogout() {

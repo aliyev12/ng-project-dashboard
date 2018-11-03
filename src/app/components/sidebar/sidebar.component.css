@@ -413,9 +413,9 @@ a, a:hover, a:focus {
 
 .wrapper {
     display: flex;
-    width: 100%;
-    align-items: stretch;
-    perspective: 1500px;
+    /* width: 100%; */
+    /* align-items: stretch;
+    perspective: 1500px; */
 }
 
 
@@ -516,8 +516,7 @@ a.article, a.article:hover {
     CONTENT STYLE
 ----------------------------------------------------- */
 #content {
-    width: 100%;
-    padding: 20px;
+    /* width: 100%; */
     min-height: 100vh;
     transition: all 0.3s;
 }
@@ -525,13 +524,14 @@ a.article, a.article:hover {
 #sidebarCollapse {
     width: 40px;
     height: 40px;
-    background: #f5f5f5;
+    padding: 0;
     cursor: pointer;
 }
 
 #sidebarCollapse span {
     width: 80%;
-    height: 2px;
+    height: 5px;
+    border-radius: 5px;
     margin: 0 auto;
     display: block;
     background: #555;
@@ -540,7 +540,7 @@ a.article, a.article:hover {
 }
 
 #sidebarCollapse span:first-of-type {
-    transform: rotate(45deg) translate(2px, 2px);
+    transform: rotate(45deg) translate(5px, 5px);
 }
 #sidebarCollapse span:nth-of-type(2) {
     opacity: 0;
@@ -589,7 +589,7 @@ a.article, a.article:hover {
         margin: 0 auto;
     }
     #sidebarCollapse.active span:first-of-type {
-        transform: rotate(45deg) translate(2px, 2px);
+        transform: rotate(45deg) translate(5px, 5px);
     }
     #sidebarCollapse.active span:nth-of-type(2) {
         opacity: 0;

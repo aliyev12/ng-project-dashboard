@@ -6,8 +6,8 @@ import {ActivatedRoute, Router, Params} from '@angular/router';
 // import {Store} from '@ngrx/store';
 // import * as fromAuth from '../../auth/store/auth.reducers';
 // import {take} from 'rxjs/operators';
-import {AuthService} from 'src/app/services/auth.service';
-import {ProjectService} from 'src/app/services/project.service';
+import {AuthService} from '../../services/auth.service';
+import {ProjectService} from '../../services/project.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 // import * as ProjectActions from '../store/project.actions';
 
@@ -23,6 +23,7 @@ export class ProjectDetailComponent implements OnInit {
   // projectState: Observable<fromProject.State>;
   id: string;
   project: Project;
+  projects: Project[];
   editorContent;
 
   constructor(
@@ -55,6 +56,15 @@ export class ProjectDetailComponent implements OnInit {
         // Do something if project exists
       }
       this.project = project;
+      console.log('project');
+      console.log(this.project);
+
+
+
+    });
+
+    this.projectService.getProjects().subscribe(projects => {
+      this.projects = projects;
     });
 
     // this.route.params.subscribe((params: Params) => {

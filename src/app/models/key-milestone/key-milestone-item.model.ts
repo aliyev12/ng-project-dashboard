@@ -2,7 +2,7 @@ export interface KeyMilestoneItem {
   id?: string;
   name?: string;
   status?: number;
-  date?: Date;
+  date?: string;
 }
 
 

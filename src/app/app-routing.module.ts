@@ -23,11 +23,12 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 // ];
 
 const routes: Routes = [
-  {path: '', component: HomepageComponent, canActivate: [AuthGuard]},
+  {path: '', redirectTo: '/projects', pathMatch: 'full', canActivate: [AuthGuard]},
+  {path: 'projects', component: HomepageComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'projects/new', component: ProjectEditComponent, canActivate: [AuthGuard] },
   {path: 'projects/:id', component: ProjectDetailComponent, canActivate: [AuthGuard] },
-  {path: 'projects/:id/edit', component: ProjectEditComponent, canActivate: [AuthGuard]},
+  {path: 'projects/edit/:id', component: ProjectEditComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotFoundComponent},
 ];
 

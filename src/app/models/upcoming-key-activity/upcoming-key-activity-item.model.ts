@@ -1,5 +1,4 @@
-export class UpcomingKeyActivityItem {
-  constructor(
-    public name: string
-    ) {}
+export interface UpcomingKeyActivityItem {
+  id?: string;
+  name?: string;
 }

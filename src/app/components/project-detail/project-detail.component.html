@@ -1,221 +1,272 @@
+<div *ngIf="project" class="d-flex flex-column project-main-container">
+  <div class="main-container-top">
+    <div class="d-flex split-main-container-in-2">
+      <div class="split-main-container-in-2-left-side">
+        <div class="d-flex flex-column left-side-container">
+          <div class="left-side-container-project-name">
 
-    <!-- <div class="col p-5 pl-4"> -->
-
-
-      <div class="row">
-
-        <div class="col-lg-9 p-0 pr-2">
-
-          <div class="row row-ml-10">
-            <div class="col pt-2 pr-2 pb-2 pl-0">
-              <div class="card border-info">
-                <div class="card-body py-2">
-
-                  <div class="d-flex justify-content-between  align-items-center row-hl">
-                    <div class="item-hl w-100">
-                      <div class="d-flex row-hl">
-                        <div class="item-hl align-items-center">
-                          <span class="card-title h3 text-center m-0 align-middle">{{ project.name }}</span>
-                          <!-- <span class="card-title h3 text-center m-0 align-middle">{{ (projectState |
-                            async).projects[id].name }}</span> -->
-                        </div>
+            <div class="card border-info">
+              <div class="card-body py-2">
+                <div class="d-flex justify-content-between  align-items-center row-hl">
+                  <div class="item-hl w-100">
+                    <div class="d-flex row-hl">
+                      <div class="item-hl align-items-center">
+                        <span class="card-title h3 text-center m-0 align-middle">{{ project.name }}</span>
                       </div>
                     </div>
-                    <div class="item-hl">
-                      <button type="button" title="Edit Project" class="btn btn-link text-dark py-0 px-1" (click)="onEditProject()"
-                        *ngIf="isAuthenticated">
-                        <i class="fas fa-edit"></i> Edit Project</button>
-                    </div>
                   </div>
-
+                  <div class="item-hl">
+                    <a routerLink="/projects/edit/{{id}}" type="button" title="Edit Project" class="btn btn-link text-dark py-0 px-1"
+                      *ngIf="isAuthenticated">
+                      <i class="fas fa-edit"></i> Edit Project</a>
+                  </div>
                 </div>
+
               </div>
             </div>
+
           </div>
+          <!-- end of left-side-container-project-name -->
 
-          <div class="row row-ml-10">
-            <div class="col pt-2 pr-2 pb-2 pl-0">
-              <div class="card border-info">
-                <div class="card-header">
-
-                  <div class="d-flex justify-content-between row-hl">
-                    <div class="item-hl">
-                      <span>Key Milestones</span>
-                    </div>
-                    <div class="item-hl">
-                    </div>
+          <div class="left-side-container-key-milestones">
+            <div class="card border-info">
+              <div class="card-header">
+                <div class="d-flex justify-content-between row-hl">
+                  <div class="item-hl">
+                    <span>Key Milestones</span>
                   </div>
-
+                  <div class="item-hl">
+                  </div>
                 </div>
-                <div class="card-body">
-                  <div class="p-0 ml-4 splitInColumns">
-                    <div class="p-2 p-2 innerDivs" *ngFor="let keyMilestone of project.keyMilestones; let i=index">
-                    <!-- <div class="p-2 p-2 innerDivs" *ngFor="let keyMilestone of (projectState | async).projects[id].keyMilestones; let i=index"> -->
-                      <span class="mr-2">{{i+1}}.</span> <u>{{keyMilestone.name}}</u>
-                      <div class="p-0 ml-4 font-italic" *ngFor="let keyMilestoneItem of keyMilestone.items; let j=index">
-                        <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{keyMilestoneItem.name}}
-                      </div>
+              </div>
+              <div class="card-body">
+                <div class="p-0 ml-4 splitInColumns">
+                  <div class="p-2 p-2 innerDivs" *ngFor="let keyMilestone of project.keyMilestones; let i=index">
+                    <span class="mr-2">{{i+1}}.</span> <u>{{keyMilestone.name}}</u>
+                    <div class="p-0 ml-4 font-italic" *ngFor="let keyMilestoneItem of keyMilestone.items; let j=index">
+                      <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{keyMilestoneItem.name}}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- end of left-side-container-key-milestones -->
 
-          <div class="row row-ml-10">
-            <div class="col-md-6 pt-2 pr-2 pb-2 pl-0">
-              <div class="card border-info">
-                <div class="card-header">
+          <div class="left-side-container-uka-and-ra">
+            <div class="d-flex flex-container-splitting-uka-and-ra-in-half">
 
-                  <div class="d-flex justify-content-between row-hl">
-                    <div class="item-hl">
-                      <span>Upcoming Key Activities</span>
-                    </div>
-                    <div class="item-hl">
+              <div class="uka-ra-kri-rdoi-containers top-left">
+                <div class="card border-info">
+                  <div class="card-header">
+                    <div class="d-flex justify-content-between row-hl">
+                      <div class="item-hl">
+                        <span>Upcoming Key Activities</span>
+                      </div>
+                      <div class="item-hl">
+                      </div>
                     </div>
                   </div>
-
-                </div>
-                <div class="card-body">
-                  <div class="p-0 ml-4">
-                    <div class="p-2 p-2" *ngFor="let upcomingKeyActivity of projects.upcomingKeyActivities; let i=index">
-                    <!-- <div class="p-2 p-2" *ngFor="let upcomingKeyActivity of (projectState | async).projects[id].upcomingKeyActivities; let i=index"> -->
+                  <div class="card-body">
+                    <div class="p-0 ml-4">
+                      <!-- <div class="p-2 p-2" *ngFor="let upcomingKeyActivity of projects.upcomingKeyActivities; let i=index">
                       <span class="mr-2">{{i+1}}.</span> <u>{{upcomingKeyActivity.name}}</u>
                       <div class="p-0 ml-4 font-italic" *ngFor="let upcomingKeyActivityItem of upcomingKeyActivity.items; let j=index">
                         <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{upcomingKeyActivityItem.name}}
                       </div>
+                    </div> -->
                     </div>
                   </div>
                 </div>
+
               </div>
-            </div>
-            <div class="col-md-6 p-2">
-              <div class="card border-info">
-                <div class="card-header">
+              <!-- end of uka-ra-kri-rdoi-containers top-left"> -->
 
-                  <div class="d-flex justify-content-between row-hl">
-                    <div class="item-hl">
-                      <span>Resource Assignments</span>
-                    </div>
-                    <div class="item-hl">
+              <div class="uka-ra-kri-rdoi-containers top-right">
+                <div class="card border-info">
+                  <div class="card-header">
+                    <div class="d-flex justify-content-between row-hl">
+                      <div class="item-hl">
+                        <span>Resource Assignments</span>
+                      </div>
+                      <div class="item-hl">
+                      </div>
                     </div>
                   </div>
-
-                </div>
-                <div class="card-body">
-                  <div class="p-0 ml-4">
-                    <div class="p-2 p-2" *ngFor="let resourceAssignment of projects.resourceAssignments; let i=index">
-                    <!-- <div class="p-2 p-2" *ngFor="let resourceAssignment of (projectState | async).projects[id].resourceAssignments; let i=index"> -->
+                  <div class="card-body">
+                    <div class="p-0 ml-4">
+                      <!-- <div class="p-2 p-2" *ngFor="let resourceAssignment of projects.resourceAssignments; let i=index">
                       <span class="mr-2">{{i+1}}.</span> <u>{{resourceAssignment.name}}</u>
                       <div class="p-0 ml-4 font-italic" *ngFor="let resourceAssignmentItem of resourceAssignment.items; let j=index">
                         <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{resourceAssignmentItem.name}}
                       </div>
+                    </div> -->
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="row row-ml-10">
-            <div class="col-md-6 pt-2 pr-2 pb-2 pl-0">
-              <div class="card border-info">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between row-hl">
-                    <div class="item-hl">
-                      <span>Key Risks and Issues</span>
-                    </div>
-                    <div class="item-hl">
+              </div>
+              <!-- end of uka-ra-kri-rdoi-containers top-right -->
+
+            </div>
+            <!-- end of flex-container-splitting-uka-and-ra-in-half -->
+
+          </div>
+          <!-- end of left-side-container-uka-and-ra -->
+
+          <div class="left-side-container-kri-and-rdoi">
+            <div class="d-flex flex-container-splitting-kri-and-rdoi-in-half">
+
+              <div class="uka-ra-kri-rdoi-containers bottom-left">
+                <div class="card border-info">
+                  <div class="card-header">
+                    <div class="d-flex justify-content-between row-hl">
+                      <div class="item-hl">
+                        <span>Key Risks and Issues</span>
+                      </div>
+                      <div class="item-hl">
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="card-body">
-                  <div class="p-0 ml-4">
-                    <div class="p-2 p-2" *ngFor="let keyRisk of projects.keyRisks; let i=index">
-                    <!-- <div class="p-2 p-2" *ngFor="let keyRisk of (projectState | async).projects[id].keyRisks; let i=index"> -->
+                  <div class="card-body">
+                    <div class="p-0 ml-4">
+                      <!-- <div class="p-2 p-2" *ngFor="let keyRisk of projects.keyRisks; let i=index">
                       <span class="mr-2">{{i+1}}.</span> <u>{{keyRisk.name}}</u>
                       <div class="p-0 ml-4 font-italic" *ngFor="let keyRiskItem of keyRisk.items; let j=index">
                         <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{keyRiskItem.name}}
                       </div>
+                    </div> -->
                     </div>
                   </div>
                 </div>
+
               </div>
-            </div>
-            <div class="col-md-6 p-2">
-              <div class="card border-info">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between row-hl">
-                    <div class="item-hl">
-                      <span>Required Decisions & Open Items</span>
-                    </div>
-                    <div class="item-hl">
+              <!-- end of uka-ra-kri-rdoi-containers bottom-left -->
+
+              <div class="uka-ra-kri-rdoi-containers bottom-right">
+                <div class="card border-info">
+                  <div class="card-header">
+                    <div class="d-flex justify-content-between row-hl">
+                      <div class="item-hl">
+                        <span>Required Decisions & Open Items</span>
+                      </div>
+                      <div class="item-hl">
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="card-body">
-                  <div class="p-0 ml-4">
-                    <div class="p-2 p-2" *ngFor="let requiredDecision of projects.requiredDecisions; let i=index">
-                    <!-- <div class="p-2 p-2" *ngFor="let requiredDecision of (projectState | async).projects[id].requiredDecisions; let i=index"> -->
+                  <div class="card-body">
+                    <div class="p-0 ml-4">
+                      <!-- <div class="p-2 p-2" *ngFor="let requiredDecision of projects.requiredDecisions; let i=index">
                       <span class="mr-2">{{i+1}}.</span> <u>{{requiredDecision.name}}</u>
                       <div class="p-0 ml-4 font-italic" *ngFor="let requiredDecisionItem of requiredDecision.items; let j=index">
                         <span class="mr-2">{{i+1}}{{getBulletLetter(j)}})</span> {{requiredDecisionItem.name}}
                       </div>
+                    </div> -->
                     </div>
                   </div>
                 </div>
+
               </div>
+              <!-- end of uka-ra-kri-rdoi-containers bottom-right -->
+
             </div>
+            <!-- end of left-side-container-kri-and-rdoi -->
+
           </div>
+          <!-- end of d-flex flex-container-splitting-kri-and-rdoi-in-half -->
 
         </div>
+        <!-- end of d-flex flex-column left-side-container -->
 
-        <div id="summaryCol" class="col-lg-3 py-2 px-0">
-          <div id="summaryCard" class="card border-info height-100">
-            <div class="card-header">
-              Summary
-            </div>
-            <div class="card-body height-100">
-              <div [froalaView]="editorContent">
-                {{ projects.summary }}
-                <!-- {{ (projectState | async).projects[id].summary }} -->
-              </div>
-            </div>
+      </div>
+      <!-- end of split-main-container-in-2-left-side -->
+
+
+
+      <div class="split-main-container-in-2-right-side-summary">
+        <div class="card border-info">
+          <div class="card-header">
+            Summary
+          </div>
+          <div class="card-body">
+            <div [froalaView]="project.summary"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- end of split main cont in 2 -->
+
+  </div>
+  <!-- end of main-container-top -->
+
+  <!-- ---------- -->
+
+  <div class="main-container-bottom-legend">
+    <style>
+      .color {
+        display: inline-block;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
+      }
+
+      .green {
+        background: #5cb85c;
+      }
+
+      .yellow {
+        background: #f0ad4e;
+      }
+
+      .red {
+        background: #d9534f;
+      }
+
+      .transparent {
+        background: transparent;
+        color: transparent;
+      }
+
+      .legend-item {
+        font-weight: 500;
+        font-size: 0.5rem;
+        white-space:nowrap !important;
+      }
+
+    </style>
+
+    <!-- LEGEND -->
+    <div class="d-flex justify-content-end pt-2">
+      <div class="legend-item">
+
+        <div class="d-flex">
+          <div class="legend-title p-3">
+          <div class="color transparent"><span>?</span></div>
+            Key Milestone Legend:
+          </div>
+          <div class="legend-green p-3">
+            <div class="color green"><span>Green</span></div>
+            Requirement Ready
+          </div>
+          <div class="legend-yellow p-3">
+            <div class="color yellow"><span>Yellow</span></div>
+            Requirement Drafted; Require Final Grooming
+          </div>
+          <div class="legend-red p-3">
+            <div class="color red"><span>Red</span></div>
+            Requirement Not Started; Planned
           </div>
         </div>
 
       </div>
+    </div>
+    <!-- END LEGEND -->
 
-      <div id="legend" class="d-flex justify-content-end mt-3">
-          <div class="p-1 text-right mr-5">
-            <i class="fas fa-info-circle ml-2"></i>
-            <strong class="ml-3 align-middle text-dark">Key Milestone Legend:</strong>
-          </div>
+  </div>
+  <!-- end of main-container-bottom -->
 
-          <div class="legend-font-size p-1 mr-5">
-            <svg width="20" height="20">
-              <rect width="20" height="20" rx="5" ry="5" style="fill: #5cb85c;stroke:#5cb85c;stroke-width:0;fill-opacity:1;stroke-opacity:0" />
-            </svg>
-            <strong class="ml-1 align-middle text-dark">Requirement Ready</strong>
-          </div>
-
-          <div class="legend-font-size p-1 mr-5">
-            <svg width="20" height="20">
-              <rect width="20" height="20" rx="5" ry="5" style="fill: #f0ad4e;stroke:#f0ad4e;stroke-width:0;fill-opacity:1;stroke-opacity:0" />
-            </svg>
-            <strong class="ml-1 align-middle text-dark">Requirement Drafted; Require Final Grooming</strong>
-          </div>
-
-          <div class="legend-font-size p-1 mr-5">
-            <svg width="20" height="20">
-              <rect width="20" height="20" rx="5" ry="5" style="fill: #d9534f;stroke:#d9534f;stroke-width:0;fill-opacity:1;stroke-opacity:0" />
-            </svg>
-            <strong class="ml-1 align-middle text-dark">Requirement Not Started; Planned</strong>
-          </div>
-      </div>
-
-
-
-
-
-    <div class="overlay"></div>
+</div>
+<!-- end of main container -->

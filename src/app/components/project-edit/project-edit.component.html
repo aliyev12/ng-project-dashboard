@@ -1,109 +1,118 @@
-<div class="row">
-  <div class="col-xs-12">
-    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-      <div class="row">
-        <div class="col-xs-12">
-          <button title="Save Everything" type="submit" class="btn btn-success mr-4 mb-3" [disabled]="!projectForm.valid"><i class="fas fa-save mr-3"></i>Save All</button>
-          <button title="Cancel and Go Back" type="button" class="btn btn-danger mb-3" (click)="onCancel()"><i class="fas fa-ban mr-3"></i>Cancel</button>
-        </div>
-      </div>
-
-      <div class="row">
-
-        <div class="col-lg-9 px-2">
-
-          <div class="row">
-            <div class="col p-2">
-              <div class="card border-info">
-                <div class="card-body py-2">
+<div class="d-flex project-main-container">
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="d-flex split-main-container-in-2">
+    <div class="split-main-container-in-2-left-side">
+      <div class="d-flex flex-column left-side-container">
+        <div class="left-side-container-project-name">
+          <div class="card border-info">
+            <div class="card-body py-2">
+              <div class="d-flex justify-content-between">
+                <div class="name-container">
                   <span class="card-title h3 text-center m-0">
                     <textarea type="text" id="name" formControlName="name" class="form-control" placeholder="Enter Project Name"
                       rows="1"></textarea>
                   </span>
                 </div>
+                <div class="buttons-container">
+                  <div class="d-flex justify-content-end">
+                    <div id="onHoverIfButtonIsDisabled" class="d-flex mr-4">
+                      <button id="submitButtonLarge" title="Save Everything" type="submit" class="btn btn-success buttons-large-screen"
+                        [disabled]="!projectForm.valid" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-save mr-3"></i>{{
+                        editMode ? 'Update' : 'Save' }}</button>
+                      <span *ngIf="!projectForm.valid" class="tooltiptext">Please, fill out all the fields</span>
+                    </div>
+
+                    <button id="cancelButtonLarge" title="Cancel and Go Back" type="button" class="btn btn-danger buttons-large-screen"
+                      (click)="onCancel()"><i class="fas fa-ban mr-3"></i>Cancel</button>
+                    <button id="submitButtonSmall" title="Save Everything" type="submit" class="btn btn-link text-dark px-4 hover-success buttons-small-screen"
+                      [disabled]="!projectForm.valid"><i class="fas fa-save"></i></button>
+                    <button id="cancelButtonSmall" title="Cancel and Go Back" type="button" class="btn btn-link text-dark px-4 hover-danger buttons-small-screen"
+                      (click)="onCancel()"><i class="fas fa-ban"></i></button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="left-side-container-key-milestones">
 
           <!-- KEY MILESTONES -->
-          <div class="row">
-            <div class="col p-2">
-              <div class="card border-info">
-                <div class="card-header">
-                  <div class="d-flex justify-content-between row-hl">
-                    <div class="item-hl">
-                      <span>Key Milestones</span>
-                    </div>
-                    <div class="item-hl">
-                      <button title="Add a New Key Milestone" type="button" class="btn btn-link text-dark py-0 px-1"
-                        (click)="onAddNewKeyMilestone()">
-                        <!-- alternative way of implementing scrolling to element without ts: -->
-                        <!-- [ngx-scroll-to]="'#endOfKeyMilestones'" [ngx-scroll-to-duration]="1500" -->
-                        <i class="fas fa-plus"></i></button>
-                    </div>
-                  </div>
+          <div class="card border-info height-100">
+            <div class="card-header">
+              <div class="d-flex justify-content-between row-hl">
+                <div class="item-hl">
+                  <span>Key Milestones</span>
                 </div>
-                <div class="card-body enableOverflow" id="keyMilestones">
-                  <div class="card-text" formArrayName="keyMilestones">
-                    <div class="pl-0" *ngFor="let keyMilestone of projectForm.get('keyMilestones').controls; let i=index"
-                      [formGroupName]="i" id="{{'keyMilestone-' + (i + 1)}}">
-                      <div class="container-1">
-                        <div class="box-1">
-                          <p class="m-0 text-right mr-2">{{i+1}}. </p>
-                        </div>
-                        <div class="box-2">
-                          <textarea type="text" class="form-control" formControlName="name" placeholder="Key Milestone"
-                            rows="1"></textarea>
-                        </div>
-                        <div class="box-3">
-                          <button title="Delete Key Milestone" type="button" class="btn btn-outline-danger" (click)="onDeleteKeyMilestone(i)"><i
-                              class="far fa-trash-alt"></i></button>
-                        </div>
-                        <div class="box-4">
-                          <!-- emply flex box just for proper alignment -->
-                          <button title="Add New Key Milestone Item" type="button" (click)="onAddKeyMilestoneItem(keyMilestone)" type="button" class="btn btn-link text-dark py-0 px-1"><i
-                              class="fas fa-plus"></i></button>
-                        </div>
-                      </div> <!-- end of flex container for key milestone name -->
-                      <div class="p-0 m-0" formArrayName="items">
-                        <div class="container-1" *ngFor="let item of keyMilestone.get('items').controls; let j=index"
-                          [formGroupName]="j">
-                          <div class="item-box-1 ml-auto">
-                            <p class="m-0 text-right mr-2">{{getBulletLetter(j)}}) </p>
-                          </div>
-                          <div class="item-box-2">
-                            <textarea type="text" class="form-control" placeholder="Key Milestone Item" formControlName="name"
-                              rows="1"></textarea>
-                          </div>
-                          <div class="item-box-3">
-                            <button title="Delete Key Milestone Item" type="button" (click)="onDeleteKeyMilestoneItem(keyMilestone, j)" type="button"
-                              class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
-                          </div>
-                          <div class="item-box-4">
-                          </div>
-                        </div>
-                      </div> <!-- end of formArrayName="items" -->
+                <div class="item-hl">
+                  <button type="button" id="newKeyMilestoneButton" class="btn btn-link text-dark py-0 px-1 hover-success"
+                    (click)="onAddNewKeyMilestone()">
+                    <!-- alternative way of implementing scrolling to element without ts: -->
+                    <!-- [ngx-scroll-to]="'#endOfKeyMilestones'" [ngx-scroll-to-duration]="1500" -->
+                    <i class="fas fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body enableOverflow" id="keyMilestones">
+              <div class="card-text" formArrayName="keyMilestones">
+                <div class="pl-0" *ngFor="let keyMilestone of projectForm.get('keyMilestones').controls; let i=index"
+                  [formGroupName]="i" id="{{'keyMilestone-' + (i + 1)}}">
+                  <div class="container-1">
+                    <div class="box-1">
+                      <p class="m-0 text-right mr-2">{{i+1}}. </p>
                     </div>
-                    <!--end of [formGroupName]="i" and loop-->
-                  </div>
-                  <!--end of formArrayName="keyMilestones" end of card-text-->
-                  <div id="endOfKeyMilestones"></div>
-                </div> <!-- end of "card-body" -->
-              </div> <!-- end of "card border-info" -->
-            </div> <!-- end of "col p-2" -->
-          </div> <!-- end key milestones row -->
+                    <div class="box-2">
+                      <textarea type="text" class="form-control" formControlName="name" placeholder="Key Milestone"
+                        rows="1"></textarea>
+                    </div>
+                    <div class="box-3">
+                      <button type="button" class="btn btn-link text-dark py-0 px-1 hover-danger" (click)="onDeleteKeyMilestone(i)"><i
+                          class="far fa-trash-alt"></i></button>
+                    </div>
+                    <div class="box-4">
+                      <!-- emply flex box just for proper alignment -->
+                      <button type="button" (click)="onAddKeyMilestoneItem(keyMilestone)" type="button" class="btn btn-link text-dark py-0 px-1 hover-success"><i
+                          class="fas fa-plus"></i></button>
+                    </div>
+                  </div> <!-- end of flex container for key milestone name -->
+                  <div class="p-0 m-0" formArrayName="items">
+                    <div class="container-1" *ngFor="let item of keyMilestone.get('items').controls; let j=index"
+                      [formGroupName]="j">
+                      <div class="item-box-1 ml-auto">
+                        <p class="m-0 text-right mr-2">{{getBulletLetter(j)}}) </p>
+                      </div>
+                      <div class="item-box-2">
+                        <textarea type="text" class="form-control" placeholder="Key Milestone Item" formControlName="name"
+                          rows="1"></textarea>
+                      </div>
+                      <div class="item-box-3">
+                        <button type="button" (click)="onDeleteKeyMilestoneItem(keyMilestone, j)" type="button" class="btn btn-link text-dark py-0 px-1 hover-danger"><i
+                            class="far fa-trash-alt"></i></button>
+                      </div>
+                      <div class="item-box-4">
+                      </div>
+                    </div>
+                  </div> <!-- end of formArrayName="items" -->
+                </div>
+                <!--end of [formGroupName]="i" and loop-->
+              </div>
+              <!--end of formArrayName="keyMilestones" end of card-text-->
+              <div id="endOfKeyMilestones"></div>
+            </div> <!-- end of "card-body" -->
+          </div> <!-- end of "card border-info" -->
+        </div>
+        <div class="left-side-container-uka-and-ra">
+          <div class="d-flex flex-container-splitting-uka-and-ra-in-half">
+            <div class="uka-ra-kri-rdoi-containers top-left">
 
-          <!-- UPCPMING KEY ACTIVITIES -->
-          <div class="row">
-            <div class="col-md-6 p-2">
-              <div class="card border-info">
+              <!-- UPCPMING KEY ACTIVITIES -->
+              <div class="card border-info height-100">
                 <div class="card-header">
                   <div class="d-flex justify-content-between row-hl">
                     <div class="item-hl">
                       <span>Upcoming Key Activities</span>
                     </div>
                     <div class="item-hl">
-                      <button title="Add New Upcomming Key Activity" type="button" id="newUpcomingKeyActivityButton" class="btn btn-link text-dark py-0 px-1"
+                      <button type="button" id="newUpcomingKeyActivityButton" class="btn btn-link text-dark py-0 px-1 hover-success"
                         (click)="onAddNewUpcomingKeyActivity()">
                         <i class="fas fa-plus"></i></button>
                     </div>
@@ -122,12 +131,12 @@
                             rows="1"></textarea>
                         </div>
                         <div class="box-3">
-                          <button title="Delete Upcoming Key Activity" type="button" class="btn btn-outline-danger" (click)="onDeleteUpcomingKeyActivity(indexOfUpcomingKeyActivity)"><i
+                          <button type="button" class="btn btn-link text-dark py-0 px-1 hover-danger" (click)="onDeleteUpcomingKeyActivity(indexOfUpcomingKeyActivity)"><i
                               class="far fa-trash-alt"></i></button>
                         </div>
                         <div class="box-4">
-                          <button title="Add Upcoming Key Activity Item" type="button" (click)="onAddUpcomingKeyActivityItem(upcomingKeyActivity)" type="button"
-                            class="btn btn-link text-dark py-0 px-1"><i class="fas fa-plus"></i></button>
+                          <button type="button" (click)="onAddUpcomingKeyActivityItem(upcomingKeyActivity)" type="button"
+                            class="btn btn-link text-dark py-0 px-1 hover-success"><i class="fas fa-plus"></i></button>
                         </div>
                       </div> <!-- end of flex container for upcoming key name -->
                       <div class="p-0 m-0" formArrayName="items">
@@ -141,8 +150,8 @@
                               formControlName="name" rows="1"></textarea>
                           </div>
                           <div class="item-box-3">
-                            <button title="Delete Upcoming Key Activity Item" type="button" (click)="onDeleteUpcomingKeyActivityItem(upcomingKeyActivity, indexOfUpcomingKeyActivityItem)"
-                              type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            <button type="button" (click)="onDeleteUpcomingKeyActivityItem(upcomingKeyActivity, indexOfUpcomingKeyActivityItem)"
+                              type="button" class="btn btn-link text-dark py-0 px-1 hover-danger"><i class="far fa-trash-alt"></i></button>
                           </div>
                           <div class="item-box-4">
                           </div>
@@ -156,16 +165,16 @@
               </div>
             </div>
 
-            <!-- RESOURCE ASSIGNMENTS -->
-            <div class="col-md-6 p-2">
-              <div class="card border-info">
+            <div class="uka-ra-kri-rdoi-containers top-right">
+              <!-- RESOURCE ASSIGNMENTS -->
+              <div class="card border-info height-100">
                 <div class="card-header">
                   <div class="d-flex justify-content-between row-hl">
                     <div class="item-hl">
                       <span>Resource Assignments</span>
                     </div>
                     <div class="item-hl">
-                      <button title="Add New Resource Assignment" type="button" id="newResourceAssignment" class="btn btn-link text-dark py-0 px-1"
+                      <button type="button" id="newResourceAssignment" class="btn btn-link text-dark py-0 px-1 hover-success"
                         (click)="onNewResourceAssignment()">
                         <i class="fas fa-plus"></i></button>
                     </div>
@@ -184,12 +193,12 @@
                             rows="1"></textarea>
                         </div>
                         <div class="box-3">
-                          <button title="Delete Resource Assignment" type="button" class="btn btn-outline-danger" (click)="onDeleteResourceAssignment(indexOfResourceAssignment)"><i
+                          <button type="button" class="btn btn-link text-dark py-0 px-1 hover-danger" (click)="onDeleteResourceAssignment(indexOfResourceAssignment)"><i
                               class="far fa-trash-alt"></i></button>
                         </div>
                         <div class="box-4">
-                          <button title="Add New Resource Assignment Item" type="button" (click)="onAddResourceAssignmentItem(resourceAssignment)" type="button"
-                            class="btn btn-link text-dark py-0 px-1"><i class="fas fa-plus"></i></button>
+                          <button type="button" (click)="onAddResourceAssignmentItem(resourceAssignment)" type="button"
+                            class="btn btn-link text-dark py-0 px-1 hover-success"><i class="fas fa-plus"></i></button>
                         </div>
                       </div> <!-- end of flex container for upcoming key name -->
                       <div class="p-0 m-0" formArrayName="items">
@@ -203,8 +212,8 @@
                               formControlName="name" rows="1"></textarea>
                           </div>
                           <div class="item-box-3">
-                            <button title="Delete Resource Assignment Item" type="button" (click)="onDeleteResourceAssignmentItem(resourceAssignment, indexOfResourceAssignmentItem)"
-                              type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            <button type="button" (click)="onDeleteResourceAssignmentItem(resourceAssignment, indexOfResourceAssignmentItem)"
+                              type="button" class="btn btn-link text-dark py-0 px-1 hover-danger"><i class="far fa-trash-alt"></i></button>
                           </div>
                           <div class="item-box-4">
                           </div>
@@ -217,19 +226,23 @@
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- KEY RISKS -->
-          <div class="row">
-            <div class="col-md-6 p-2">
-              <div class="card border-info">
+          </div>
+        </div>
+        <!-- flex-container-splitting-kri-and-rdoi-in-half -->
+        <div class="left-side-container-kri-and-rdoi">
+          <div class="d-flex flex-container-splitting-kri-and-rdoi-in-half">
+
+            <div class="uka-ra-kri-rdoi-containers bottom-left">
+              <!-- KEY RISKS -->
+              <div class="card border-info height-100">
                 <div class="card-header">
                   <div class="d-flex justify-content-between row-hl">
                     <div class="item-hl">
                       <span>Key Risks and Issues</span>
                     </div>
                     <div class="item-hl">
-                      <button title="Add New Key Risk" type="button" id="newKeyRiskButton" class="btn btn-link text-dark py-0 px-1"
+                      <button type="button" id="newKeyRiskButton" class="btn btn-link text-dark py-0 px-1 hover-success"
                         (click)="onNewKeyRisk()">
                         <i class="fas fa-plus"></i></button>
                     </div>
@@ -247,11 +260,11 @@
                           <textarea type="text" class="form-control" formControlName="name" placeholder="Key Risk" rows="1"></textarea>
                         </div>
                         <div class="box-3">
-                          <button title="Delete Key Risk" type="button" class="btn btn-outline-danger" (click)="onDeleteKeyRisk(indexOfKeyRisk)"><i
+                          <button type="button" class="btn btn-link text-dark py-0 px-1 hover-danger" (click)="onDeleteKeyRisk(indexOfKeyRisk)"><i
                               class="far fa-trash-alt"></i></button>
                         </div>
                         <div class="box-4">
-                          <button title="Add New Key Risk Item" type="button" (click)="onAddKeyRiskItem(keyRisk)" type="button" class="btn btn-link text-dark py-0 px-1"><i
+                          <button type="button" (click)="onAddKeyRiskItem(keyRisk)" type="button" class="btn btn-link text-dark py-0 px-1 hover-success"><i
                               class="fas fa-plus"></i></button>
                         </div>
                       </div> <!-- end of flex container for Key Risk name -->
@@ -266,8 +279,8 @@
                               rows="1"></textarea>
                           </div>
                           <div class="item-box-3">
-                            <button title="Delete Key Risk Item" type="button" (click)="onDeleteKeyRiskItem(keyRisk, indexOfKeyRiskItem)" type="button"
-                              class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            <button type="button" (click)="onDeleteKeyRiskItem(keyRisk, indexOfKeyRiskItem)" type="button"
+                              class="btn btn-link text-dark py-0 px-1 hover-danger"><i class="far fa-trash-alt"></i></button>
                           </div>
                           <div class="item-box-4">
                           </div>
@@ -281,16 +294,16 @@
               </div>
             </div>
 
-            <!-- REQUIRED DECISIONS -->
-            <div class="col-md-6 p-2">
-              <div class="card border-info">
+            <div class="uka-ra-kri-rdoi-containers bottom-right">
+              <!-- REQUIRED DECISIONS -->
+              <div class="card border-info height-100">
                 <div class="card-header">
                   <div class="d-flex justify-content-between row-hl">
                     <div class="item-hl">
                       <span>Required Decisions & Open Items</span>
                     </div>
                     <div class="item-hl">
-                      <button title="Add New Required Decision" type="button" id="newRequiredDecisionButton" class="btn btn-link text-dark py-0 px-1"
+                      <button type="button" id="newRequiredDecisionButton" class="btn btn-link text-dark py-0 px-1 hover-success"
                         (click)="onNewRequiredDecision()">
                         <i class="fas fa-plus"></i></button>
                     </div>
@@ -309,12 +322,12 @@
                             rows="1"></textarea>
                         </div>
                         <div class="box-3">
-                          <button title="Delete Required Decision" type="button" class="btn btn-outline-danger" (click)="onDeleteRequiredDecision(indexOfRequiredDecision)"><i
+                          <button type="button" class="btn btn-link text-dark py-0 px-1 hover-danger" (click)="onDeleteRequiredDecision(indexOfRequiredDecision)"><i
                               class="far fa-trash-alt"></i></button>
                         </div>
                         <div class="box-4">
-                          <button title="Add New Required Decision Item" type="button" (click)="onAddRequiredDecisionItem(requiredDecision)" type="button"
-                            class="btn btn-link text-dark py-0 px-1"><i class="fas fa-plus"></i></button>
+                          <button type="button" (click)="onAddRequiredDecisionItem(requiredDecision)" type="button"
+                            class="btn btn-link text-dark py-0 px-1 hover-success"><i class="fas fa-plus"></i></button>
                         </div>
                       </div> <!-- end of flex container for Key Risk name -->
                       <div class="p-0 m-0" formArrayName="items">
@@ -328,8 +341,8 @@
                               formControlName="name" rows="1"></textarea>
                           </div>
                           <div class="item-box-3">
-                            <button title="Delete Required Decision Item" type="button" (click)="onDeleteRequiredDecisionItem(requiredDecision, indexOfRequiredDecisionItem)"
-                              type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            <button type="button" (click)="onDeleteRequiredDecisionItem(requiredDecision, indexOfRequiredDecisionItem)"
+                              type="button" class="btn btn-link text-dark py-0 px-1 hover-danger"><i class="far fa-trash-alt"></i></button>
                           </div>
                           <div class="item-box-4">
                           </div>
@@ -342,63 +355,22 @@
                 </div>
               </div>
             </div>
-          </div>
 
-        </div>
-
-        <!-- SUMMARY -->
-        <div class="col-lg-3 py-2 px-4" id="summary">
-          <div class="card border-info height-100">
-            <div class="card-header">
-              Summary
-            </div>
-            <div class="card-body height-100 p-1">
-              <!-- <textarea type="text" id="description" class="form-control" formControlName="summary" placeholder="Summary"
-                  rows="6"></textarea> -->
-                <textarea [froalaEditor]="options" formControlName="summary" (froalaModelChange)="onChange($event)" [(froalaModel)]="model" id="description" placeholder="Summary"
-                  #summaryEditor></textarea>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- LEGEND -->
-      <div class="row mt-3">
-        <div class="col-xl-3">
-          <div class="alert alert-white p-1 text-right">
-            <i class="fas fa-info-circle ml-2"></i>
-            <strong class="ml-3 align-middle text-dark">Key Milestone Legend:</strong>
-          </div>
-        </div>
-
-        <div class="col-xl-3">
-          <div class="alert alert-success legend-font-size p-1">
-            <svg width="20" height="20">
-              <rect width="20" height="20" rx="5" ry="5" style="fill: #5cb85c;stroke:#5cb85c;stroke-width:0;fill-opacity:1;stroke-opacity:0" />
-            </svg>
-            <strong class="ml-3 align-middle text-dark">Requirement Ready</strong>
-          </div>
-        </div>
-
-        <div class="col-xl-3">
-          <div class="alert alert-warning legend-font-size p-1">
-            <svg width="20" height="20">
-              <rect width="20" height="20" rx="5" ry="5" style="fill: #f0ad4e;stroke:#f0ad4e;stroke-width:0;fill-opacity:1;stroke-opacity:0" />
-            </svg>
-            <strong class="ml-3 align-middle text-dark">Requirement Drafted; Require Final Grooming</strong>
-          </div>
-        </div>
-
-        <div class="col-xl-3">
-          <div class="alert alert-danger legend-font-size p-1">
-            <svg width="20" height="20">
-              <rect width="20" height="20" rx="5" ry="5" style="fill: #d9534f;stroke:#d9534f;stroke-width:0;fill-opacity:1;stroke-opacity:0" />
-            </svg>
-            <strong class="ml-3 align-middle text-dark">Requirement Not Started; Planned</strong>
           </div>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="split-main-container-in-2-right-side-summary">
+      <!-- SUMMARY -->
+      <div class="card border-info height-100">
+        <div class="card-header">
+          Summary
+        </div>
+        <div class="card-body height-100 p-1">
+          <textarea [froalaEditor]="options" formControlName="summary" (froalaModelChange)="onChange($event)"
+            [(froalaModel)]="model" id="description" placeholder="Summary" #summaryEditor></textarea>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

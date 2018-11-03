@@ -1,20 +1,3 @@
-.btn-link:hover {
-  color: #28a745!important;
-  text-decoration: none !important;
-}
-
-.square {
-  height: 30px !important;
-  width: 30px !important;
-  background-color: #d9534f;
-  border-radius: 5px;
-  display: inline-block;
-}
-
-.legend-font-size {
-  font-size: 1vh !important;
-  /* white-space: nowrap; */
-}
 
 .height-100 {
   height: 100% !important;
@@ -32,21 +15,256 @@
   break-inside: avoid;
 }
 
-/* .row-ml-10 {
-  margin-left: -10px;
-} */
 
-.row {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+/* NEW LOOk */
+/* NEW LOOk */
+/* NEW LOOk */
+/* NEW LOOk */
+
+.main-container-top {
+  height: 95%;
+}
+
+.main-container-bottom-legend {
+  height: 5%;
+}
+
+.project-main-container,
+.split-main-container-in-2,
+.left-side-container,
+.flex-container-splitting-uka-and-ra-in-half,
+.flex-container-splitting-kri-and-rdoi-in-half {
+  width: 100%;
+}
+
+.split-main-container-in-2-left-side {
+  width: 75%;
+  height: 100%;
+}
+
+.split-main-container-in-2-right-side-summary {
+  width: 25%;
+  /* height: 100%; */
+  padding-left: 3px;
+}
+
+/* .left-side-container-key-milestones, */
+.left-side-container-project-name,
+.left-side-container-key-milestones,
+.left-side-container-uka-and-ra,
+.left-side-container-kri-and-rdoi {
+  width: 100%;
+}
+
+.left-side-container-project-name {
+  padding-bottom: 3px;
+  padding-right: 3px;
+  /* height: 4%; */
+}
+
+.left-side-container-key-milestones {
+  /* height: 40%; */
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 3px;
+}
+
+.left-side-container-uka-and-ra {
+  /* height: 28%; */
+}
+
+.left-side-container-kri-and-rdoi {
+  /* height: 28%; */
+}
+
+.uka-ra-kri-rdoi-containers {
+  width: 50%;
+  /* height: 100%; */
+}
+
+.top-left {
+  padding-right: 3px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.top-right {
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.bottom-left {
+  padding-right: 3px;
+  padding-top: 3px;
+}
+
+.bottom-right {
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 3px;
+}
+
+.name-container {
+  width: 60%;
+  padding-right: 10px;
+}
+
+.buttons-container {
+  width: 40%;
+  align-self: flex-end;
+}
+
+.buttons-small-screen {
+  display: none;
+}
+
+.hover-danger:hover,
+#cancelButton:hover {
+  color: #dc3545 !important;
+}
+
+.hover-success:hover,
+#submitButton:hover {
+  color: #28a745 !important;
+}
+
+#onHoverIfButtonIsDisabled {
+  position: relative;
+  display: inline-block;
+}
+
+#onHoverIfButtonIsDisabled .tooltiptext {
+  visibility: hidden;
+  width: 220px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: -106%;
+  left: 50%;
+  margin-left: -97%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#onHoverIfButtonIsDisabled .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: -28%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color:  transparent transparent #555 transparent;
+}
+
+#onHoverIfButtonIsDisabled:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+ textarea.ng-untouched.ng-pristine.ng-invalid {
+  border: 3px solid #ffc107 !important;
+}
+
+.fr-wrapper {
+  min-height: 300px !important;
+}
+
+.buttons-large-screen {
+  width: 111px;
 }
 
 
+@media (max-width: 1200px) {
+  .top-left {
+    padding-right: 0;
+  }
 
+  .top-right {
+    padding-left: 0;
+    padding-right: 0;
+  }
 
+  .bottom-left {
+    padding-right: 0;
+    padding-bottom: 3px;
+  }
 
+  .bottom-right {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 3px;
+  }
 
+  .split-main-container-in-2 {
+    flex-direction: column;
+  }
 
+  .split-main-container-in-2-left-side,
+  .split-main-container-in-2-right-side-summary {
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .left-side-container-key-milestones {
+    margin-bottom: 0;
+  }
+
+  .split-main-container-in-2-left-side {
+    height: unset;
+  }
+
+  /* Summary */
+  .split-main-container-in-2-right-side-summary {
+    min-height: 100px;
+    padding-top: 3px;
+  }
+
+  .flex-container-splitting-uka-and-ra-in-half,
+  .flex-container-splitting-kri-and-rdoi-in-half {
+    flex-direction: column;
+  }
+
+  .uka-ra-kri-rdoi-containers {
+    width: 100%;
+    min-height: 100px;
+  }
+
+  /* Name */
+  .left-side-container-project-name {
+    padding-right: 0;
+  }
+
+  /* Key Milestones */
+  .left-side-container-key-milestones {
+    min-height: 100px;
+    padding-right: 0;
+  }
+
+  /* Box row 1 */
+  .left-side-container-uka-and-ra {
+    height: unset;
+  }
+
+  /* Box row 2 */
+  .left-side-container-kri-and-rdoi {
+    height: unset;
+  }
+
+  .buttons-small-screen {
+    display: block;
+  }
+
+  .buttons-large-screen {
+    display: none;
+  }
+}
 
 
 

@@ -1,8 +1,11 @@
-#container {
-  min-height: 100% !important;
-  position: relative;
+.main-flex-container {
+  display: flex;
 }
 
-.aboveFooterSpace {
-  margin-bottom: 60px;
+.main-child-sidebar {
+  width: 250px;
+}
+
+.main-child-content {
+  width: 100%;
 }

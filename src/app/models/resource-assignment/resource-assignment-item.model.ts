@@ -1,5 +1,4 @@
-export class ResourceAssignmentItem {
-  constructor(
-    public name: string
-    ) {}
+export interface ResourceAssignmentItem {
+  id?: string;
+  name?: string;
 }

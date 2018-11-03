@@ -1,13 +1,43 @@
-<app-sidebar></app-sidebar>
-<div class="container">
-  <flash-messages></flash-messages>
-  <router-outlet></router-outlet>
+<style>
+.app-item-2 {
+  width: 100%;
+  margin-top: 40px;
+  margin-right: 40px;
+  margin-bottom: 40px;
+}
+
+@media(max-width: 768px) {
+.app-item-1 {
+  position: absolute;
+}
+
+.app-item-2 {
+  margin-left: 10px;
+  margin-top: 40px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+}
+
+</style>
+
+<div class="d-flex">
+  <div class="app-item-1">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="app-item-2">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 
 
 
 
 
+
+
+<!-- <flash-messages></flash-messages> -->
 
 <!-- OLD STUFF BELOW -->
 <!-- OLD STUFF BELOW -->

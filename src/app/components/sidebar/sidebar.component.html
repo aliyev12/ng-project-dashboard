@@ -7,18 +7,18 @@
       </a>
     </div>
 
-    <ul class="list-unstyled components">
-      <li *ngIf="isAuthenticated">
+    <ul *ngIf="isAuthenticated" class="list-unstyled components">
+      <li>
         <a class="dropdown-item" (click)="onLogout()">
           <i class="fas fa-user-times"></i> Logout
         </a>
       </li>
 
-      <li  *ngIf="isAuthenticated">
-        <a *ngFor="let projectEl of projects; let i = index" [routerLink]="i">{{projectEl.name}}</a>
+      <li *ngFor="let project of projects">
+        <a routerLink="projects/{{ project.id }}">{{ project.name }}</a>
       </li>
       <li id="newProjectLi">
-        <a id="newProjectButton" (click)="onNewProject()" *ngIf="isAuthenticated">
+        <a id="newProjectButton" (click)="onNewProject()">
           <i class="fas fa-plus pr-2"></i> New
           Project</a>
       </li>
@@ -34,7 +34,6 @@
       <span></span>
       <span></span>
     </button>
-      <router-outlet></router-outlet>
   </div>
 
 </div>

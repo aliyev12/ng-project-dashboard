@@ -1,11 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ElementRef} from '@angular/core';
 import {Project} from '../../models/project.model';
-import {FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
+import {
+  FormGroup,
+  FormArray,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import {ActivatedRoute, Router, Params} from '@angular/router';
-// import {Store} from '@ngrx/store';
-// import * as fromProject from '../store/project.reducers';
-// import * as ProjectActions from '../store/project.actions';
-// import {take} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 
 import {
   ScrollToService,
@@ -13,8 +16,10 @@ import {
 } from '@nicky-lenaers/ngx-scroll-to';
 import {forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {ProjectService} from 'src/app/services/project.service';
+import {ProjectService} from '../../services/project.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
+import {Subscription} from 'rxjs';
+import {Promise} from 'q';
 
 @Component({
   selector: 'app-project-edit',
@@ -28,28 +33,21 @@ import {FlashMessagesService} from 'angular2-flash-messages';
     },
   ],
 })
-export class ProjectEditComponent implements OnInit, ControlValueAccessor {
+export class ProjectEditComponent implements OnInit, ControlValueAccessor, AfterViewInit {
   public options: Object = {
     charCounterCount: true /** CHARACTER COUNT FOR SUMMARY */,
-    toolbarButtons: [
-      'bold',
-      'italic',
-      'underline',
-      'fontSize',
-      'color',
-      // ['accept', 'accept-charset', 'accesskey', 'action', 'align', 'allowfullscreen', 'allowtransparency', 'alt', 'async', 'autocomplete', 'autofocus', 'autoplay', 'autosave', 'background', 'bgcolor', 'border', 'charset', 'cellpadding', 'cellspacing', 'checked', 'cite', 'class', 'color', 'cols', 'colspan', 'content', 'contenteditable', 'contextmenu', 'controls', 'coords', 'data', 'data-.*', 'datetime', 'default', 'defer', 'dir', 'dirname', 'disabled', 'download', 'draggable', 'dropzone', 'enctype', 'for', 'form', 'formaction', 'frameborder', 'headers', 'height', 'hidden', 'high', 'href', 'hreflang', 'http-equiv', 'icon', 'id', 'ismap', 'itemprop', 'keytype', 'kind', 'label', 'lang', 'language', 'list', 'loop', 'low', 'max', 'maxlength', 'media', 'method', 'min', 'mozallowfullscreen', 'multiple', 'muted', 'name', 'novalidate', 'open', 'optimum', 'pattern', 'ping', 'placeholder', 'playsinline', 'poster', 'preload', 'pubdate', 'radiogroup', 'readonly', 'rel', 'required', 'reversed', 'rows', 'rowspan', 'sandbox', 'scope', 'scoped', 'scrolling', 'seamless', 'selected', 'shape', 'size', 'sizes', 'span', 'src', 'srcdoc', 'srclang', 'srcset', 'start', 'step', 'summary', 'spellcheck', 'style', 'tabindex', 'target', 'title', 'type', 'translate', 'usemap', 'value', 'valign', 'webkitallowfullscreen', 'width', 'wrap']
-    ],
+    toolbarButtons: ['bold', 'italic', 'underline', 'fontSize', 'color'],
     toolbarButtonsXS: ['bold', 'italic', 'underline', 'fontSize', 'color'],
     toolbarButtonsSM: ['bold', 'italic', 'underline', 'fontSize', 'color'],
     toolbarButtonsMD: ['bold', 'italic', 'underline', 'fontSize', 'color'],
   };
   id: string;
-  project: Project;
   editMode = false;
   editedItem: Project;
   projectForm: FormGroup;
-  model: any; /** CONTENT OF RICH TEXT EDITOR OF SUMMARY */
-  currentDate: Date;
+  project: Project;
+  description;
+    model: any; /** CONTENT OF RICH TEXT EDITOR OF SUMMARY */
   config: Object = {
     charCounterCount: false,
   };
@@ -57,30 +55,34 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private _scrollToService: ScrollToService,
     private projectService: ProjectService,
-    private flashMessage: FlashMessagesService
-  ) // private store: Store<fromProject.FeatureState>,
-
-  {}
+    private _scrollToService: ScrollToService,
+    private flashMessage: FlashMessagesService,
+    private elRef: ElementRef
+  ) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.projectService.getProject(this.id).subscribe(project => {
-      if (project !== null) {
-        // Do something if project exists
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      // If there is an ID passed into url, then editMode is true, otherwise it is false
+      this.editMode = params['id'] != null;
+      if (this.editMode) {
+      this.projectService.getProject(this.id).subscribe(project => {
+        this.project = project;
+        this.projectForm.patchValue({
+          name: project.name,
+          summary: project.summary,
+        });
+      });
       }
-      this.project = project;
+
+      this.initForm();
     });
-    // If there is an ID passed into url, then editMode is true, otherwise it is false
-    this.editMode = this.id != null;
-    this.initForm();
-
-    // this.route.params.subscribe((params: Params) => {
-    //   this.id = +params['id'];
-    // });
-
     this.model = this.projectForm.controls.summary.value;
+  }
+
+  ngAfterViewInit() {
+    this.description = this.elRef.nativeElement.querySelector('#description');
   }
 
   onSubmit() {
@@ -90,22 +92,8 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor {
         cssClass: 'alert-success',
         timeout: 4000,
       });
-
-      // this.store.dispatch(
-      //   new ProjectActions.UpdateProject({
-      //     index: this.id,
-      //     updatedProject: this.projectForm.value,
-      //   })
-      // );
     } else {
       this.projectService.newProject(this.projectForm.value);
-
-      // this.store.dispatch(
-      //   new ProjectActions.SetLastModified(this.currentDate)
-      // );
-      // this.store.dispatch(
-      //   new ProjectActions.AddProject(this.projectForm.value)
-      // );
     }
     this.onCancel();
   }
@@ -266,62 +254,94 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor {
 
   /** DELETE */
   onDeleteKeyMilestone(i: number) {
-    const control = <FormArray>this.projectForm.controls['keyMilestones'];
-    control.removeAt(i);
+    if (confirm('Are you sure you want to delete this Key Milestone?')) {
+      const control = <FormArray>this.projectForm.controls['keyMilestones'];
+      control.removeAt(i);
+    }
   }
 
   onDeleteUpcomingKeyActivity(indexOfUpcomingKeyActivity: number) {
-    const control = <FormArray>(
-      this.projectForm.controls['upcomingKeyActivities']
-    );
-    control.removeAt(indexOfUpcomingKeyActivity);
+    if (
+      confirm('Are you sure you want to delete this Upcoming Key Activity?')
+    ) {
+      const control = <FormArray>(
+        this.projectForm.controls['upcomingKeyActivities']
+      );
+      control.removeAt(indexOfUpcomingKeyActivity);
+    }
   }
 
   onDeleteResourceAssignment(indexOfResourceAssignment: number) {
-    const control = <FormArray>this.projectForm.controls['resourceAssignments'];
-    control.removeAt(indexOfResourceAssignment);
+    if (confirm('Are you sure you want to delete this Resource Assignment?')) {
+      const control = <FormArray>(
+        this.projectForm.controls['resourceAssignments']
+      );
+      control.removeAt(indexOfResourceAssignment);
+    }
   }
 
   onDeleteKeyRisk(indexOfKeyRisk: number) {
-    const control = <FormArray>this.projectForm.controls['keyRisks'];
-    control.removeAt(indexOfKeyRisk);
+    if (confirm('Are you sure you want to delete this Key Risk?')) {
+      const control = <FormArray>this.projectForm.controls['keyRisks'];
+      control.removeAt(indexOfKeyRisk);
+    }
   }
 
   onDeleteRequiredDecision(indexOfRequiredDecision: number) {
-    const control = <FormArray>this.projectForm.controls['requiredDecisions'];
-    control.removeAt(indexOfRequiredDecision);
+    if (confirm('Are you sure you want to delete this Required Decision?')) {
+      const control = <FormArray>this.projectForm.controls['requiredDecisions'];
+      control.removeAt(indexOfRequiredDecision);
+    }
   }
 
   /** DELETE ITEMS */
   onDeleteKeyMilestoneItem(keyMilestone, j: number) {
-    const control = <FormArray>keyMilestone.controls.items;
-    control.removeAt(j);
+    if (confirm('Are you sure you want to delete this Key Milestone Item?')) {
+      const control = <FormArray>keyMilestone.controls.items;
+      control.removeAt(j);
+    }
   }
 
   onDeleteUpcomingKeyActivityItem(
     upcomingKeyActivity,
     indexOfUpcomingKeyActivityItem
   ) {
-    const control = <FormArray>upcomingKeyActivity.controls.items;
-    control.removeAt(indexOfUpcomingKeyActivityItem);
+    if (
+      confirm(
+        'Are you sure you want to delete this Upcoming Key Activity Item?'
+      )
+    ) {
+      const control = <FormArray>upcomingKeyActivity.controls.items;
+      control.removeAt(indexOfUpcomingKeyActivityItem);
+    }
   }
 
   onDeleteResourceAssignmentItem(
     resourceAssignment,
     indexOfResourceAssignmentItem
   ) {
-    const control = <FormArray>resourceAssignment.controls.items;
-    control.removeAt(indexOfResourceAssignmentItem);
+    if (
+      confirm('Are you sure you want to delete this Resource Assignment Item?')
+    ) {
+      const control = <FormArray>resourceAssignment.controls.items;
+      control.removeAt(indexOfResourceAssignmentItem);
+    }
   }
 
   onDeleteKeyRiskItem(keyRisk, indexOfKeyRiskItem) {
-    const control = <FormArray>keyRisk.controls.items;
-    control.removeAt(indexOfKeyRiskItem);
+    if (confirm('Are you sure you want to delete this Key Risk Item?')) {
+      const control = <FormArray>keyRisk.controls.items;
+      control.removeAt(indexOfKeyRiskItem);
+    }
   }
 
   onDeleteRequiredDecisionItem(requiredDecision, indexOfRequiredDecisionItem) {
-    const control = <FormArray>requiredDecision.controls.items;
-    control.removeAt(indexOfRequiredDecisionItem);
+    if (
+      confirm('Are you sure you want to delete this Required Decision Item?')
+    ) {
+      const control = <FormArray>requiredDecision.controls.items;
+      control.removeAt(indexOfRequiredDecisionItem);
+    }
   }
 
   /** INIT FORM */
@@ -335,17 +355,14 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor {
     const projectRequiredDecisions = new FormArray([]);
 
     if (this.editMode) {
-      this.store
-        .select('projects')
-        .pipe(take(1))
-        .subscribe((fromProjects: fromProject.State) => {
-          const project = fromProjects.projects[this.id];
-          projectName = project.name;
-          projectSummary = project.summary;
+      this.projectService.getProject(this.id).subscribe(project => {
+        projectName = project.name;
+        projectSummary = project.summary;
 
-          if (project['keyMilestones']) {
-            for (const keyMilestone of project.keyMilestones) {
-              const projectKeyMilestoneItems = new FormArray([]);
+        if (project.keyMilestones) {
+          for (const keyMilestone of project.keyMilestones) {
+            const projectKeyMilestoneItems = new FormArray([]);
+            if (keyMilestone.items) {
               for (const keyMilestoneItem of keyMilestone.items) {
                 projectKeyMilestoneItems.push(
                   new FormGroup({
@@ -353,100 +370,102 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor {
                   })
                 );
               }
-              projectKeyMilestones.push(
-                new FormGroup({
-                  name: new FormControl(keyMilestone.name, Validators.required),
-                  items: projectKeyMilestoneItems,
-                })
-              );
             }
-          } // end if keyMilestones
+            projectKeyMilestones.push(
+              new FormGroup({
+                name: new FormControl(keyMilestone.name, Validators.required),
+                items: projectKeyMilestoneItems,
+              })
+            );
+          }
+        } // end if keyMilestones
 
-          if (project['upcomingKeyActivities']) {
-            for (const upcomingKeyActivity of project.upcomingKeyActivities) {
-              const projectUpcomingKeyActivityItems = new FormArray([]);
-              for (const upcomingKeyActivityItem of upcomingKeyActivity.items) {
-                projectUpcomingKeyActivityItems.push(
-                  new FormGroup({
-                    name: new FormControl(upcomingKeyActivityItem.name),
-                  })
-                );
-              }
-              projectUpcomingKeyActivities.push(
+        if (project.upcomingKeyActivities) {
+          for (const upcomingKeyActivity of project.upcomingKeyActivities) {
+            const projectUpcomingKeyActivityItems = new FormArray([]);
+            for (const upcomingKeyActivityItem of upcomingKeyActivity.items) {
+              projectUpcomingKeyActivityItems.push(
                 new FormGroup({
-                  name: new FormControl(
-                    upcomingKeyActivity.name,
-                    Validators.required
-                  ),
-                  items: projectUpcomingKeyActivityItems,
+                  name: new FormControl(upcomingKeyActivityItem.name),
                 })
               );
             }
-          } // end if upcomingKeyActivities
+            projectUpcomingKeyActivities.push(
+              new FormGroup({
+                name: new FormControl(
+                  upcomingKeyActivity.name,
+                  Validators.required
+                ),
+                items: projectUpcomingKeyActivityItems,
+              })
+            );
+          }
+        } // end if upcomingKeyActivities
 
-          if (project['resourceAssignments']) {
-            for (const resourceAssignment of project.resourceAssignments) {
-              const projectResourceAssignmentItems = new FormArray([]);
-              for (const resourceAssignmentItem of resourceAssignment.items) {
-                projectResourceAssignmentItems.push(
-                  new FormGroup({
-                    name: new FormControl(resourceAssignmentItem.name),
-                  })
-                );
-              }
-              projectResourceAssignments.push(
+        if (project.resourceAssignments) {
+          for (const resourceAssignment of project.resourceAssignments) {
+            const projectResourceAssignmentItems = new FormArray([]);
+            for (const resourceAssignmentItem of resourceAssignment.items) {
+              projectResourceAssignmentItems.push(
                 new FormGroup({
-                  name: new FormControl(
-                    resourceAssignment.name,
-                    Validators.required
-                  ),
-                  items: projectResourceAssignmentItems,
+                  name: new FormControl(resourceAssignmentItem.name),
                 })
               );
             }
-          } // end if resourceAssignments
+            projectResourceAssignments.push(
+              new FormGroup({
+                name: new FormControl(
+                  resourceAssignment.name,
+                  Validators.required
+                ),
+                items: projectResourceAssignmentItems,
+              })
+            );
+          }
+        } // end if resourceAssignments
 
-          if (project['keyRisks']) {
-            for (const keyRisk of project.keyRisks) {
-              const projectKeyRiskItems = new FormArray([]);
-              for (const keyRiskItem of keyRisk.items) {
-                projectKeyRiskItems.push(
-                  new FormGroup({
-                    name: new FormControl(keyRiskItem.name),
-                  })
-                );
-              }
-              projectKeyRisks.push(
+        if (project.keyRisks) {
+          for (const keyRisk of project.keyRisks) {
+            const projectKeyRiskItems = new FormArray([]);
+            for (const keyRiskItem of keyRisk.items) {
+              projectKeyRiskItems.push(
                 new FormGroup({
-                  name: new FormControl(keyRisk.name, Validators.required),
-                  items: projectKeyRiskItems,
+                  name: new FormControl(keyRiskItem.name),
                 })
               );
             }
-          } // end if keyRisks
+            projectKeyRisks.push(
+              new FormGroup({
+                name: new FormControl(keyRisk.name, Validators.required),
+                items: projectKeyRiskItems,
+              })
+            );
+          }
+        } // end if keyRisks
 
-          if (project['requiredDecisions']) {
-            for (const requiredDecision of project.requiredDecisions) {
-              const projectRequiredDecisionItems = new FormArray([]);
-              for (const requiredDecisionItem of requiredDecision.items) {
-                projectRequiredDecisionItems.push(
-                  new FormGroup({
-                    name: new FormControl(requiredDecisionItem.name),
-                  })
-                );
-              }
-              projectRequiredDecisions.push(
+        if (project.requiredDecisions) {
+          for (const requiredDecision of project.requiredDecisions) {
+            const projectRequiredDecisionItems = new FormArray([]);
+            for (const requiredDecisionItem of requiredDecision.items) {
+              projectRequiredDecisionItems.push(
                 new FormGroup({
-                  name: new FormControl(
-                    requiredDecision.name,
-                    Validators.required
-                  ),
-                  items: projectRequiredDecisionItems,
+                  name: new FormControl(requiredDecisionItem.name),
                 })
               );
             }
-          } // end if requiredDecisions
-        }); // end store subscribe
+            projectRequiredDecisions.push(
+              new FormGroup({
+                name: new FormControl(
+                  requiredDecision.name,
+                  Validators.required
+                ),
+                items: projectRequiredDecisionItems,
+              })
+            );
+          }
+        } // end if requiredDecisions
+        // }); // end store subscribe
+      }); /************************* */
     } // end if editmode
 
     this.projectForm = new FormGroup({
@@ -513,4 +532,6 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
+
 }
+

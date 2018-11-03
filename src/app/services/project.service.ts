@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, take, debounceTime } from 'rxjs/operators';
 
 import { Project } from '../models/project.model';
+import { KeyMilestone } from '../models/key-milestone/key-milestone.model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Injectable({
@@ -13,13 +15,19 @@ export class ProjectService {
   projectsCollection: AngularFirestoreCollection<Project>;
   projectDoc: AngularFirestoreDocument<Project>;
   projects: Observable<Project[]>;
+  keyMilestones: Observable<KeyMilestone[]>;
   project: Observable<Project>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private afs: AngularFirestore,
+    private router: Router,
+    private route: ActivatedRoute
+    ) {
     this.projectsCollection = this.afs.collection('projects', ref => ref.orderBy('name', 'asc'));
   }
 
   getProjects(): Observable<Project[]> {
+
     this.projects = this.projectsCollection.snapshotChanges()
       .pipe(map(changes => {
         return changes.map(
@@ -34,12 +42,44 @@ export class ProjectService {
   }
 
   newProject(project: Project) {
-    this.projectsCollection.add(project);
+    this.projectsCollection.add(project)
+      .then((data) => {
+        this.router.navigate([`projects/${data.id}`], {relativeTo: this.route});
+        console.log(`The ID of the newly created project is: ${data.id}`);
+      });
   }
+
+  // getProject(id: string) {
+  //   return new Promise((resolve, reject) => {
+  //     this.projectDoc = this.afs.doc<Project>(`projects/${id}`);
+  //     this.project = this.projectDoc.snapshotChanges().pipe(map(action => {
+  //       if (action.payload.exists === false) {
+  //         return null;
+  //       } else {
+  //         const data = action.payload.data() as Project;
+  //         data.id = action.payload.id;
+  //         return data;
+  //       }
+  //     }));
+  //   });
+
+  //   this.projectDoc = this.afs.doc<Project>(`projects/${id}`);
+  //   this.project = this.projectDoc.snapshotChanges().pipe(map(action => {
+  //     if (action.payload.exists === false) {
+  //       return null;
+  //     } else {
+  //       const data = action.payload.data() as Project;
+  //       data.id = action.payload.id;
+  //       return data;
+  //     }
+  //   }));
+  //   return this.project;
+  // }
 
   getProject(id: string): Observable<Project> {
     this.projectDoc = this.afs.doc<Project>(`projects/${id}`);
-    this.project = this.projectDoc.snapshotChanges().pipe(map(action => {
+    this.project = this.projectDoc.snapshotChanges()
+    .pipe(map(action => {
       if (action.payload.exists === false) {
         return null;
       } else {

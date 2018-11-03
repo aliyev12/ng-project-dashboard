@@ -1,5 +1,4 @@
-export class KeyRiskItem {
-  constructor(
-    public name: string
-    ) {}
+export interface KeyRiskItem {
+  id?: string;
+  name?: string;
 }
