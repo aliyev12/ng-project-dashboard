@@ -159,7 +159,6 @@ textarea.ng-untouched.ng-pristine.ng-invalid {
 .legend-item {
   font-weight: 500;
   font-size: 0.5rem;
-  white-space: nowrap !important;
 }
 
 
@@ -425,4 +424,35 @@ textarea.ng-untouched.ng-pristine.ng-invalid {
   .buttons-large-screen {
     display: none;
   }
+
+  .legend-flex-container {
+    flex-direction: column;
+  }
+
+  .legend-main-wrapper {
+    justify-content: start !important;
+    padding-top: 30px !important;
+  }
+
+  .legend-title {
+    display: none;
+  }
+
+  .legend-green,
+  .legend-yellow,
+  .legend-red {
+    padding: 4px !important;
+  }
+}
+
+.edit-project-button:hover {
+  text-decoration: none;
+}
+
+.hover-success:hover {
+  color: #28a745 !important;
+}
+
+.height-100 {
+  height: 100% !important;
 }

@@ -18,9 +18,9 @@
                         </div>
                       </div>
                       <div class="item-hl">
-                        <a routerLink="/projects/edit/{{id}}" type="button" title="Edit Project" class="btn btn-link text-dark py-0 px-1"
+                        <button routerLink="/projects/edit/{{id}}" type="button" title="Edit Project" class="btn btn-link text-dark py-0 px-1 hover-success edit-project-button"
                           *ngIf="isAuthenticated">
-                          <i class="fas fa-edit"></i> Edit Project</a>
+                          <i class="fas fa-edit"></i> Edit Project</button>
                       </div>
                     </div>
 
@@ -186,11 +186,11 @@
 
 
           <div class="split-main-container-in-2-right-side-summary">
-            <div class="card border-info">
+            <div class="card border-info height-100">
               <div class="card-header">
                 Summary
               </div>
-              <div class="card-body" *ngIf="project">
+              <div class="card-body height-100 p-1" *ngIf="project">
                 <div [froalaView]="project.summary"></div>
               </div>
             </div>
@@ -206,25 +206,25 @@
 
       <div class="main-container-bottom-legend">
         <!-- LEGEND -->
-        <div class="d-flex justify-content-end pt-2">
+        <div class="d-flex justify-content-end pt-2 legend-main-wrapper">
           <div class="legend-item">
 
-            <div class="d-flex">
+            <div class="d-flex legend-flex-container">
               <div class="legend-title p-3">
                 <div class="color transparent"><span>?</span></div>
-                Key Milestone Legend:
+                <span class="no-wrap">Key Milestone Legend:</span>
               </div>
               <div class="legend-green p-3">
                 <div class="color green"><span>Green</span></div>
-                Requirement Ready
+                <span class="no-wrap ml-2">Requirement Ready</span>
               </div>
               <div class="legend-yellow p-3">
                 <div class="color yellow"><span>Yellow</span></div>
-                Requirement Drafted; Require Final Grooming
+                <span class="no-wrap ml-2">Requirement Drafted; Require Final Grooming</span>
               </div>
               <div class="legend-red p-3">
                 <div class="color red"><span>Red</span></div>
-                Requirement Not Started; Planned
+                <span class="no-wrap ml-2">Not Started; Planned</span>
               </div>
             </div>
 

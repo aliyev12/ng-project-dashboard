@@ -34,22 +34,16 @@ import {Promise} from 'q';
   ],
 })
 export class ProjectEditComponent implements OnInit, ControlValueAccessor, AfterViewInit {
-  public options: Object = {
-    charCounterCount: true /** CHARACTER COUNT FOR SUMMARY */,
-    toolbarButtons: ['bold', 'italic', 'underline', 'fontSize', 'color'],
-    toolbarButtonsXS: ['bold', 'italic', 'underline', 'fontSize', 'color'],
-    toolbarButtonsSM: ['bold', 'italic', 'underline', 'fontSize', 'color'],
-    toolbarButtonsMD: ['bold', 'italic', 'underline', 'fontSize', 'color'],
-  };
+  options = this.projectService.getWisiwigConfiguration();
   id: string;
   editMode = false;
   editedItem: Project;
   projectForm: FormGroup;
   project: Project;
   description;
-    model: any; /** CONTENT OF RICH TEXT EDITOR OF SUMMARY */
+  model: any; /** CONTENT OF RICH TEXT EDITOR OF SUMMARY */
   config: Object = {
-    charCounterCount: false,
+  charCounterCount: false,
   };
 
   constructor(
@@ -74,7 +68,6 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
         });
       });
       }
-
       this.initForm();
     });
     this.model = this.projectForm.controls.summary.value;
@@ -94,7 +87,7 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate([`projects/${this.id}`]);
   }
 
   /** ADDING MAIN BULLETS */
@@ -459,7 +452,6 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
             );
           }
         } // end if requiredDecisions
-        // }); // end store subscribe
       }); /************************* */
     } // end if editmode
 

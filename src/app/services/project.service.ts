@@ -106,6 +106,17 @@ export class ProjectService {
     this.projectDoc.delete();
   }
 
+  getWisiwigConfiguration() {
+    const options: Object = {
+      charCounterCount: true /** CHARACTER COUNT FOR SUMMARY */,
+      toolbarButtons: ['bold', 'italic', 'underline', 'fontSize', 'color'],
+      toolbarButtonsXS: ['bold', 'italic', 'underline', 'fontSize', 'color'],
+      toolbarButtonsSM: ['bold', 'italic', 'underline', 'fontSize', 'color'],
+      toolbarButtonsMD: ['bold', 'italic', 'underline', 'fontSize', 'color'],
+    };
+    return options;
+  }
+
 }
 
 
