@@ -90,11 +90,17 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
     this.router.navigate([`projects/${this.id}`]);
   }
 
+  onSetKeyMilestoneDateStatus(i) {
+
+  }
+
   /** ADDING MAIN BULLETS */
   onAddNewKeyMilestone() {
     (<FormArray>this.projectForm.get('keyMilestones')).push(
       new FormGroup({
         name: new FormControl(null, Validators.required),
+        status: new FormControl(null),
+        date: new FormControl(null),
         items: new FormArray([]),
       })
     );
@@ -102,7 +108,7 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
     const indexOfLastItem = length - 1;
     const destination = 'keyMilestone-' + indexOfLastItem;
     const config: ScrollToConfigOptions = {
-      container: 'keyMilestones',
+      container: 'keyMilestonesCardBody',
       target: destination,
       duration: 2000,
       easing: 'easeOutElastic',
@@ -362,6 +368,8 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
             projectKeyMilestones.push(
               new FormGroup({
                 name: new FormControl(keyMilestone.name, Validators.required),
+                status: new FormControl(keyMilestone.status),
+                date: new FormControl(keyMilestone.date),
                 items: projectKeyMilestoneItems,
               })
             );

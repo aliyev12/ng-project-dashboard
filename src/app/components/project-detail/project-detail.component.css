@@ -1,3 +1,61 @@
+a {
+  cursor: pointer !important;
+}
+
+.keyMilestoneDateAddingBubble {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  margin-left: 10px;
+  position: absolute;
+}
+
+.keyMilestones {
+  font-size: 16px !important;
+}
+
+.keyMilestoneDateAddShowHideButton {
+  visibility: hidden;
+}
+
+/* #months-flex-main-container div {
+  border: 1px solid black;
+} */
+
+#months-flex-main-container .month {
+  width: 8%;
+  min-height: 60px;
+}
+
+.month-name {
+  font-size: 0.5vw;
+  white-space: nowrap;
+}
+
+.month-name-narrow {
+  display: none;
+}
+
+.month-inbetween {
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.month-start {
+  margin-right: 1px;
+}
+
+.month-end {
+  margin-left: 1px;
+}
+
+.plotting-line {
+  height: 10px;
+  width: 100%;
+}
+
+
+
 .splitInColumns {
   -webkit-columns: 2;
   -moz-columns: 2;
@@ -159,6 +217,18 @@ textarea.ng-untouched.ng-pristine.ng-invalid {
 .legend-item {
   font-weight: 500;
   font-size: 0.5rem;
+}
+
+.edit-project-button:hover {
+  text-decoration: none;
+}
+
+.hover-success:hover {
+  color: #28a745 !important;
+}
+
+.height-100 {
+  height: 100% !important;
 }
 
 
@@ -340,8 +410,15 @@ textarea.ng-untouched.ng-pristine.ng-invalid {
   }
 }
 
+/* END OF SPINNER */
 
+
+
+/* MEDIA QUERIES */
+
+/* @media (min-width: 993px) and (max-width: 1200px) { */
 @media (max-width: 1200px) {
+
   .top-left {
     padding-right: 0;
   }
@@ -443,16 +520,32 @@ textarea.ng-untouched.ng-pristine.ng-invalid {
   .legend-red {
     padding: 4px !important;
   }
+
+  .month-name {
+    display: none;
+  }
+
+  .month-name-narrow {
+    display: inline-block;
+    font-size: 0.5vw;
+  }
+
+  .splitInColumns {
+    -webkit-columns: unset;
+    -moz-columns: unset;
+    columns: unset;
+  }
+
+  .innerDivs {
+    -webkit-column-break-inside: unset;
+    page-break-inside: unset;
+    break-inside: unset;
+  }
 }
 
-.edit-project-button:hover {
-  text-decoration: none;
-}
+@media(max-width: 992px) {
+  #months-flex-main-container {
+    display: none !important;
+  }
 
-.hover-success:hover {
-  color: #28a745 !important;
-}
-
-.height-100 {
-  height: 100% !important;
 }

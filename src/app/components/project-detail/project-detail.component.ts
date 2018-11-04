@@ -5,13 +5,29 @@ import {AuthService} from '../../services/auth.service';
 import {ProjectService} from '../../services/project.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import { Observable } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.css'],
+  animations: [
+    trigger('divState', [
+      state('normal', style({
+        backgroundColor: 'red',
+        transform: 'translateX(0)'
+      })),
+      state('highlighted', style({
+        backgroundColor: 'blue',
+        transform: 'translateX(100px)'
+      })),
+      transition('normal => highlighted', animate(300)),
+      transition('highlighted => normal', animate(800))
+    ]) // end of trigger
+  ] // end of animations
 })
 export class ProjectDetailComponent implements OnInit {
+  state = 'normal';
   showDropdown = false;
   isAuthenticated: boolean;
   loggedInUser: string;
@@ -21,13 +37,14 @@ export class ProjectDetailComponent implements OnInit {
   projects: Project[];
   editorContent;
   isLoading = true;
+  showHideAddKMDateButton = 'none';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private projectService: ProjectService,
-    private flashMessage: FlashMessagesService // private store: Store<fromProject.FeatureState>
+    private projectService: ProjectService
+    // private flashMessage: FlashMessagesService // private store: Store<fromProject.FeatureState>
   ) {}
 
   ngOnInit() {
@@ -51,15 +68,32 @@ export class ProjectDetailComponent implements OnInit {
         this.projects = projects;
       });
     });
+  }
 
-    console.log(`this.id = ${this.id}`);
-    console.log(`this.project = `);
-    console.log(this.project);
-    setTimeout(() => {
-      console.log(`this.project 2 s later = `);
-    console.log(this.project);
-    }, 2000);
-    console.log();
+  onAnimate() {
+    if (this.state === 'normal') {
+      this.state = 'highlighted';
+    } else {
+      this.state = 'normal';
+    }
+  }
+
+  onKMMouseEnter(index: number) {
+    const indexPlusOne = index + 1;
+    const keyMilestoneDateAddShowHideButton = document.querySelector(`#keyMilestoneDateAddShowHideButton-${indexPlusOne}`);
+    keyMilestoneDateAddShowHideButton.setAttribute('style', 'visibility: visible');
+    // keyMilestoneDateAddShowHideButton.innerHTML = '<p>Mouse entered</p>';
+     // setAttribute(qualifiedName: string, value: string): void;
+    // keyMilestoneDateAddShowHideButton.toggleAttribute
+    // keyMilestoneDateAddShowHideButton.hasAttribute
+    // this.showHideAddKMDateButton = 'inline-block';
+  }
+
+  onKMMouseLeave(index: number) {
+    const indexPlusOne = index + 1;
+    const keyMilestoneDateAddShowHideButton = document.querySelector(`#keyMilestoneDateAddShowHideButton-${indexPlusOne}`);
+    keyMilestoneDateAddShowHideButton.setAttribute('style', 'visibility: hidden');
+    // keyMilestoneDateAddShowHideButton.innerHTML = '<p>Mouse Left</p>';
   }
 
   onEditProject() {
@@ -69,10 +103,10 @@ export class ProjectDetailComponent implements OnInit {
   onDeleteProject() {
     if (confirm('Are you sure?')) {
       this.projectService.deleteProject(this.project);
-      this.flashMessage.show('Project removed', {
-        cssClass: 'alert-success',
-        timeout: 4000,
-      });
+      // this.flashMessage.show('Project removed', {
+      //   cssClass: 'alert-success',
+      //   timeout: 4000,
+      // });
       this.router.navigate(['/projects']);
     }
   }

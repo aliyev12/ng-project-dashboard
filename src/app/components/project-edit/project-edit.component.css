@@ -56,6 +56,10 @@ ul {
   overflow: auto;
 }
 
+#keyMilestonesCardBody {
+  max-height: 300px !important;
+}
+
 .project-main-container,
 .split-main-container-in-2,
 .left-side-container,

@@ -1,9 +1,3 @@
-import { KeyMilestone } from './key-milestone/key-milestone.model';
-import { UpcomingKeyActivity } from './upcoming-key-activity/upcoming-key-activity.model';
-import { ResourceAssignment } from './resource-assignment/resource-assignment.model';
-import { KeyRisk } from './key-risk/key-risk.model';
-import { RequiredDecision } from './required-decision/required-decision.model';
-
 export interface Project {
   id?: string;
   name?: string;
@@ -12,6 +6,8 @@ export interface Project {
     {
       id?: string;
       name?: string;
+      status?: number;
+      date?: string;
       items?: [
         {
           id?: string,
