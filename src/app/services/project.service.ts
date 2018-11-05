@@ -101,9 +101,19 @@ export class ProjectService {
       });
   }
 
+  archiveProject(id: string, project: Project) {
+    //
+  }
+
   deleteProject(project: Project) {
     this.projectDoc = this.afs.doc(`projects/${project.id}`);
-    this.projectDoc.delete();
+    this.projectDoc.delete()
+      .then(() => {
+        this.router.navigate([`/`]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   getWisiwigConfiguration() {

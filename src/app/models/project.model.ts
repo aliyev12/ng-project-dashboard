@@ -1,5 +1,6 @@
 export interface Project {
   id?: string;
+  archived?: boolean;
   name?: string;
   summary?: string;
   keyMilestones?: [

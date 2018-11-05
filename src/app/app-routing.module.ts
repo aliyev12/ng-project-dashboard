@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ArchiveComponent } from './components/archive/archive.component';
 
 // const appRoutes: Routes = [
 //   { path: '', redirectTo: '/projects', pathMatch: 'full' },
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'projects/new', component: ProjectEditComponent, canActivate: [AuthGuard] },
   {path: 'projects/:id', component: ProjectDetailComponent, canActivate: [AuthGuard] },
   {path: 'projects/edit/:id', component: ProjectEditComponent, canActivate: [AuthGuard]},
+  {path: 'archive', component: ArchiveComponent, canActivate: [AuthGuard]},
   {path: '**', component: NotFoundComponent},
 ];
 

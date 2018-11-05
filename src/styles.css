@@ -8,6 +8,42 @@ body {
   overflow-x: hidden !important;
 }
 
+/* Modifying date picker */
+.mydp, .mydp .headertodaybtn {
+  border: none !important;
+}
+
+.selbtngroup {
+  height: 0 !important;
+}
+
+.mydp .btnclear, .mydp .btndecrease, .mydp .btnincrease, .mydp .btnpicker {
+  height: 0 !important;
+  width: 0 !important;
+}
+
+.mydp, .mydp .headertodaybtn, .mydp .selection, .mydp .selectiongroup, .mydp .selector {
+  border-radius: unset !important;
+}
+
+.mydp .selbtngroup {
+  white-space: unset !important;
+  width: 0 !important;
+}
+
+.mydp .selectiongroup {
+  display: unset !important;
+  border: none !important;
+  border-spacing: 0;
+  background-color: unset !important;
+}
+
+.mydp .alignselectorright {
+  right: -44px !important;
+}
+
+/* Done modifying date picker */
+
 
 
 @media (max-width: 992px) {

@@ -24,6 +24,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
+import { MyDatePickerModule } from 'mydatepicker';
+import { ArchiveComponent } from './components/archive/archive.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
     SidebarComponent,
     ProjectDetailComponent,
     ProjectEditComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ArchiveComponent
     ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
     FroalaViewModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MyDatePickerModule
   ],
   bootstrap: [AppComponent],
   providers: [ProjectService, AuthService, AuthGuard, ScrollToService]

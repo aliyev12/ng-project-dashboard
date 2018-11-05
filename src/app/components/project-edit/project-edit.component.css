@@ -18,20 +18,44 @@ ul {
   margin-bottom: 10px;
 }
 
+/* Number */
 .box-1 {
   flex-basis: 2%;
 }
 
+/* Textarea */
 .box-2 {
-  flex-basis: 86%;
-  margin-right: 10px;
+  flex-basis: 100%;
+  /* margin-right: 10px; 65 */
 }
 
+/* Select list */
 .box-3 {
+  flex-basis: 15%;
+  /* margin-right: 10px; */
+}
+
+.statusSelectList {
+  min-width: 115px !important;
+}
+
+/* Date picker */
+.box-4 {
   flex-basis: 6%;
 }
 
-.box-4 {
+/* Expand */
+.box-5 {
+  flex-basis: 6%;
+}
+
+/* Delete */
+.box-6 {
+  flex-basis: 6%;
+}
+
+/* Delete */
+.box-7 {
   flex-basis: 6%;
 }
 
@@ -57,8 +81,20 @@ ul {
 }
 
 #keyMilestonesCardBody {
-  max-height: 300px !important;
+  height: 300px !important;
 }
+
+/* select option[value="1"] {
+  background: #dc3545 !important;
+}
+
+select option[value="2"] {
+  background: #ffc107 !important;
+}
+
+select option[value="2"] {
+  background: #28a745 !important;
+} */
 
 .project-main-container,
 .split-main-container-in-2,
@@ -144,8 +180,7 @@ ul {
 }
 
 .buttons-container {
-  width: 40%;
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .buttons-small-screen {
@@ -210,6 +245,10 @@ ul {
 
 .buttons-large-screen {
   width: 111px;
+}
+
+.main-wrapper-content {
+  width: 100% !important;
 }
 
 

@@ -10,7 +10,7 @@
     <ul *ngIf="isAuthenticated" class="list-unstyled components">
       <li>
         <a class="dropdown-item" (click)="onLogout()">
-          <i class="fas fa-user-times"></i> Logout
+          <i class="fas fa-user-times mr-3"></i> Logout
         </a>
       </li>
 
@@ -20,8 +20,12 @@
       </li>
       <li id="newProjectLi">
         <a id="newProjectButton" (click)="onNewProject()">
-          <i class="fas fa-plus pr-2"></i> New
+          <i class="fas fa-plus mr-3"></i>New
           Project</a>
+      </li>
+      <li id="newProjectLi">
+        <a id="newProjectButton" routerLink="archive">
+            <i class="fas fa-archive mr-3"></i>Archive</a>
       </li>
     </ul>
 

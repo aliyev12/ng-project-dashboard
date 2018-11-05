@@ -17,6 +17,7 @@ import {
 import {forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ProjectService} from '../../services/project.service';
+import {IMyDpOptions} from 'mydatepicker';
 // import {FlashMessagesService} from 'angular2-flash-messages';
 import {Subscription} from 'rxjs';
 import {Promise} from 'q';
@@ -33,7 +34,8 @@ import {Promise} from 'q';
     },
   ],
 })
-export class ProjectEditComponent implements OnInit, ControlValueAccessor, AfterViewInit {
+export class ProjectEditComponent
+  implements OnInit, ControlValueAccessor, AfterViewInit {
   options = this.projectService.getWisiwigConfiguration();
   id: string;
   editMode = false;
@@ -42,9 +44,28 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
   project: Project;
   description;
   model: any; /** CONTENT OF RICH TEXT EDITOR OF SUMMARY */
+  showDateStatus = false;
   config: Object = {
-  charCounterCount: false,
+    charCounterCount: false,
   };
+  currentDateForDatePicker = {
+    year: (new Date()).getFullYear(),
+    month: (new Date()).getMonth() + 1,
+    day: (new Date()).getDate()
+  };
+  myDatePickerOptions: IMyDpOptions = {
+    // other options...
+    dateFormat: 'mm/dd/yyyy',
+    height: '34px',
+    width: '135px',
+    showInputField:	false,
+    showClearDateBtn: false,
+    allowDeselectDate: true,
+    inline: false,
+    alignSelectorRight: true,
+    disableUntil: this.currentDateForDatePicker
+  };
+  datePickerModel: Object = {jsdate: new Date()};
 
   constructor(
     private route: ActivatedRoute,
@@ -60,13 +81,13 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
       this.id = params['id'];
       this.editMode = params['id'] != null;
       if (this.editMode) {
-      this.projectService.getProject(this.id).subscribe(project => {
-        this.project = project;
-        this.projectForm.patchValue({
-          name: project.name,
-          summary: project.summary,
+        this.projectService.getProject(this.id).subscribe(project => {
+          this.project = project;
+          this.projectForm.patchValue({
+            name: project.name,
+            summary: project.summary,
+          });
         });
-      });
       }
       this.initForm();
     });
@@ -90,9 +111,28 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
     this.router.navigate([`projects/${this.id}`]);
   }
 
-  onSetKeyMilestoneDateStatus(i) {
-
+  onArchive() {
+    if (confirm('Are you sure you want to archive this project?')) {
+      console.log(`Project with ID# ${this.id} is being archived...`);
+    }
   }
+
+  onDelete() {
+    const confirmProjectName = prompt(`
+    In order to confirm project deletion, please enter the project name as it appears below:
+    ${this.project.name}
+    `);
+    if (confirmProjectName.toLowerCase() === this.project.name.toLowerCase()) {
+      if (confirm('Are you sure you want to permanently delete this project?')) {
+        console.log(`Project with ID# ${this.id} is being permanently deleted...`);
+        this.projectService.deleteProject(this.project);
+      }
+    } else {
+      alert(`Project cannot be deleted because the names you have entered do not match.`);
+    }
+  }
+
+  onSetKeyMilestoneDateStatus(i) {}
 
   /** ADDING MAIN BULLETS */
   onAddNewKeyMilestone() {
@@ -528,5 +568,22 @@ export class ProjectEditComponent implements OnInit, ControlValueAccessor, After
     this.onTouched = fn;
   }
 
-}
+  setDate(): void {
+    // Set today date using the patchValue function
+    let date = new Date();
+    this.projectForm.patchValue({
+      myDate: {
+        date: {
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+        },
+      },
+    });
+  }
 
+  clearDate(): void {
+    // Clear the date using the patchValue function
+    this.projectForm.patchValue({myDate: null});
+  }
+}
