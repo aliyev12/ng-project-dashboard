@@ -84,6 +84,7 @@ export class ProjectEditComponent
         this.projectService.getProject(this.id).subscribe(project => {
           this.project = project;
           this.projectForm.patchValue({
+            archived: project.archived,
             name: project.name,
             summary: project.summary,
           });
@@ -113,6 +114,7 @@ export class ProjectEditComponent
 
   onArchive() {
     if (confirm('Are you sure you want to archive this project?')) {
+      this.projectService.archiveProject(this.id);
       console.log(`Project with ID# ${this.id} is being archived...`);
     }
   }
@@ -380,6 +382,7 @@ export class ProjectEditComponent
 
   /** INIT FORM */
   private initForm() {
+    let projectArchived = false;
     let projectName = '';
     let projectSummary = '';
     const projectKeyMilestones = new FormArray([]);
@@ -390,6 +393,7 @@ export class ProjectEditComponent
 
     if (this.editMode) {
       this.projectService.getProject(this.id).subscribe(project => {
+        projectArchived = project.archived;
         projectName = project.name;
         projectSummary = project.summary;
 
@@ -504,6 +508,7 @@ export class ProjectEditComponent
     } // end if editmode
 
     this.projectForm = new FormGroup({
+      archived: new FormControl(projectArchived),
       name: new FormControl(projectName, Validators.required),
       summary: new FormControl(projectSummary),
       keyMilestones: projectKeyMilestones,

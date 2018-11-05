@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   innerWidth: any;
   isAuthenticated: boolean;
   loggedInUser: string;
-  projects: Project[];
+  projects: Project[] = [];
   trigger;
   wrapper;
   sidebarCollapse;
@@ -46,7 +46,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.isAuthenticated = true;
         this.loggedInUser = auth.email;
         this.projectService.getProjects().subscribe(projects => {
-          this.projects = projects;
+          const unArchivedProjects = [];
+          projects.forEach(project => {
+            if (project.archived === false || !project.archived) {
+              unArchivedProjects.push(project);
+            }
+          });
+           this.projects = unArchivedProjects;
         });
       } else {
         this.isAuthenticated = false;
@@ -110,12 +116,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     // this.store.dispatch(new AuthActions.Logout());
     this.isAuthenticated = false;
     this.authService.logout();
-  }
-
-  onNavigateToProject(index: number) {
-    this.projectService.getProjects().subscribe(projects => {
-        this.router.navigate([`projects/${projects[index].id}`]);
-    });
   }
 
 

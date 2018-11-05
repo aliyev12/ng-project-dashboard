@@ -14,8 +14,21 @@ export class ArchiveComponent implements OnInit {
 
   ngOnInit() {
     this.projectService.getProjects().subscribe((projects => {
-      this.projects = projects;
+      const archivedProjects = [];
+      projects.map(project => {
+        if (project.archived === true) {
+          archivedProjects.push(project);
+        }
+      });
+       this.projects = archivedProjects;
     }));
+  }
+
+  onRestore(index: number) {
+    if (confirm('Are you sure you want to restore this project?')) {
+      this.projectService.restoreProject(this.projects[index].id);
+      console.log(`Project with ID# ${this.projects[index].id} is being archived...`);
+    }
   }
 
 

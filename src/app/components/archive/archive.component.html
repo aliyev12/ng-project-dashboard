@@ -1,22 +1,27 @@
 <table *ngIf="projects?.length > 0; else noProjects" class="table table-striped">
-    <thead class="thead-inverse">
-      <tr>
-        <th>Name</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let project of projects">
-        <td>{{ project.name }}</td>
-        <!-- <td>{{ client.email }}</td>
+  <thead class="thead-inverse">
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let project of projects; let i = index">
+      <td>{{ project.name }}</td>
+      <!-- <td>{{ client.email }}</td>
         <td>{{ client.balance | currency:"USD":"symbol" }}</td> -->
-        <td><a routerLink="project/{{ project.id }}" class="btn btn-secondary btn-sm"><i class="fa fa-arrow-circle-o-right mr-2"></i>Restore</a></td>
-      </tr>
-    </tbody>
-  </table>
+      <td>
+        <button type="button" (click)="onRestore(i)" class="btn btn-secondary btn-sm">
+          <i class="fa fa-arrow-circle-o-right mr-2"></i>
+          Restore
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
-  <ng-template #noProjects>
-    <hr>
-    <h5>There are no projects</h5>
-  </ng-template>
+<ng-template #noProjects>
+  <hr>
+  <h5>There are no projects</h5>
+</ng-template>

@@ -13,10 +13,8 @@
           <i class="fas fa-user-times mr-3"></i> Logout
         </a>
       </li>
-
       <li *ngFor="let project of projects; let i = index">
-        <!-- routerLink="projects/{{ project.id }}" -->
-        <a  (click)="onNavigateToProject(i)">{{ project.name }}</a>
+        <a routerLink="projects/{{ project.id }}">{{ project.name }}</a>
       </li>
       <li id="newProjectLi">
         <a id="newProjectButton" (click)="onNewProject()">
@@ -25,7 +23,7 @@
       </li>
       <li id="newProjectLi">
         <a id="newProjectButton" routerLink="archive">
-            <i class="fas fa-archive mr-3"></i>Archive</a>
+          <i class="fas fa-archive mr-3"></i>Archive</a>
       </li>
     </ul>
 
