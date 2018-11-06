@@ -65,7 +65,6 @@ export class ProjectEditComponent
     alignSelectorRight: true,
     disableUntil: this.currentDateForDatePicker
   };
-  datePickerModel: Object = {jsdate: new Date()};
 
   constructor(
     private route: ActivatedRoute,

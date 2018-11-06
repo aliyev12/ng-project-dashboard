@@ -34,10 +34,11 @@ export class ProjectDetailComponent implements OnInit {
   id: string;
   project: Project;
   projectIsLoaded = false;
-  projects: Project[];
+  projects: Project[] = [];
   editorContent;
   isLoading = true;
   showHideAddKMDateButton = 'none';
+  dates = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +53,6 @@ export class ProjectDetailComponent implements OnInit {
       if (auth) {
         this.isAuthenticated = true;
         this.loggedInUser = auth.email;
-        console.log('Is Authenticated!');
       } else {
         this.isAuthenticated = false;
       }
@@ -68,6 +68,25 @@ export class ProjectDetailComponent implements OnInit {
         this.projects = projects;
       });
     });
+
+    // this.dates = this.project.keyMilestones.map(keyMilestone => {
+    //   return keyMilestone.date;
+    // });
+    // console.log(this.dates);
+
+    this.projectService.getProject(this.id).subscribe(project => {
+      if (project) {
+        project.keyMilestones.map(km => {
+          this.dates.push(km.date);
+        });
+      }
+    });
+
+    setTimeout(() => {
+      console.log(this.dates);
+    }, 1000);
+
+
   }
 
   onAnimate() {
