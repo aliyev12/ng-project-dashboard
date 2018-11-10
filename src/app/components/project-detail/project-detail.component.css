@@ -428,7 +428,7 @@ textarea.ng-untouched.ng-pristine.ng-invalid {
 /* MEDIA QUERIES */
 
 /* @media (min-width: 993px) and (max-width: 1200px) { */
-@media (max-width: 1200px) {
+@media (max-width: 1330px) {
 
   .top-left {
     padding-right: 0;
@@ -560,3 +560,11 @@ textarea.ng-untouched.ng-pristine.ng-invalid {
   }
 
 }
+@media(max-width: 855px) {
+  #dates-plotter {
+    display: none !important;
+  }
+
+}
+
+

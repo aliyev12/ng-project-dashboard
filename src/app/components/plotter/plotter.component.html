@@ -1,21 +1,63 @@
 <div class="months">
-  <div class="d-flex flex-column justify-content-center month" *ngFor="let month of months">
+  <div class="d-flex flex-column justify-content-center month bg-primary" *ngFor="let month of months">
     <span class="month-and-year">{{month.month}} {{month.year}}</span>
   </div>
 </div>
 <div class="main-wrapper" #myBounds>
+
+  <!--     [className]="(plottedDate.status == 1) ? 'bg-danger' : 'bg-success'"
+ -->
+
   <div
+    *ngFor="let plottedDate of plottedDates; let i = index"
     ngDraggable
     [bounds]="myBounds"
     [inBounds]="true"
     [gridSize]="gridSize"
     [preventDefaultEvent]="true"
-    class="drag-element"
+    class="d-flex justify-content-center plottedDate"
+    [ngClass]="{
+      'bg-danger': (plottedDate.status == 1),
+      'bg-warning': (plottedDate.status == 2),
+      'bg-success': (plottedDate.status == 3)
+    }"
     [zIndex]="1000"
-  ></div>
+    (started)="onStart($event)"
+    (stopped)="onStop($event)"
+    (movingOffset)="onMoving($event)"
+    (endOffset)="onMoveEnd($event)"
+    [position]="{x: plottedDate.position, y: 0}"
+    id="plottedDate-{{i}}"
+  >
+  <div
+      class="bubbleInfo d-flex justify-content-center"
+      [ngClass]="{
+        'bg-danger': (plottedDate.status == 1),
+        'bg-warning': (plottedDate.status == 2),
+        'bg-success': (plottedDate.status == 3)
+      }"
+      >
+      <div class="text-white my-auto mx-auto bubbleInfoText">
+        {{plottedDate.bullet}}
+      </div>
+
+  </div>
+    <div class="text-white my-auto mx-auto">{{plottedDate.bullet}}</div>
+  </div>
+
   <div class="middle-line"></div>
   <div *ngFor="let coordinate of coordinates">
     <div [ngDraggable]="false" [position]="{x: coordinate.x, y: coordinate.y}" [preventDefaultEvent]="true" class="grid"></div>
   </div>
 
 </div>
+
+
+<!-- <div class="col-sm-4">
+    <div class="alert alert-secondary" role="alert">
+      movingOffset: {{'{'}} x: {{movingOffset.x}}, y: {{movingOffset.y}} {{'}'}}
+    </div>
+    <div class="alert alert-secondary" role="alert">
+      endOffset: {{'{'}} x: {{endOffset.x}}, y: {{endOffset.y}} {{'}'}}
+    </div>
+</div> -->

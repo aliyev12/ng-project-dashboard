@@ -82,11 +82,6 @@ export class ProjectDetailComponent implements OnInit {
       }
     });
 
-    setTimeout(() => {
-      console.log(this.dates);
-    }, 1000);
-
-
   }
 
   onAnimate() {
