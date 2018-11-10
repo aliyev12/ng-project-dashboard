@@ -1,0 +1,47 @@
+.grid {
+  /* position: fixed; */
+  width: 60px;
+  height: 30px;
+  background-color: transparent;
+  border: 1px black solid;
+}
+
+.drag-element {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: #d9534f;
+  position: absolute;
+  margin-left: 30px;
+}
+
+.main-wrapper {
+  width: 720px;
+  height: 30px;
+}
+
+.middle-line {
+  width: 720px;
+  height: 6px;
+  position: absolute;
+  background: #333;
+  margin-top: 12px;
+  border-radius: 3px;
+}
+
+.months {
+  display: flex;
+  width: 720px;
+  height: 20px;
+  margin-bottom: 10px;
+  font-size: 10px;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.month {
+  width: 60px;
+  height: 20px;
+  border: 1px solid black;
+}

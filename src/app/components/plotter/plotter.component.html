@@ -1,0 +1,21 @@
+<div class="months">
+  <div class="d-flex flex-column justify-content-center month" *ngFor="let month of months">
+    <span class="month-and-year">{{month.month}} {{month.year}}</span>
+  </div>
+</div>
+<div class="main-wrapper" #myBounds>
+  <div
+    ngDraggable
+    [bounds]="myBounds"
+    [inBounds]="true"
+    [gridSize]="gridSize"
+    [preventDefaultEvent]="true"
+    class="drag-element"
+    [zIndex]="1000"
+  ></div>
+  <div class="middle-line"></div>
+  <div *ngFor="let coordinate of coordinates">
+    <div [ngDraggable]="false" [position]="{x: coordinate.x, y: coordinate.y}" [preventDefaultEvent]="true" class="grid"></div>
+  </div>
+
+</div>

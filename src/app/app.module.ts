@@ -26,6 +26,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { MyDatePickerModule } from 'mydatepicker';
 import { ArchiveComponent } from './components/archive/archive.component';
+import { PlotterComponent } from './components/plotter/plotter.component';
+import { AngularDraggableModule } from 'angular2-draggable';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { ArchiveComponent } from './components/archive/archive.component';
     ProjectDetailComponent,
     ProjectEditComponent,
     NotFoundComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    PlotterComponent
     ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ import { ArchiveComponent } from './components/archive/archive.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    AngularDraggableModule
   ],
   bootstrap: [AppComponent],
   providers: [ProjectService, AuthService, AuthGuard, ScrollToService]
