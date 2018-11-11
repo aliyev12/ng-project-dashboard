@@ -23,10 +23,11 @@
     }"
     [zIndex]="1000"
     (started)="onStart($event)"
-    (stopped)="onStop($event)"
+    (stopped)="onStop(plottedDate.kmIndex, $event)"
     (movingOffset)="onMoving($event)"
-    (endOffset)="onMoveEnd($event)"
+    (endOffset)="onMoveEnd(i, plottedDate.kmIndex, plottedDate.position, plottedDate.date, $event)"
     [position]="{x: plottedDate.position, y: 0}"
+    [ngStyle]="plottedDate.offset"
     id="plottedDate-{{i}}"
   >
   <div

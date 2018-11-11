@@ -1,7 +1,16 @@
-import {Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  AfterViewInit,
+} from '@angular/core';
 import {ProjectService} from '../../services/project.service';
 import {Project} from '../../models/project.model';
 import {Plotter} from './plotter.model';
+import {PlotterService} from './plotter.service';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-plotter',
@@ -18,35 +27,17 @@ export class PlotterComponent implements OnInit {
   months = [];
   gridSize = 60;
   movingOffset = {x: 0, y: 0};
-  endOffset = {x: 0, y: 0};
 
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    private plotterService: PlotterService
+  ) {}
 
   ngOnInit() {
     this.projectService.getProject(this.projectId).subscribe(project => {
+      this.initPlotter(project);
       this.project = project;
-      project.keyMilestones.forEach((keyMilestone, i) => {
-        this.plottedDates.push({
-          bullet: i + 1,
-          name: keyMilestone.name,
-          date: keyMilestone.date,
-          status: keyMilestone.status,
-          position: this.getKMPosition(keyMilestone.date),
-        });
-        keyMilestone.items.forEach(kmItem => {
-          this.plottedDates.push({
-            bullet: i + 1,
-            name: kmItem.name,
-            date: kmItem.date,
-            status: kmItem.status,
-            position: this.getKMPosition(kmItem.date),
-          });
-        });
-      });
-
-      this.repositionBubbles();
     });
-
     this.setCoordinates();
     this.setMonths();
   }
@@ -158,18 +149,53 @@ export class PlotterComponent implements OnInit {
     }
   }
 
-  repositionBubbles() {
-    const positions = [];
-    console.log('repositioning...');
-    if (this.plottedDates) {
-      this.plottedDates.forEach((plottedDate, i) => {
-        positions.push(`${i+1} - ${plottedDate.position}`);
-      });
+  getKMOffset(date) {
+    const positions = this.plottedDates.map(
+      plottedDate => plottedDate.position
+    );
+    let counter = 0;
+    let offset: number;
+    let myStyles;
+    positions.forEach(position => {
+      if (date === position) {
+        counter = counter + 1;
+      }
+    });
+    if (counter > 0) {
+      offset = (3 - counter) * 10;
+    } else {
+      offset = 30;
     }
+    myStyles = {
+      'margin-left': `${offset}px`,
+    };
 
-    console.log(positions);
+    return myStyles;
+  }
 
-
+  initPlotter(project) {
+    project.keyMilestones.forEach((keyMilestone, i) => {
+      this.plottedDates.push({
+        bullet: i + 1,
+        kmIndex: i,
+        name: keyMilestone.name,
+        date: keyMilestone.date,
+        status: keyMilestone.status,
+        position: this.getKMPosition(keyMilestone.date),
+        offset: this.getKMOffset(this.getKMPosition(keyMilestone.date)),
+      });
+      keyMilestone.items.forEach((kmItem, j) => {
+        this.plottedDates.push({
+          bullet: j + 1,
+          kmIndex: j,
+          name: kmItem.name,
+          date: kmItem.date,
+          status: kmItem.status,
+          position: this.getKMPosition(kmItem.date),
+          offset: this.getKMOffset(this.getKMPosition(kmItem.date)),
+        });
+      });
+    });
   }
 
   /********************** */
@@ -180,17 +206,88 @@ export class PlotterComponent implements OnInit {
     // console.log('started output:', event);
   }
 
-  onStop(event) {
-    // console.log('stopped output:', event);
+  onStop(kmIndex, event) {
+
+
+    // this.plottedDates.splice(0, (this.plottedDates.length + 1));
+    // console.log(this.plottedDates);
+    // this.initPlotter(this.project);
+    //  console.log(this.plottedDates);
+    // this.plottedDates.map(plottedDate => {
+    //   plottedDate.offset['margin-left'] = '30px';
+    // });
   }
 
   onMoving(event) {
     this.movingOffset.x = event.x;
     this.movingOffset.y = event.y;
+    // console.log(event);
+
   }
 
-  onMoveEnd(event) {
-    this.endOffset.x = event.x;
-    this.endOffset.y = event.y;
+  onMoveEnd(plotIndex, kmIndex, currentPosition, date, event) {
+    const endOffset = {x: 0, y: 0};
+    endOffset.x = event.x;
+    endOffset.y = event.y;
+    // const difference = event.x - currentPosition;
+    // const divided = difference / 60;
+    const monthsApart = (event.x - currentPosition) / 60;
+    let newYear;
+    let newMonth;
+    if (monthsApart > (12 - date.date.month)) {
+      newMonth = monthsApart - (12 - date.date.month);
+      newYear = date.date.year + 1;
+    } else {
+      newMonth = date.date.month + monthsApart;
+      newYear = date.date.year;
+    }
+    const newEpoc = new Date(newYear, newMonth, 28, 0, 0, 0, 0).getTime();
+    // this.project.keyMilestones[kmIndex].name = 'new name';
+    // this.project.keyMilestones[kmIndex].date.date = {
+    //     day: 28,
+    //     month: newMonth,
+    //     year: newYear
+    //   };
+
+
+    this.project.keyMilestones[kmIndex].date = {
+      date: {
+        day: 28,
+        month: newMonth,
+        year: newYear
+      },
+      jsdate: {
+        seconds: newEpoc
+      },
+      formatted: `${newMonth}/28/${newYear}`,
+      epoc: newEpoc
+    };
+
+/**
+export interface IMyDateModel {
+    date: {day: number, month: number, year: number};
+    jsdate: Date;
+    formatted: string;
+    epoc: number;
+}
+ */
+    {
+
+    this.projectService.updateProject(this.projectId, this.project);
+
+    // console.log(`event.x = ${event.x}`);
+    // console.log(`currentPosition = ${currentPosition}`);
+    // console.log(`date = ${date.date.month}`);
+    // console.log(date);
+
+    console.log(this.project.keyMilestones[kmIndex].date);
+
+
+    // console.log(`number of months apart = ${monthsApart}`);
+
+
+
+
+
   }
 }

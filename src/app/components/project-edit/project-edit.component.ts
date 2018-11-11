@@ -17,7 +17,7 @@ import {
 import {forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ProjectService} from '../../services/project.service';
-import {IMyDpOptions} from 'mydatepicker';
+import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
 // import {FlashMessagesService} from 'angular2-flash-messages';
 import {Subscription} from 'rxjs';
 import {Promise} from 'q';
@@ -572,22 +572,28 @@ export class ProjectEditComponent
     this.onTouched = fn;
   }
 
-  setDate(): void {
-    // Set today date using the patchValue function
-    let date = new Date();
-    this.projectForm.patchValue({
-      myDate: {
-        date: {
-          year: date.getFullYear(),
-          month: date.getMonth() + 1,
-          day: date.getDate(),
-        },
-      },
-    });
-  }
+  // setDate(): void {
+  //   // Set today date using the patchValue function
+  //   let date = new Date();
+  //   this.projectForm.patchValue({
+  //     myDate: {
+  //       date: {
+  //         year: date.getFullYear(),
+  //         month: date.getMonth() + 1,
+  //         day: date.getDate(),
+  //       },
+  //     },
+  //   });
+  // }
 
-  clearDate(): void {
-    // Clear the date using the patchValue function
-    this.projectForm.patchValue({myDate: null});
-  }
+  // clearDate(): void {
+  //   // Clear the date using the patchValue function
+  //   this.projectForm.patchValue({myDate: null});
+  // }
+
+  // onDateChanged(event: IMyDateModel) {
+  //   console.log('happening...');
+
+  //   // console.log('onDateChanged(): ', event.date, ' - jsdate: ', new Date(event.jsdate).toLocaleDateString(), ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+  // }
 }
