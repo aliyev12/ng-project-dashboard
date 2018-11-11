@@ -8,13 +8,13 @@ export interface Project {
       id?: string;
       name?: string;
       status?: number;
-      date?: string;
+      date?: any;
       items?: [
         {
           id?: string,
           name?: string,
           status?: number,
-          date?: string
+          date?: any
         }
       ]
     }

@@ -10,7 +10,7 @@ import {ProjectService} from '../../services/project.service';
 import {Project} from '../../models/project.model';
 import {Plotter} from './plotter.model';
 import {PlotterService} from './plotter.service';
-import { stringify } from 'querystring';
+import {stringify} from 'querystring';
 
 @Component({
   selector: 'app-plotter',
@@ -174,6 +174,7 @@ export class PlotterComponent implements OnInit {
   }
 
   initPlotter(project) {
+    this.plottedDates = [];
     project.keyMilestones.forEach((keyMilestone, i) => {
       this.plottedDates.push({
         bullet: i + 1,
@@ -207,11 +208,6 @@ export class PlotterComponent implements OnInit {
   }
 
   onStop(kmIndex, event) {
-
-
-    // this.plottedDates.splice(0, (this.plottedDates.length + 1));
-    // console.log(this.plottedDates);
-    // this.initPlotter(this.project);
     //  console.log(this.plottedDates);
     // this.plottedDates.map(plottedDate => {
     //   plottedDate.offset['margin-left'] = '30px';
@@ -222,19 +218,16 @@ export class PlotterComponent implements OnInit {
     this.movingOffset.x = event.x;
     this.movingOffset.y = event.y;
     // console.log(event);
-
   }
 
   onMoveEnd(plotIndex, kmIndex, currentPosition, date, event) {
     const endOffset = {x: 0, y: 0};
     endOffset.x = event.x;
     endOffset.y = event.y;
-    // const difference = event.x - currentPosition;
-    // const divided = difference / 60;
     const monthsApart = (event.x - currentPosition) / 60;
     let newYear;
     let newMonth;
-    if (monthsApart > (12 - date.date.month)) {
+    if (monthsApart > 12 - date.date.month) {
       newMonth = monthsApart - (12 - date.date.month);
       newYear = date.date.year + 1;
     } else {
@@ -242,52 +235,19 @@ export class PlotterComponent implements OnInit {
       newYear = date.date.year;
     }
     const newEpoc = new Date(newYear, newMonth, 28, 0, 0, 0, 0).getTime();
-    // this.project.keyMilestones[kmIndex].name = 'new name';
-    // this.project.keyMilestones[kmIndex].date.date = {
-    //     day: 28,
-    //     month: newMonth,
-    //     year: newYear
-    //   };
-
-
     this.project.keyMilestones[kmIndex].date = {
       date: {
         day: 28,
         month: newMonth,
-        year: newYear
+        year: newYear,
       },
       jsdate: {
-        seconds: newEpoc
+        nanoseconds: 0,
+        seconds: newEpoc,
       },
       formatted: `${newMonth}/28/${newYear}`,
-      epoc: newEpoc
+      epoc: newEpoc,
     };
-
-/**
-export interface IMyDateModel {
-    date: {day: number, month: number, year: number};
-    jsdate: Date;
-    formatted: string;
-    epoc: number;
-}
- */
-    {
-
     this.projectService.updateProject(this.projectId, this.project);
-
-    // console.log(`event.x = ${event.x}`);
-    // console.log(`currentPosition = ${currentPosition}`);
-    // console.log(`date = ${date.date.month}`);
-    // console.log(date);
-
-    console.log(this.project.keyMilestones[kmIndex].date);
-
-
-    // console.log(`number of months apart = ${monthsApart}`);
-
-
-
-
-
   }
 }
