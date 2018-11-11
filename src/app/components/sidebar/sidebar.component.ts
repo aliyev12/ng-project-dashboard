@@ -118,5 +118,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     this.authService.logout();
   }
 
+  onProjectChanged(id: string) {
+     this.projectService.projectChanged.next(id);
+  }
+
 
 }

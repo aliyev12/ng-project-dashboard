@@ -10,7 +10,6 @@
   width: 30px;
   border-radius: 50%;
   position: absolute;
-  /* margin-left: 30px; */
   cursor: -webkit-grab;
   cursor: grab;
   border: 1px solid white;
@@ -26,6 +25,17 @@
 .plottedDate:hover {
   z-index: 9999 !important;
 }
+
+
+
+.set-z-index {
+  z-index: 9999 !important;
+}
+
+.remove-z-index {
+  z-index: 9 !important;
+}
+
 
 .main-wrapper {
   width: 780px;
@@ -69,19 +79,17 @@
   border-bottom-right-radius: 5px;
 }
 
-.bubbleInfo {
-  pointer-events: none;
-  margin: 0;
-  width: 20px;
-  height: 13px;
+.numberOfBuble {
+  position: absolute;
+  top: -24px;
   border-radius: 50% 50% 0 50%;
-  text-align: center;
   -webkit-transform: rotate(70deg) skew(45deg);
   -moz-transform: rotate(70deg) skew(45deg);
   -ms-transform: rotate(70deg) skew(45deg);
   transform: rotate(70deg) skew(45deg);
-  position: absolute;
-  top: -24px;
+  width: 20px;
+  height: 13px;
+  text-align: center;
 }
 
 .bubbleInfoText {

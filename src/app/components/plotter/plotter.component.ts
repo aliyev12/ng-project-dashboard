@@ -10,7 +10,6 @@ import {ProjectService} from '../../services/project.service';
 import {Project} from '../../models/project.model';
 import {Plotter} from './plotter.model';
 import {PlotterService} from './plotter.service';
-import {stringify} from 'querystring';
 
 @Component({
   selector: 'app-plotter',
@@ -34,6 +33,14 @@ export class PlotterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.projectService.projectChanged.subscribe((data: string) => {
+      this.projectId = data;
+      console.log(`data from Subject received: ${data}`);
+      console.log(`this.projectId = ${this.projectId}`);
+      this.initPlotter(this.project);
+      console.log(this.plottedDates);
+
+    });
     this.projectService.getProject(this.projectId).subscribe(project => {
       this.initPlotter(project);
       this.project = project;
@@ -169,7 +176,6 @@ export class PlotterComponent implements OnInit {
     myStyles = {
       'margin-left': `${offset}px`,
     };
-
     return myStyles;
   }
 
@@ -199,25 +205,13 @@ export class PlotterComponent implements OnInit {
     });
   }
 
-  /********************** */
-  /********************** */
-  /********************** */
+  onStart(event) {}
 
-  onStart(event) {
-    // console.log('started output:', event);
-  }
-
-  onStop(kmIndex, event) {
-    //  console.log(this.plottedDates);
-    // this.plottedDates.map(plottedDate => {
-    //   plottedDate.offset['margin-left'] = '30px';
-    // });
-  }
+  onStop(kmIndex, event) {}
 
   onMoving(event) {
     this.movingOffset.x = event.x;
     this.movingOffset.y = event.y;
-    // console.log(event);
   }
 
   onMoveEnd(plotIndex, kmIndex, currentPosition, date, event) {

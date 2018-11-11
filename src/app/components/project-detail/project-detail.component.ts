@@ -59,6 +59,7 @@ export class ProjectDetailComponent implements OnInit {
     });
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
+      this.projectService.projectChanged.next(params['id']);
       this.projectService.getProject(params['id']).subscribe(project => {
         this.projectIsLoaded = true;
         this.isLoading = false;
@@ -68,11 +69,6 @@ export class ProjectDetailComponent implements OnInit {
         this.projects = projects;
       });
     });
-
-    // this.dates = this.project.keyMilestones.map(keyMilestone => {
-    //   return keyMilestone.date;
-    // });
-    // console.log(this.dates);
 
     this.projectService.getProject(this.id).subscribe(project => {
       if (project) {

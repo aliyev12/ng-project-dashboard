@@ -4,7 +4,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {Project} from '../models/project.model';
@@ -20,6 +20,7 @@ export class ProjectService {
   projects: Observable<Project[]>;
   keyMilestones: Observable<KeyMilestone[]>;
   project: Observable<Project>;
+  projectChanged = new Subject();
 
   constructor(
     private afs: AngularFirestore,
