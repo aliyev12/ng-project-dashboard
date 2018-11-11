@@ -35,11 +35,11 @@ export class PlotterComponent implements OnInit {
   ngOnInit() {
     this.projectService.projectChanged.subscribe((data: string) => {
       this.projectId = data;
-      console.log(`data from Subject received: ${data}`);
-      console.log(`this.projectId = ${this.projectId}`);
       this.initPlotter(this.project);
-      console.log(this.plottedDates);
-
+      this.projectService.getProject(this.projectId).subscribe(project => {
+        this.initPlotter(project);
+        this.project = project;
+      });
     });
     this.projectService.getProject(this.projectId).subscribe(project => {
       this.initPlotter(project);
@@ -182,26 +182,28 @@ export class PlotterComponent implements OnInit {
   initPlotter(project) {
     this.plottedDates = [];
     project.keyMilestones.forEach((keyMilestone, i) => {
-      this.plottedDates.push({
-        bullet: i + 1,
-        kmIndex: i,
-        name: keyMilestone.name,
-        date: keyMilestone.date,
-        status: keyMilestone.status,
-        position: this.getKMPosition(keyMilestone.date),
-        offset: this.getKMOffset(this.getKMPosition(keyMilestone.date)),
-      });
-      keyMilestone.items.forEach((kmItem, j) => {
+      if (keyMilestone.date) {
         this.plottedDates.push({
-          bullet: j + 1,
-          kmIndex: j,
-          name: kmItem.name,
-          date: kmItem.date,
-          status: kmItem.status,
-          position: this.getKMPosition(kmItem.date),
-          offset: this.getKMOffset(this.getKMPosition(kmItem.date)),
+          bullet: i + 1,
+          kmIndex: i,
+          name: keyMilestone.name,
+          date: keyMilestone.date,
+          status: keyMilestone.status,
+          position: this.getKMPosition(keyMilestone.date),
+          offset: this.getKMOffset(this.getKMPosition(keyMilestone.date)),
         });
-      });
+        keyMilestone.items.forEach((kmItem, j) => {
+          this.plottedDates.push({
+            bullet: j + 1,
+            kmIndex: j,
+            name: kmItem.name,
+            date: kmItem.date,
+            status: kmItem.status,
+            position: this.getKMPosition(kmItem.date),
+            offset: this.getKMOffset(this.getKMPosition(kmItem.date)),
+          });
+        });
+      }
     });
   }
 

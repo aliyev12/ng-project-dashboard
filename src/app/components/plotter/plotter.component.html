@@ -14,7 +14,7 @@
     [preventDefaultEvent]="true"
     class="d-flex justify-content-center plottedDate"
     [ngClass]="{
-      'bg-danger': (plottedDate.status == 1),
+      'bg-danger': (plottedDate.status == 1 || !plottedDate.status || plottedDate.status === null),
       'bg-warning': (plottedDate.status == 2),
       'bg-success': (plottedDate.status == 3)
     }"
@@ -27,11 +27,12 @@
     [ngStyle]="plottedDate.offset"
     id="plottedDate-{{i}}"
   >
+  <!--       *ngIf="plottedDate.offset['margin-left'] !== '30px'"
+ -->
     <span
-      *ngIf="plottedDate.offset['margin-left'] !== '30px'"
       class="numberOfBuble"
       [ngClass]="{
-        'bg-danger': (plottedDate.status == 1),
+        'bg-danger': (plottedDate.status == 1 || !plottedDate.status || plottedDate.status === null),
         'bg-warning': (plottedDate.status == 2),
         'bg-success': (plottedDate.status == 3)
       }"

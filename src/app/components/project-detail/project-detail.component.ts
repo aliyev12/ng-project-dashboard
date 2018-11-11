@@ -156,4 +156,21 @@ export class ProjectDetailComponent implements OnInit {
       return lettersArray[j];
     }
   }
+
+  onKeyMilestoneDateAddShowHideButton(kmIndex) {
+    this.project.keyMilestones[kmIndex].date = {
+      date: {
+        day: 28,
+        month: new Date().getMonth(),
+        year: new Date().getFullYear(),
+      },
+      jsdate: {
+        nanoseconds: 0,
+        seconds: new Date().getTime(),
+      },
+      formatted: `${new Date().getMonth()}/28/${new Date().getFullYear()}`,
+      epoc: new Date().getTime()
+    };
+    this.projectService.updateProject(this.id, this.project);
+  }
 }
