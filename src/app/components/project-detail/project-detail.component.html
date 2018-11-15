@@ -57,10 +57,17 @@
 
                     <div class="p-0 ml-4 splitInColumns" *ngIf="project">
                       <div class="innerDivs" *ngFor="let keyMilestone of project.keyMilestones; let i=index">
-                        <div (mouseenter)="onKMMouseEnter(i)" (mouseleave)="onKMMouseLeave(i)">
-                          <a id="{{'keyMilestone-' + (i + 1)}}" class="keyMilestones"><span class="mr-2">{{i+1}}.</span><u>{{(keyMilestone.name)}}</u>
-                          </a>
-                          <a id="{{'keyMilestoneDateAddShowHideButton-' + (i + 1)}}" class="keyMilestoneDateAddShowHideButton" (click)="onKeyMilestoneDateAddShowHideButton(i)">
+                        <div (mouseenter)="!keyMilestone.date ? onKMMouseEnter(i) : null" (mouseleave)="!keyMilestone.date ? onKMMouseLeave(i) : null">
+                          <span
+                          id="{{'keyMilestone-' + (i + 1)}}"
+                          class="keyMilestones"
+                          [ngClass]="{
+                            'kmIfDateIsNull': (!keyMilestone.date)
+                          }"
+                          >
+                            <span class="mr-2">{{i+1}}.</span>{{(keyMilestone.name)}}
+                        </span>
+                          <a *ngIf="!keyMilestone.date" id="{{'keyMilestoneDateAddShowHideButton-' + (i + 1)}}" class="keyMilestoneDateAddShowHideButton" (click)="onKeyMilestoneDateAddShowHideButton(i)">
                             <div class="keyMilestoneDateAddingBubble">
                               <div class="d-flex justify-content-center">
                                 <div class="align-self-center">

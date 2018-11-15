@@ -161,16 +161,19 @@ export class ProjectDetailComponent implements OnInit {
     this.project.keyMilestones[kmIndex].date = {
       date: {
         day: 28,
-        month: new Date().getMonth(),
+        month: new Date().getMonth() + 1,
         year: new Date().getFullYear(),
       },
       jsdate: {
         nanoseconds: 0,
         seconds: new Date().getTime(),
       },
-      formatted: `${new Date().getMonth()}/28/${new Date().getFullYear()}`,
+      formatted: `${new Date().getMonth() + 1}/28/${new Date().getFullYear()}`,
       epoc: new Date().getTime()
     };
+    console.log(`below is what I'm inserting into date`);
+    console.log(this.project.keyMilestones[kmIndex].date);
+
     this.projectService.updateProject(this.id, this.project);
   }
 }
