@@ -1,16 +1,11 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  Input,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {ProjectService} from '../../services/project.service';
 import {Project} from '../../models/project.model';
 import {Plotter} from './plotter.model';
-import {PlotterService} from './plotter.service';
-import {LoginComponent} from '../login/login.component';
+import {PlotterService} from './services/plotter.service';
+import { SetPlotterMonthsService } from './services/set-plotter-months.service';
+import { GetKmPositionService } from './services/get-km-position.service';
+import { SetKmOffsetsService } from './services/set-km-offsets.service';
 
 @Component({
   selector: 'app-plotter',
@@ -18,7 +13,6 @@ import {LoginComponent} from '../login/login.component';
   styleUrls: ['./plotter.component.css'],
 })
 export class PlotterComponent implements OnInit {
-  // @ViewChild('item') dragItem: ElementRef;
   @Input() projectId: string;
   @Input() bullet: string;
   project: Project;
@@ -26,158 +20,32 @@ export class PlotterComponent implements OnInit {
   coordinates = [];
   months = [];
   gridSize = 60;
-  movingOffset = {x: 0, y: 0};
 
   constructor(
     private projectService: ProjectService,
-    private plotterService: PlotterService
+    private plotterService: PlotterService,
+    private setPlotterMonthsService: SetPlotterMonthsService,
+    private getKmPositionService: GetKmPositionService,
+    private setKmOffsetsService: SetKmOffsetsService
   ) {}
 
   ngOnInit() {
     this.projectService.projectChanged.subscribe((data: string) => {
       this.projectId = data;
       this.initPlotter(this.project);
-      this.projectService.getProject(this.projectId).subscribe(project => {
-        this.initPlotter(project);
-        this.plottedDates = this.plotterService.setKMOffsets(this.plottedDates);
-        this.deletePlottedDatesWithNegativePositions();
-        this.project = project;
-      });
+      this.getProjectFromService();
     });
+    this.getProjectFromService();
+    this.coordinates = this.plotterService.setCoordinates();
+    this.months = this.setPlotterMonthsService.setMonths();
+  }
+
+  getProjectFromService() {
     this.projectService.getProject(this.projectId).subscribe(project => {
       this.initPlotter(project);
-      // this.setKMOffsets();
-      this.plottedDates = this.plotterService.setKMOffsets(this.plottedDates);
-      this.deletePlottedDatesWithNegativePositions();
+      this.plottedDates = this.setKmOffsetsService.setKMOffsets(this.plottedDates);
       this.project = project;
     });
-    this.coordinates = this.plotterService.setCoordinates();
-    this.months = this.plotterService.setMonths();
-  }
-
-  getKMPosition(kmDate) {
-    const plotMonth: number = kmDate.date.month;
-    const plotYear: number = kmDate.date.year;
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentYear = currentDate.getFullYear();
-    if (
-      new Date(kmDate.date.year, kmDate.date.month - 1, kmDate.date.day) >=
-        currentDate &&
-      new Date(kmDate.date.year, kmDate.date.month - 1, kmDate.date.day) <=
-        new Date(
-          currentDate.getFullYear() + 1,
-          currentDate.getMonth(),
-          28
-        )
-    ) {
-      let differenceBwMonths;
-
-      if (currentMonth <= plotMonth && currentYear === plotYear) {
-        differenceBwMonths = Math.abs(currentMonth - plotMonth);
-      } else {
-        differenceBwMonths = plotMonth + (12 - currentMonth);
-      }
-      if (currentYear === plotYear) {
-        return differenceBwMonths * 60;
-      } else {
-        return differenceBwMonths * 60;
-      }
-    } else {
-      return -1;
-    }
-  } // end of method
-
-  getKMOffset(positionFromPlottedDates) {
-    const positions = this.plottedDates.map(
-      plottedDate => plottedDate.position
-    );
-    let counter = 0;
-    let offset: number;
-    let myStyles;
-    positions.forEach(position => {
-      if (positionFromPlottedDates === position) {
-        counter = counter + 1;
-      }
-    });
-    if (counter > 0 && counter <= 3) {
-      console.log('0 - 3');
-      offset = (3 - counter) * 10;
-    } else if (counter > 3 && counter <= 6) {
-      console.log('3 - 6');
-      offset = (6 - counter) * 5;
-    } else if (counter > 6 && counter <= 10) {
-      console.log('6 - 10');
-      offset = (10 - counter) * 3;
-    } else if (counter > 10 && counter <= 15) {
-      console.log('10 - 15');
-      offset = (15 - counter) * 2;
-    } else if (counter > 15) {
-      console.log('15+');
-      offset = 1;
-    } else {
-      console.log('30');
-      offset = 30;
-    }
-    myStyles = {
-      'margin-left': `${offset}px`,
-    };
-    return myStyles;
-  }
-
-  // setKMOffsets() {
-  //   // Check if any of the positions are -1
-  //   // if any of them are -1, then that element should not be displayed
-  //   const positions = this.plottedDates.map(
-  //     plottedDate => plottedDate.position
-  //   );
-
-  //   this.plottedDates.forEach(plottedDate => {
-  //     const position = plottedDate.position;
-  //     let counter = 0;
-  //     let offset: number;
-  //     let myStyles;
-  //     positions.forEach(p => {
-  //       if (p !== -1) {
-  //         if (p === position) {
-  //           counter = counter + 1;
-  //         }
-  //       } else {
-  //         counter = -1;
-  //       }
-  //     });
-
-  //     if (counter > 1 && counter <= 4) {
-  //       offset = (3 - counter) * 10;
-  //     } else if (counter > 4 && counter <= 7) {
-  //       offset = (6 - counter) * 5;
-  //     } else if (counter > 7 && counter <= 11) {
-  //       offset = (10 - counter) * 3;
-  //     } else if (counter > 11 && counter <= 16) {
-  //       offset = (16 - counter) * 2;
-  //     } else if (counter > 15) {
-  //       offset = 1;
-  //     } else if (counter > 0) {
-  //       offset = 30;
-  //     } else {
-  //       offset = 0;
-  //     }
-
-  //     // console.log(`counter for ${plottedDate.bullet} = ${counter};
-  //     //             offset = ${offset},
-  //     //             month = ${plottedDate.date.date.month}`);
-
-  //     myStyles = {
-  //       'margin-left': `${offset}px`,
-  //     };
-  //     plottedDate.offset = myStyles;
-  //   });
-  // }
-
-  deletePlottedDatesWithNegativePositions() {
-    console.log('inside deletePlottedDatesWithNegativePositions()...');
-
-    console.log(this.plottedDates);
   }
 
   initPlotter(project) {
@@ -190,9 +58,9 @@ export class PlotterComponent implements OnInit {
           name: keyMilestone.name,
           date: keyMilestone.date,
           status: keyMilestone.status,
-          position: this.getKMPosition(keyMilestone.date),
-          // offset: this.getKMOffset(this.getKMPosition(keyMilestone.date)),
-          offset: {'margin-left': '0px'},
+          position: this.getKmPositionService.getKMPosition(keyMilestone.date),
+          repeat: 0,
+          offset: {'margin-left': '30px'},
         });
 
         keyMilestone.items.forEach((kmItem, j) => {
@@ -202,53 +70,23 @@ export class PlotterComponent implements OnInit {
             name: kmItem.name,
             date: kmItem.date,
             status: kmItem.status,
-            position: this.getKMPosition(kmItem.date),
-            // offset: this.getKMOffset(this.getKMPosition(kmItem.date)),
-            offset: {'margin-left': '0px'},
+            position: this.getKmPositionService.getKMPosition(kmItem.date),
+            repeat: 0,
+            repeatNumber: 0,
+            offset: {'margin-left': '30px'},
           });
         });
       }
     });
   }
 
-  onStart(event) {}
-
-  onStop(kmIndex, event) {}
-
-  onMoving(event) {
-    this.movingOffset.x = event.x;
-    this.movingOffset.y = event.y;
-  }
-
   onMoveEnd(plotIndex, kmIndex, currentPosition, date, event) {
-    const currentDate = new Date();
-    const endOffset = {x: 0, y: 0};
-    endOffset.x = event.x;
-    endOffset.y = event.y;
     const monthsApart = (event.x - currentPosition) / 60;
     let newYear;
     let newMonth;
 
-    // if (monthsApart < 0) {
-    //   if (Math.abs(monthsApart) >= date.date.month) {
-    //     newMonth = (-1) * ((Math.abs(monthsApart) - date.date.month) - 12);
-    //     newYear = date.date.year - 1;
-    //   } else if (Math.abs(monthsApart) < date.date.month) {
-    //     newMonth = date.date.month - Math.abs(monthsApart);
-    //     newYear = date.date.year;
-    //   }
-    // } else {
-    //   if (Math.abs(monthsApart) <= date.date.month) {
-    //     newMonth = (-1) * ((Math.abs(monthsApart) - date.date.month) - 12);
-    //     newYear = date.date.year - 1;
-    //   } else if (Math.abs(monthsApart) > date.date.month) {
-    //     newMonth = date.date.month + Math.abs(monthsApart);
-    //     newYear = date.date.year;
-    //   }
-    // }
-
     if (monthsApart >= 0) {
-      if ((date.date.month + monthsApart) > 12) {
+      if (date.date.month + monthsApart > 12) {
         newMonth = monthsApart - (12 - date.date.month);
         newYear = date.date.year + 1;
       } else {
@@ -256,7 +94,7 @@ export class PlotterComponent implements OnInit {
         newYear = date.date.year;
       }
     } else {
-      if ((date.date.month + monthsApart) <= 0) {
+      if (date.date.month + monthsApart <= 0) {
         newMonth = 12 - (Math.abs(monthsApart) - date.date.month);
         newYear = date.date.year - 1;
       } else {
@@ -264,7 +102,6 @@ export class PlotterComponent implements OnInit {
         newYear = date.date.year;
       }
     }
-
 
     const newEpoc = new Date(newYear, newMonth, 28, 0, 0, 0, 0).getTime();
 
@@ -283,4 +120,6 @@ export class PlotterComponent implements OnInit {
     };
     this.projectService.updateProject(this.projectId, this.project);
   }
+
+
 }
