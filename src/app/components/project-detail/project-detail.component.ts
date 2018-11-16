@@ -4,8 +4,8 @@ import {ActivatedRoute, Router, Params} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {ProjectService} from '../../services/project.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
-import { Observable } from 'rxjs';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {Observable} from 'rxjs';
+import {trigger, state, style, transition, animate} from '@angular/animations';
 
 @Component({
   selector: 'app-project-detail',
@@ -13,18 +13,24 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrls: ['./project-detail.component.css'],
   animations: [
     trigger('divState', [
-      state('normal', style({
-        backgroundColor: 'red',
-        transform: 'translateX(0)'
-      })),
-      state('highlighted', style({
-        backgroundColor: 'blue',
-        transform: 'translateX(100px)'
-      })),
+      state(
+        'normal',
+        style({
+          backgroundColor: 'red',
+          transform: 'translateX(0)',
+        })
+      ),
+      state(
+        'highlighted',
+        style({
+          backgroundColor: 'blue',
+          transform: 'translateX(100px)',
+        })
+      ),
       transition('normal => highlighted', animate(300)),
-      transition('highlighted => normal', animate(800))
-    ]) // end of trigger
-  ] // end of animations
+      transition('highlighted => normal', animate(800)),
+    ]), // end of trigger
+  ], // end of animations
 })
 export class ProjectDetailComponent implements OnInit {
   state = 'normal';
@@ -45,8 +51,8 @@ export class ProjectDetailComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private projectService: ProjectService
-    // private flashMessage: FlashMessagesService // private store: Store<fromProject.FeatureState>
-  ) {}
+  ) // private flashMessage: FlashMessagesService // private store: Store<fromProject.FeatureState>
+  {}
 
   ngOnInit() {
     this.authService.getAuth().subscribe(auth => {
@@ -77,7 +83,6 @@ export class ProjectDetailComponent implements OnInit {
         });
       }
     });
-
   }
 
   onAnimate() {
@@ -90,10 +95,15 @@ export class ProjectDetailComponent implements OnInit {
 
   onKMMouseEnter(index: number) {
     const indexPlusOne = index + 1;
-    const keyMilestoneDateAddShowHideButton = document.querySelector(`#keyMilestoneDateAddShowHideButton-${indexPlusOne}`);
-    keyMilestoneDateAddShowHideButton.setAttribute('style', 'visibility: visible');
+    const keyMilestoneDateAddShowHideButton = document.querySelector(
+      `#keyMilestoneDateAddShowHideButton-${indexPlusOne}`
+    );
+    keyMilestoneDateAddShowHideButton.setAttribute(
+      'style',
+      'visibility: visible'
+    );
     // keyMilestoneDateAddShowHideButton.innerHTML = '<p>Mouse entered</p>';
-     // setAttribute(qualifiedName: string, value: string): void;
+    // setAttribute(qualifiedName: string, value: string): void;
     // keyMilestoneDateAddShowHideButton.toggleAttribute
     // keyMilestoneDateAddShowHideButton.hasAttribute
     // this.showHideAddKMDateButton = 'inline-block';
@@ -101,8 +111,13 @@ export class ProjectDetailComponent implements OnInit {
 
   onKMMouseLeave(index: number) {
     const indexPlusOne = index + 1;
-    const keyMilestoneDateAddShowHideButton = document.querySelector(`#keyMilestoneDateAddShowHideButton-${indexPlusOne}`);
-    keyMilestoneDateAddShowHideButton.setAttribute('style', 'visibility: hidden');
+    const keyMilestoneDateAddShowHideButton = document.querySelector(
+      `#keyMilestoneDateAddShowHideButton-${indexPlusOne}`
+    );
+    keyMilestoneDateAddShowHideButton.setAttribute(
+      'style',
+      'visibility: hidden'
+    );
     // keyMilestoneDateAddShowHideButton.innerHTML = '<p>Mouse Left</p>';
   }
 
@@ -169,11 +184,30 @@ export class ProjectDetailComponent implements OnInit {
         seconds: new Date().getTime(),
       },
       formatted: `${new Date().getMonth() + 1}/28/${new Date().getFullYear()}`,
-      epoc: new Date().getTime()
+      epoc: new Date().getTime(),
     };
     console.log(`below is what I'm inserting into date`);
     console.log(this.project.keyMilestones[kmIndex].date);
 
     this.projectService.updateProject(this.id, this.project);
+  }
+
+  dateOutOfRange(date): number {
+    const currentDate = new Date();
+    let returnValue = 0;
+    if (date) {
+      if (
+        new Date(date.date.year, date.date.month - 1, date.date.day) >=
+          currentDate &&
+        new Date(date.date.year, date.date.month - 1, date.date.day) <=
+          new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), 28)
+      ) {
+        returnValue = 2;
+      } else {
+        returnValue = 1;
+      }
+    }
+
+    return returnValue;
   }
 }

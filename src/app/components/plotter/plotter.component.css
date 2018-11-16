@@ -26,8 +26,6 @@
   z-index: 9999 !important;
 }
 
-
-
 .set-z-index {
   z-index: 9999 !important;
 }
@@ -103,21 +101,3 @@
 .display-none {
   display: none !important;
 }
-
-/*
-position: absolute;
-    top: 30px;
-    /* border-radius: 50% 50% 0 50%; */
-    /* -webkit-transform: rotate(70deg) skew(45deg); */
-    /* transform: rotate(70deg) skew(45deg); */
-    /* width: 5px;
-    height: 24px;
-    text-align: center; */
-
-/*
-.bubbleInfoText[_ngcontent-c3] {
-    /* -webkit-transform: rotate(-45deg); */
-    /* transform: rotate(-45deg); */
-    /* font-size: 0.1rem;
-    color: #333 !important;
-    margin-top: 25px !important; */

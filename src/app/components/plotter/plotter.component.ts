@@ -59,7 +59,6 @@ export class PlotterComponent implements OnInit {
           date: keyMilestone.date,
           status: keyMilestone.status,
           position: this.getKmPositionService.getKMPosition(keyMilestone.date),
-          repeat: 0,
           offset: {'margin-left': '30px'},
         });
 
@@ -71,8 +70,6 @@ export class PlotterComponent implements OnInit {
             date: kmItem.date,
             status: kmItem.status,
             position: this.getKmPositionService.getKMPosition(kmItem.date),
-            repeat: 0,
-            repeatNumber: 0,
             offset: {'margin-left': '30px'},
           });
         });

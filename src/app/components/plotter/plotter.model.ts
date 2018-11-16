@@ -7,8 +7,6 @@ export interface Plotter {
   date?: IMyDateModel;
   status?: number;
   position?: number;
-  repeat?: number;
-  repeatNumber?: number;
   offset?: {
     'margin-left': string
     };
