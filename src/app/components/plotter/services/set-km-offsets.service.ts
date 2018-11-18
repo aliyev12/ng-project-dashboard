@@ -11,8 +11,8 @@ export class SetKmOffsetsService {
     let repeated = [];
     let plottedDates: Plotter[] = dates;
 
-    plottedDates.forEach((plottedDate) => {
-      plottedDates.forEach((pd) => {
+    plottedDates.forEach(plottedDate => {
+      plottedDates.forEach(pd => {
         if (plottedDate.date.date.month === pd.date.date.month) {
           repeated.push(pd);
         }
@@ -21,32 +21,84 @@ export class SetKmOffsetsService {
         const l = repeated.length;
         let offset = 30;
 
-        if (l >= 1 && l <= 3) {
-          offset = offset - (10 * i);
-          r.offset = {'margin-left': `${offset}px`};
-        } else if (l >= 4 && l <= 6) {
-          offset = offset - (5 * i);
-          r.offset = {'margin-left': `${offset}px`};
-        } else if (l >= 7 && l <= 10) {
-          offset = offset - (3 * i);
-          r.offset = {'margin-left': `${offset}px`};
-        } else if (l >= 11 && l <= 15) {
-          offset = offset - (2 * i);
-          r.offset = {'margin-left': `${offset}px`};
-        } else if (l > 15 && l <= 30) {
-          offset = offset - i;
-          r.offset = {'margin-left': `${offset}px`};
-        } else {
-          offset = 0;
-          offset = offset + i;
-          r.offset = {'margin-left': `${offset}px`};
+        switch (true) {
+          case l >= 1 && l <= 3:
+            console.log(r.bullet);
+            console.log('if (l >= 1 && l <= 3)');
+            offset = offset - 10 * i;
+            r.offset = {'margin-left': `${offset}px`};
+            break;
+          case l >= 4 && l <= 6:
+            console.log(r.bullet);
+            console.log('if (l >= 4 && l <= 6)');
+            offset = offset - 5 * i;
+            r.offset = {'margin-left': `${offset}px`};
+            break;
+          case l >= 7 && l <= 10:
+            console.log(r.bullet);
+            console.log('if (l >= 7 && l <= 10)');
+            offset = offset - 3 * i;
+            r.offset = {'margin-left': `${offset}px`};
+            break;
+          case l >= 11 && l <= 15:
+            console.log(r.bullet);
+            console.log('if (l >= 11 && l <= 15)');
+            offset = offset - 2 * i;
+            r.offset = {'margin-left': `${offset}px`};
+            break;
+          case l > 15 && l <= 30:
+            console.log(r.bullet);
+            console.log('if (l > 15 && l <= 30)');
+            offset = offset - i;
+            r.offset = {'margin-left': `${offset}px`};
+            break;
+          default:
+            console.log(r.bullet);
+            console.log('else');
+            offset = 0;
+            offset = offset + i;
+            r.offset = {'margin-left': `${offset}px`};
+            break;
         }
 
+        // if (l >= 1 && l <= 3) {
+        //   console.log(r.bullet);
+        //   console.log('if (l >= 1 && l <= 3)');
+        //   offset = offset - (10 * i);
+        //   r.offset = {'margin-left': `${offset}px`};
+        // } else if (l >= 4 && l <= 6) {
+        //   console.log(r.bullet);
+        //   console.log('if (l >= 4 && l <= 6)');
+        //   offset = offset - (5 * i);
+        //   r.offset = {'margin-left': `${offset}px`};
+        // } else if (l >= 7 && l <= 10) {
+        //   console.log(r.bullet);
+        //   console.log('if (l >= 7 && l <= 10)');
+        //   offset = offset - (3 * i);
+        //   r.offset = {'margin-left': `${offset}px`};
+        // } else if (l >= 11 && l <= 15) {
+        //   console.log(r.bullet);
+        //   console.log('if (l >= 11 && l <= 15)');
+        //   offset = offset - (2 * i);
+        //   r.offset = {'margin-left': `${offset}px`};
+        // } else if (l > 15 && l <= 30) {
+        //   console.log(r.bullet);
+        //   console.log('if (l > 15 && l <= 30)');
+        //   offset = offset - i;
+        //   r.offset = {'margin-left': `${offset}px`};
+        // } else {
+        //   console.log(r.bullet);
+        //   console.log('else');
+        //   offset = 0;
+        //   offset = offset + i;
+        //   r.offset = {'margin-left': `${offset}px`};
+        // }
       });
       repeated = [];
     });
-    plottedDates = plottedDates.filter(p => p.position !== (-1));
+    plottedDates = plottedDates.filter(p => p.position !== -1);
+    console.log(plottedDates);
+
     return plottedDates;
   }
-
 }
